@@ -54,5 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //add dates to calendar make a list of them
+        //on item click should take you to url, button click should add event to calendar with url in event description
+        ArrayList<CalendarEventObject> eventsList = new ArrayList<>();
+        eventsList.add(new CalendarEventObject("43P/Wolf-Harrington at perihelion","Fri, 19 Aug 2016 ","https://in-the-sky.org/news.php?id=20160819_18_100"));
+        eventsList.add(new CalendarEventObject("α–Cygnid meteor shower","Sun, 21 Aug 2016","https://in-the-sky.org/news.php?id=20160821_11_100"));
+        eventsList.add(new CalendarEventObject("The Moon at perigee","Sun, 21 Aug 2016","https://in-the-sky.org/news.php?id=20160822_09_100"));
+        //etc.
     }
 }

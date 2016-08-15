@@ -22,6 +22,13 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder>{
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
         MainRvViewHolder viewHolder = new MainRvViewHolder(view);
 
+        //for inflating different card layouts
+//        if(viewType == CARDVIEW_TYPE_1){
+//              View view = ...
+//              viewholder = new Otherviewholder}
+
+
+
         return viewHolder;
 
     }
@@ -32,7 +39,13 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder>{
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public int getItemCount() {
         return list.size();
     }
+
 }
