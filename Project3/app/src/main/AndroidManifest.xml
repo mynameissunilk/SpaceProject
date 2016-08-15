@@ -15,6 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="sunil.project3.Table1ContentProvider"
+            android:name=".Table1ContentProvider"/>
     </application>
 
 </manifest>
