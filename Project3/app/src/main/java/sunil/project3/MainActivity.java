@@ -1,7 +1,12 @@
 package sunil.project3;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -31,5 +36,23 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(arrayList);
         mRecyclerView.setAdapter(adapter);
+
+
+
+        //notification
+        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent,0);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+       // notificationBuilder.setSmallIcon();
+        notificationBuilder.setContentTitle("Don't you want to know what's going on in space?")
+                .setContentText("Come see what's new!")
+                .setAutoCancel(true)
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        //use jobscheduler to determine when to launch notification?
+        NotificationManagerCompat.from(MainActivity.this).notify(1, notificationBuilder.build());
+
+
+
     }
 }
