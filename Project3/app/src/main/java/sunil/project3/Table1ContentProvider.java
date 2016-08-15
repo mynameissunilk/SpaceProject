@@ -18,13 +18,13 @@ public class Table1ContentProvider extends ContentProvider {
 
     private static final String TAG = "Table1ContentProvider";
     public static final int AllValuesX = 1;
-    public static final int X_ID = 2;
+    public static final int _ID = 2;
 
     public static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI(ProviderContract.AUTHORITY, DBHelper.TABLE_X, AllValuesX);
-        uriMatcher.addURI(ProviderContract.AUTHORITY, DBHelper.TABLE_X + "/#", X_ID);
+        uriMatcher.addURI(ProviderContract.AUTHORITY, DBHelper.Table_NYT, AllValuesX);
+        uriMatcher.addURI(ProviderContract.AUTHORITY, DBHelper.Table_NYT + "/#", _ID);
     }
 
     @Override
@@ -41,9 +41,9 @@ public class Table1ContentProvider extends ContentProvider {
         int uriType = uriMatcher.match(uri);
         switch (uriType) {
             case AllValuesX:
-                return ProviderContract.X.CONTENT_TYPE;
-            case X_ID:
-                return ProviderContract.X.CONTENT_ITEM_TYPE;
+                return ProviderContract.NYT.CONTENT_TYPE;
+            case _ID:
+                return ProviderContract.NYT.CONTENT_ITEM_TYPE;
         }
         return null;
     }
@@ -55,14 +55,14 @@ public class Table1ContentProvider extends ContentProvider {
         switch (uriType) {
             case AllValuesX:
                 DBHelper dbHelper = DBHelper.getInstance(getContext());
-                id = dbHelper.addItemsFromClick(contentValues);
+                id = dbHelper.addItems(contentValues);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown Uri " + uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-        return ContentUris.withAppendedId(ProviderContract.X.CONTENT_URI, id);
+        return ContentUris.withAppendedId(ProviderContract.NYT.CONTENT_URI, id);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Table1ContentProvider extends ContentProvider {
             case AllValuesX:
                 cursor = mDBHelper.findStocks(selection, selectionArgs, sortOrder, null);
                 break;
-            case X_ID:
+            case _ID:
                 cursor = mDBHelper.findStocks(selection, selectionArgs, sortOrder, uri.getLastPathSegment());
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -94,7 +94,7 @@ public class Table1ContentProvider extends ContentProvider {
             case AllValuesX:
                 rowsUpdated = mDBHelper.updateProduct(values,selection,selectionArgs,null);
                 break;
-            case X_ID:
+            case _ID:
                 String id = uri.getLastPathSegment();
                 rowsUpdated = mDBHelper.updateProduct(values,null,null,id);
                 break;
@@ -115,7 +115,7 @@ public class Table1ContentProvider extends ContentProvider {
                 rowsDeleted = mDBHelper.deleteProduct(selection,selectionArgs,null);
 
                 break;
-            case X_ID:
+            case _ID:
                 String id = uri.getLastPathSegment();
                 rowsDeleted = mDBHelper.deleteProduct(null,null,id);
                 break;
