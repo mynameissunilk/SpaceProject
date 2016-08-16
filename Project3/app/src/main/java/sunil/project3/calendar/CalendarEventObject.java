@@ -1,4 +1,4 @@
-package sunil.project3;
+package sunil.project3.calendar;
 
 import android.database.Cursor;
 

@@ -2,50 +2,50 @@
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/calendar_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true"
-    android:id="@+id/calendar_cardview">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upcoming Celestial Events"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
-    <ListView
-        android:id="@+id/listview_calendar_events"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Upcoming Celestial Events"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textview_calendar_event_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Calendar Event Title" />
+
+        <TextView
+            android:id="@+id/textview_calendar_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Calendar Event Date" />
+
+
+        <ImageButton
+            android:id="@+id/imagebutton_add_to_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/ic_event_black_24dp" />
+
+
     </LinearLayout>
-
-    <!--<TextView-->
-        <!--android:id="@+id/textview_calendar_event_title"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Calendar Event Title"-->
-        <!--android:gravity="center_horizontal"/>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textview_calendar_event_date"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Calendar Event Date"-->
-        <!--android:layout_gravity="center_horizontal"/>-->
-<!--</LinearLayout>-->
-
-    <!--<ImageButton-->
-        <!--android:id="@+id/imagebutton_add_to_calendar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="end"-->
-        <!--android:backgroundTint="@android:color/white"-->
-        <!--android:src="@drawable/ic_event_black_24dp" />-->
 
 </android.support.v7.widget.CardView>
 
