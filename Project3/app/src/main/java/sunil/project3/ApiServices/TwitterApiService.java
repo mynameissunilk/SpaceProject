@@ -15,10 +15,12 @@ public interface TwitterApiService {
     Call<okhttp3.ResponseBody>getToken(
             @Header("Authorization") String auth,
             @Header("Content-Type") String content,
-            @Query("grant_type") String grant
-    );
+            @Query("grant_type") String grant);
 
-
-
+    @GET("1.1/statuses/user_timeline.json")
+    Call<okhttp3.ResponseBody>getTimeline(
+            @Header("Authorization") String auth,
+            @Query("screen_name") String user,
+            @Query("count") int cnt);
 
 }

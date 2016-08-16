@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -39,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
     public static final String nasaKey = "IsXUyhCSGkUP5QHrAAYITkO2PyqGeawPISAwZXRr";
 
     //public static final String instaauthURL="https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=cod";
-    public static final String twittokenURL = "https://api.twitter.com/oauth2/token";
+    public static final String twittokenURL = "https://api.twitter.com/";
     public static final String twitcons = "tJF1TxJoPHGrjyTMzIAGqjpaE";
     public static final String twitsecr = "T8IuaJBtYACzTRuWcPtIuVxEFDEFK6tgapgOqDbrS8IcGNu2NZ";
     public static final String twitTbcrypt = twitcons + ":" + twitsecr;
-    public static final String twitBase = "https://api.twitter.com/1.1/"; //ugh i'm dumb
+    public static final String twitBase = "https://api.twitter.com/"; //ugh i'm dumb
     public static String twitenc64;
     public static String twitToken;
 
@@ -147,9 +150,8 @@ public class MainActivity extends AppCompatActivity {
         */
 
 /*
-
         // NYT WORKS, QUERY NEEDS WORK...
-        
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -177,53 +179,82 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<Doc> call, Throwable t) {
                 Log.i("NYT","FAILED!");
             }
-        });
+        });*/
 
-*/
 
-/*
         byte[] concatArray = twitTbcrypt.getBytes();
         twitenc64 = Base64.encodeToString(concatArray, Base64.NO_WRAP);
 
-        getTwitToken(); // write this son
+        //getTwitToken();
 
         //header needs: Authorization,Basic twitenc64
         //header needs: Content-Type=application/x-www-form-urlencoded:charset=UTF-8
-
         // service needs: @POST grant_type=client_credentials
         //baseurl for token: https:/api.twitter.com/oauth2/token
 
 
+        // twitter oauth
         HttpLoggingInterceptor log = new HttpLoggingInterceptor();
         log.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(log)
                 .build();
 
-        Gson gson = new Gson();
-
         Retrofit twitterfit = new Retrofit.Builder()
                 .baseUrl(twittokenURL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         TwitterApiService twitterService = twitterfit.create(TwitterApiService.class);
 
-        Call<okhttp3.ResponseBody>call = twitterService.getToken(new String("Bearer "+twitenc64),"application/x-www-form-urlencoded:charset=UTF-8","client_credentials");
+        String twitAuth = "Basic "+twitenc64;
+
+        Call<okhttp3.ResponseBody>call = twitterService.getToken(twitAuth,"application/x-www-form-urlencoded;charset=UTF-8","client_credentials");
         call.enqueue(new Callback<okhttp3.ResponseBody>() {
             @Override
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                Log.i("YES?","GOT TO THIS POINT...");
+                String output = null;
                 try {
+                    output = response.body().string();
 
-                    String output = response.body().string();
-
-
-
-
+                    // sometimes fancy gson needs to go !@#$ off
+                    JSONObject jason = new JSONObject(output);
+                    twitToken = jason.getString("access_token");
+                    Log.i("PLEASE WORK",twitToken);
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                Log.i("FAILURE","YOU ARE A HORRIBLE PERSON");
+            }
+        });
+
+        HttpLoggingInterceptor loggy = new HttpLoggingInterceptor();
+        loggy.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient twitclient = new OkHttpClient.Builder().addInterceptor(loggy).build();
+
+        Retrofit timelinefit = new Retrofit.Builder()
+                .baseUrl(twitBase)
+                .client(twitclient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TwitterApiService timelineService = twitterfit.create(TwitterApiService.class);
+        //String twitBear = "Bearer "+twitToken;
+        Call<okhttp3.ResponseBody>timelineCall = timelineService.getTimeline("Bearer "+twitToken,"nasa",10);
+
+        timelineCall.enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                Log.i("WORKS?","WORKS.");
             }
 
             @Override
@@ -232,7 +263,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        */
     }
 
 }
