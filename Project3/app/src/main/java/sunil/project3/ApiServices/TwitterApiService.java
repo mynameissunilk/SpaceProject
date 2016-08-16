@@ -1,14 +1,24 @@
 package sunil.project3.ApiServices;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
+import sunil.project3.Guardian.ResponseBody;
 
-/**
- * Created by sunil on 8/15/16.
-/* *//*
+
 public interface TwitterApiService {
-    @POST("url")
 
-    @GET("geturl")
+    // yeah, i used the solution for reference... nice mind tricks with the formatting btw
+    @POST("oauth2/token")
+    Call<okhttp3.ResponseBody>getToken(
+            @Header("Authorization") String auth,
+            @Header("Content-Type") String content,
+            @Query("grant_type") String grant
+    );
 
-}*/
+
+
+
+}
