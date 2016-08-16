@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,9 +96,17 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     AVH.mInnerTextView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            AVH.mSmallTextView.setHeight(2000);
-                            AVH.mSmallTextView.setLayoutParams(new FrameLayout.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, 200));
-                            Toast.makeText(mContext,"click" + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            int num = AVH.mSmallTextView.getHeight();
+                            if (num < 300) {
+                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(400, 300);
+                                AVH.mSmallTextView.setLayoutParams(parms);
+                            }
+                            else {
+                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(400, 0);
+                                AVH.mSmallTextView.setLayoutParams(parms);
+                            }
                         }
                     });
                 }
