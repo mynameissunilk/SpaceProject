@@ -14,8 +14,11 @@ public class CalendarEventObject {
     }
 
     public String getmEventDate() {
-        return mWeekDay + ", " + mMonth + " " + mDay + ", " + mYear + " at " + mHour + ":" + mMinute;
 
+        if (mHour == 00 && mMinute == 00) {
+            return mWeekDay + ", " + mMonth + "/" + mDay + "/" + mYear;
+        }
+        return mWeekDay + ", " + mMonth + "/" + mDay + "/" + mYear + " at " + mHour + ":" + mMinute;
     }
 
     public String getmDetailUrl() {
@@ -59,7 +62,6 @@ public class CalendarEventObject {
         mDetailUrl = detailUrl;
 
     }
-
 
 
 }

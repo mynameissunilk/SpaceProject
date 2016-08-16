@@ -8,24 +8,17 @@
 
     <TextView
         android:id="@+id/textview_calendar_event_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calendar Event Title" />
+        android:text="Calendar Event Title"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/textview_calendar_event_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textview_calendar_event_title"
-        android:text="Calendar Event Date" />
-
-    <ImageButton
-        android:id="@+id/imagebutton_add_to_calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:backgroundTint="@android:color/white"
-        android:src="@drawable/ic_event_available_black_24dp" />
+        android:text="Calendar Event Date"
+        android:layout_gravity="center"/>
 
 
 </LinearLayout>

@@ -28,16 +28,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder> {
     private static final String TAG = "MainRvAdapter";
     //    public ArrayList<String> list;
     public ArrayList<CalendarEventObject> eventList;
-    Context context;
+    Context mContext;
 
 //    public MainRvAdapter(ArrayList<String> list, Context context) {
 //        this.list = list;
 //        this.context = context;
 //    }
 
-    public MainRvAdapter(ArrayList<CalendarEventObject> list, Context context) {
+    public MainRvAdapter(ArrayList<CalendarEventObject> list) {
         this.eventList = list;
-        this.context = context;
+
     }
 //    @Override
 //    public MainRvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,12 +58,13 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder> {
     @Override
     public void onBindViewHolder(MainRvViewHolder holder, final int position) {
 //        holder.mTextView.setText(list.get(position));
+
         holder.mAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //you should do this in an async task
-                new CalendarEvent(eventList, context).addCalendarEvent(position);
+                new CalendarEvent(eventList, mContext).addCalendarEvent(position);
 
             }
         });
@@ -72,7 +73,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder> {
             public void onClick(View view) {
                 Uri uri = Uri.parse(eventList.get(position).getmDetailUrl());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                context.startActivity(intent);
+                mContext.startActivity(intent);
             }
         });
         holder.mEventTitle.setText(eventList.get(position).getmEventTitle());
