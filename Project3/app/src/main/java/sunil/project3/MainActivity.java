@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -29,6 +31,7 @@ import sunil.project3.ApiServices.NytApiService;
 import sunil.project3.ApiServices.TwitterApiService;
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
+import sunil.project3.NYT.ContentNyt;
 import sunil.project3.NYT.Doc;
 
 
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+/*
 
 //         CONNECTION TO GUARDIAN... SUCCESS!
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -82,21 +86,28 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     Gson gson = new Gson();
 
-                    Content guardianquery = gson.fromJson(String.valueOf(response.body().getResponse().getResults().get(1)),Content.class);
-                    Log.i("guardian?",guardianquery.toString());
+                    //Content guardianquery = gson.fromJson(String.valueOf(response.body().getResponse().getResults().get(1)),Content.class);
+                    //Log.i("guardian?",guardianquery.toString());
 
-                    /*
+
+                    List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
+
+                    // print articles & links
+                    for(int i = 0; i<guardianArticles.size();i++){
+                        Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                    }
+
+                    */
+/*
                     POJO pojo = gson.fromJson(response.body().string(),POJO.class)
                     String article = pojo.getText() pogo.getsomethingelse()
-                    */
+                    *//*
+
 
                     //getResponse.getResults
                     //go through results, and store title and url
 
-
                     Log.i("SUCCESS","CONNECTED");
-
-
                 }
 
                 catch(Exception ex){
@@ -110,8 +121,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+*/
 
 /*
+
         // CONNECTION TO NASA... SUCCESS!
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -123,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 .addInterceptor(interceptor) // the logging interceptor
                 .build();
 
-*//*
+
+*/
+/*
 
                 .addInterceptor(new Interceptor() {
                     @Override
@@ -136,7 +151,9 @@ public class MainActivity extends AppCompatActivity {
                         return chain.proceed(request);
                     }
                 })
+
 *//*
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -152,8 +169,15 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ContentNasa>() {
             @Override
             public void onResponse(Call<ContentNasa> call, Response<ContentNasa> response) {
-                String imgurl = response.body().getUrl();
-                Log.i("URL?",imgurl);
+
+                String apodTitle = response.body().getTitle();
+                String apodexplanation = response.body().getExplanation();
+                String apodUrl = response.body().getUrl();
+
+                Log.i("TITLE: ",apodTitle);
+                Log.i("EXPLANATION: ",apodexplanation);
+                Log.i("URL: ",apodUrl);
+
             }
 
             @Override
@@ -162,9 +186,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        */
+*/
 
-/*
+
+
         // NYT WORKS, QUERY NEEDS WORK...
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -181,20 +206,26 @@ public class MainActivity extends AppCompatActivity {
 
         NytApiService nytService = retrofit.create(NytApiService.class);
 
-        Call<Doc>call = nytService.getArticle(nytKey);
+        Call<ContentNyt>call = nytService.getArticle(nytKey);
 
-        call.enqueue(new Callback<Doc>() {
+        call.enqueue(new Callback<ContentNyt>() {
             @Override
-            public void onResponse(Call<Doc> call, Response<Doc> response) {
+            public void onResponse(Call<ContentNyt> call, Response<ContentNyt> response) {
                 Log.i("NYT","CONNECTED! ");
 
+                List<Doc> docList = response.body().getResponse().getDocs();
+
+                for(int i = 0; i <docList.size();i++){
+                    Log.i("CONTENTS: ",docList.get(i).getHeadline().toString());
+                }
+
             }
 
             @Override
-            public void onFailure(Call<Doc> call, Throwable t) {
+            public void onFailure(Call<ContentNyt> call, Throwable t) {
                 Log.i("NYT","FAILED!");
             }
-        });*/
+        });
 
 /*
 
