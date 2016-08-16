@@ -5,7 +5,7 @@ import android.database.Cursor;
 /**
  * Created by owlslubic on 8/15/16.
  */
-public class CalendarEventObject {
+public class CalendarEventObject {//extends CardObj
     String mEventTitle, mEventDate, mDetailUrl, mWeekDay;
     int mYear, mMonth, mDay, mHour, mMinute;
 

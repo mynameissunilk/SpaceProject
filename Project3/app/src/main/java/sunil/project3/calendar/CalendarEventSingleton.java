@@ -22,17 +22,27 @@ import sunil.project3.R;
 
 //THIS WORKS ON ANDERS'S PHONE, BUT NOT ON MINE. TEST MORE LATER
 
-public class CalendarEvent {
+public class CalendarEventSingleton {
+    private static CalendarEventSingleton sInstance;
+
     public ArrayList<CalendarEventObject> eventList;
-    Context context;
     public int year, month, day, hour, minute;
 
-    public CalendarEvent(ArrayList<CalendarEventObject> list, Context context) {
-        this.eventList = list;
-        this.context = context;
+    private CalendarEventSingleton(){}
+
+    public static CalendarEventSingleton getInstance(){
+        if(sInstance == null){
+            sInstance = new CalendarEventSingleton();
+        }
+        return sInstance;
     }
 
-    public void addCalendarEvent(int position) {
+//    public CalendarEvent(ArrayList<CalendarEventObject> list, Context context) {
+//        this.eventList = list;
+//        this.context = context;
+//    }
+
+    public void addCalendarEvent(int position, Context context) {
         long startMillis = 0;
         long endMillis = 0;
         year = eventList.get(position).getmYear();
@@ -62,14 +72,9 @@ public class CalendarEvent {
 
     }
 
-}
 
-class CalendarAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<CalendarEventObject> eventList;
-    public CalendarAdapter(Context context) {
-        this.context=context;
-        eventList = new ArrayList<>();
+
+    public ArrayList<CalendarEventObject> getEventList(){
         eventList = new ArrayList<>();
         eventList.add(new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100"));
         eventList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
@@ -80,66 +85,7 @@ class CalendarAdapter extends BaseAdapter {
         eventList.add(new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100"));
         eventList.add(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
 
+    return eventList;
     }
-
-    @Override
-    public int getCount() {
-        return eventList.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if(view ==null){
-            view = LayoutInflater.from(context).inflate(R.layout.calendar_cardview, viewGroup, false);
-            TextView tvName = (TextView) view.findViewById(R.id.textview_calendar_event_title);
-            TextView tvDate = (TextView) view.findViewById(R.id.textview_calendar_event_date);
-            tvName.setText(eventList.get(i).getmEventTitle());
-            tvDate.setText(eventList.get(i).getmEventDate());
-
-        }
-
-
-        return view;
-    }
-
-
 
 }
-
-
-            //TEMPORARILY PUT THIS STUFF HERE, WAS IN THE MAIN ACTIVITY, JUS TRYNA AVOID MERGE CONFLICTS
-//    public ArrayList<CalendarEventObject> getCelestialEventsList() {
-//        //calendar event data
-//        eventList = new ArrayList<>();
-//        eventList.add(new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100"));
-//        eventList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
-//        eventList.add(new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100"));
-//        eventList.add(new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100"));
-//        eventList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
-//        eventList.add(new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100"));
-//        eventList.add(new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100"));
-//        eventList.add(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
-//
-//        return eventList;
-//    }
-//
-//
-//    public void displayEventsOnCalendarCard() {
-//
-//        CalendarAdapter adapter = new CalendarAdapter(this);
-//        mListView = (ListView) findViewById(R.id.listview_calendar_events);
-//        mListView.setAdapter(adapter);
-//    }
-//
-////the idea is that i will display these events in the listview on a single card, but how to get that into the recyclerview?
-//

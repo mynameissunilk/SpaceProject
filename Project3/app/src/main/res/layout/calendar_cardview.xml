@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="3dp"
+    android:padding="16dp"
     card_view:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -19,7 +20,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Upcoming Celestial Events"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_margin="16dp"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textview_calendar_event_title"
@@ -32,7 +39,8 @@
             android:id="@+id/textview_calendar_event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textview_calendar_event_title"
             android:text="Calendar Event Date" />
 
 
@@ -40,10 +48,136 @@
             android:id="@+id/imagebutton_add_to_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:backgroundTint="@android:color/white"
             android:src="@drawable/ic_event_black_24dp" />
+        </RelativeLayout>
 
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_calendar_event_title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Calendar Event Title" />
+
+            <TextView
+                android:id="@+id/textview_calendar_event_date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textview_calendar_event_title2"
+                android:text="Calendar Event Date" />
+
+
+            <ImageButton
+                android:id="@+id/imagebutton_add_to_calendar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_event_black_24dp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_calendar_event_title3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Calendar Event Title" />
+
+            <TextView
+                android:id="@+id/textview_calendar_event_date3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textview_calendar_event_title3"
+                android:text="Calendar Event Date" />
+
+
+            <ImageButton
+                android:id="@+id/imagebutton_add_to_calendar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_event_black_24dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_calendar_event_title4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Calendar Event Title" />
+
+            <TextView
+                android:id="@+id/textview_calendar_event_date4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textview_calendar_event_title4"
+                android:text="Calendar Event Date" />
+
+
+            <ImageButton
+                android:id="@+id/imagebutton_add_to_calendar4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_event_black_24dp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_calendar_event_title5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Calendar Event Title" />
+
+            <TextView
+                android:id="@+id/textview_calendar_event_date5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textview_calendar_event_title5"
+                android:text="Calendar Event Date" />
+
+
+            <ImageButton
+                android:id="@+id/imagebutton_add_to_calendar5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_event_black_24dp"
+                android:layout_marginBottom="16dp"/>
+        </RelativeLayout>
 
     </LinearLayout>
 
