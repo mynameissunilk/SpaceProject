@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,17 +24,18 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public ArrayList<String> mInnerText;
     public ArrayList<String> mList;
-    public ArrayList<String> mLargeText;
     public ArrayList<String> mShortText;
     int mViewType;
     RecyclerView.ViewHolder mViewHolder;
+    AstronautViewHolder AVH;
 
     // for one viewGroup
-    public MainRvAdapter(int viewType, ArrayList<String> largeText, ArrayList<String> shortText, ArrayList<String> innerText
+    public MainRvAdapter(int viewType, ArrayList<String> shortText, ArrayList<String> innerText
             , ArrayList<String> list) {
         this.mList = list;
         mViewType = viewType;
-        this.mInnerText = innerText; this.mShortText = shortText; this.mLargeText = largeText;
+        this.mShortText = shortText;
+        this.mInnerText = innerText;
     }
 
     // for another view group
@@ -81,16 +84,21 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                MVH.mT5.setText(array.get(position).toString());
                 break;
             case 1:
-                AstronautViewHolder AVH = (AstronautViewHolder) holder;
+                AVH = (AstronautViewHolder) holder;
                 AVH.mImageView.setImageResource(android.R.drawable.ic_input_add);
-                if(mShortText.size() != 0) {
-                    AVH.mLargeTextView.setText(mShortText.indexOf(position));
+                if(!mShortText.get(0).isEmpty()) {
+                    AVH.mSmallTextView.setText(mShortText.get(position));
                 }
-                if(mLargeText.size() != 0) {
-                    AVH.mSmallTextView.setText(mLargeText.indexOf(position));
-                }
-                if(mInnerText.size() != 0) {
-                    AVH.mInnerTextView.setText(mInnerText.indexOf(position));
+                if(!mInnerText.get(0).isEmpty()) {
+                    AVH.mInnerTextView.setText(mInnerText.get(position));
+                    AVH.mInnerTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AVH.mSmallTextView.setHeight(2000);
+                            AVH.mSmallTextView.setLayoutParams(new FrameLayout.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, 200));
+                            Toast.makeText(mContext,"click" + view.getHeight(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 break;
         }
@@ -104,6 +112,17 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onClick(View view) {
-        view.setMinimumHeight(500);
+
     }
+
+//    @Override
+//    public void onClick(View view) {
+////        switch (mViewType){
+////            case 0:
+////                AVH.mLargeTextView.setVisibility(View.VISIBLE);
+//                AVH.mSmallTextView.setVisibility(View.VISIBLE);
+//                AVH.mSmallTextView.setLayoutParams(new FrameLayout.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, 200));
+//        Toast.makeText(mContext,"click" + view.getHeight(), Toast.LENGTH_SHORT).show();
+////        }
+//    }
 }

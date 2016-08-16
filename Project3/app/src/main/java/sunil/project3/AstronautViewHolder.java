@@ -16,8 +16,8 @@ public class AstronautViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
 
         mInnerTextView = (TextView) itemView.findViewById(R.id.textChild);
-        mSmallTextView = (TextView) itemView.findViewById(R.id.long_text);
-        mLargeTextView = (TextView) itemView.findViewById(R.id.short_text);
+        mSmallTextView = (TextView) itemView.findViewById(R.id.short_text);
+//        mLargeTextView = (TextView) itemView.findViewById(R.id.long_text);
         mImageView = (ImageView) itemView.findViewById(R.id.imageChild);
 
     }
