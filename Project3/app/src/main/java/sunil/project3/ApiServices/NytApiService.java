@@ -2,22 +2,18 @@ package sunil.project3.ApiServices;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Query;
-import sunil.project3.NYT.ContentNyt;
 import sunil.project3.NYT.Doc;
 
-/**
- * Created by sunil on 8/15/16.
- */
+
 public interface NytApiService {
 
-    @GET("?{api-key}&{sort}&{fq=type_of_material}&{fq=section_name}&{q}")
+    // endpoints don't have to be perfect
+    // retrofit overrides errything... (thankgod)
+    @GET("/articlesearch.json?&sort=newest&fq=type_of_material:(%22News%22)&fq=section_name:(%22Science%22)&q=nasa&q=space")
     Call<Doc>getArticle(
-            @Header("api-key") String apikey,
-            @Query("sort") String sort,
-            @Query("fq=type_of_material") String material,
-            @Query("fq=section_name") String section,
-            @Query("q") String query);
+            @Query("api-key") String apikey);
+
     // TODO: make sure you don't have to exclude &s in an interface method declaration
+
 }

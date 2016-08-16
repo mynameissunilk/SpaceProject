@@ -36,7 +36,7 @@ public class Response {
     private String orderBy;
     @SerializedName("results")
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private List<ResponseBody> results = new ArrayList<ResponseBody>();
 
     /**
      * 
@@ -187,7 +187,7 @@ public class Response {
      * @return
      *     The results
      */
-    public List<Result> getResults() {
+    public List<ResponseBody> getResults() {
         return results;
     }
 
@@ -196,7 +196,7 @@ public class Response {
      * @param results
      *     The results
      */
-    public void setResults(List<Result> results) {
+    public void setResults(List<ResponseBody> results) {
         this.results = results;
     }
 
