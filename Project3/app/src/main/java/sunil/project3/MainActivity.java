@@ -6,6 +6,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,7 @@ import sunil.project3.ApiServices.GuardianApiService;
 import sunil.project3.ApiServices.NasaApiService;
 import sunil.project3.ApiServices.NytApiService;
 import sunil.project3.ApiServices.TwitterApiService;
+import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
 import sunil.project3.NYT.Doc;
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* CONNECTION TO GUARDIAN... SUCCESS!
+//         CONNECTION TO GUARDIAN... SUCCESS!
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -72,15 +74,29 @@ public class MainActivity extends AppCompatActivity {
 
         GuardianApiService guardianService = retrofit.create(GuardianApiService.class);
 
-        Call<ResponseBody> call = guardianService.getArticles(guardianKey);
+        Call<Content> call = guardianService.getArticles(guardianKey);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<Content>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Content> call, Response<Content> response) {
                 try{
-                    String url = response.body().getWebUrl();
+                    Gson gson = new Gson();
+
+                    Content guardianquery = gson.fromJson(String.valueOf(response.body().getResponse().getResults().get(1)),Content.class);
+                    Log.i("guardian?",guardianquery.toString());
+
+                    /*
+                    POJO pojo = gson.fromJson(response.body().string(),POJO.class)
+                    String article = pojo.getText() pogo.getsomethingelse()
+                    */
+
+                    //getResponse.getResults
+                    //go through results, and store title and url
+
+
                     Log.i("SUCCESS","CONNECTED");
-                    Log.i("STRING NULL?","works? "+url );
+
+
                 }
 
                 catch(Exception ex){
@@ -89,12 +105,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Content> call, Throwable t) {
                 Log.i("FAILURE","FAILED TO CONNECT");
             }
         });
 
-        */
 
 /*
         // CONNECTION TO NASA... SUCCESS!
@@ -181,17 +196,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+/*
 
         byte[] concatArray = twitTbcrypt.getBytes();
         twitenc64 = Base64.encodeToString(concatArray, Base64.NO_WRAP);
-
-        //getTwitToken();
-
-        //header needs: Authorization,Basic twitenc64
-        //header needs: Content-Type=application/x-www-form-urlencoded:charset=UTF-8
-        // service needs: @POST grant_type=client_credentials
-        //baseurl for token: https:/api.twitter.com/oauth2/token
-
 
         // twitter oauth
         HttpLoggingInterceptor log = new HttpLoggingInterceptor();
@@ -249,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
         TwitterApiService timelineService = twitterfit.create(TwitterApiService.class);
         //String twitBear = "Bearer "+twitToken;
-        Call<okhttp3.ResponseBody>timelineCall = timelineService.getTimeline("Bearer "+twitToken,"nasa",10);
+        Call<okhttp3.ResponseBody>timelineCall = timelineService.getTimeline("Bearer "+twitToken,"nasa",5);
 
         timelineCall.enqueue(new Callback<okhttp3.ResponseBody>() {
             @Override
@@ -262,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+*/
 
     }
 
