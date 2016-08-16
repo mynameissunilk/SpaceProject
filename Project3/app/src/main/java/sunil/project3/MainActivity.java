@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,18 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import sunil.project3.CardObjects.CardObjSingleton;
+import sunil.project3.CardObjects.CardObject;
+import sunil.project3.CardObjects.GuardianObj;
+import sunil.project3.CardObjects.NYTObj;
+import sunil.project3.CardObjects.TwitterObj;
+
 public class MainActivity extends AppCompatActivity {
     public RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView2;
 
     CursorAdapter mCursorAdapter;
-    TextView mT1,mT2,mT3,mT4,mT5;
+    TextView mT1, mT2, mT3, mT4, mT5;
     ListView mListView;
     private static final String TAG = "MainActivity";
 
@@ -66,17 +74,55 @@ public class MainActivity extends AppCompatActivity {
         astroINList.add("Great turbulent clouds");
         astroINList.add("White dwarf Euclid ");
         astroINList.add("Vanquish the impossthe. ");
-        astroINList.add("Apollonius of Perga? Citizens .");
+        astroINList.add("Apollonius of Perga? Citizens.");
 
 
 
-        //recyclerview setup
+
+
+
+
+        TwitterObj twitterObj1 = new TwitterObj("www.me.com","my name 194u1","me","10/10/2010","you");
+        GuardianObj guardianObj1 = new GuardianObj("brilliant title", "10/10/2010", "www.me.com");
+        NYTObj nytObj1 = new NYTObj("brilliant headline", "brilliant snippet", "amazing url", "10/10/2010");
+        TwitterObj twitterObj2 = new TwitterObj("www.me.com","my name","me","10/10/2010","you");
+        NYTObj nytObj2 = new NYTObj("brilliant headline", "brilliant snippet", "amazing url", "10/10/2010");
+        GuardianObj guardianObj2 = new GuardianObj("brilliant title", "10/10/2010", "www.me.com");
+
+        List<CardObject> cardObjects = new ArrayList<>();
+        cardObjects.add(twitterObj1);
+        cardObjects.add(guardianObj1);
+        cardObjects.add(twitterObj2);
+        cardObjects.add(nytObj2);
+        cardObjects.add(guardianObj2);
+        cardObjects.add(nytObj1);
+
+        CardObjSingleton.getInstance().addToMasterList(cardObjects);
+
+
+        //recyclerview setup CARDOBJECTS
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(manager);
-        MainRvAdapter adapter = new MainRvAdapter(1,astroSTList,astroINList,arrayList);
-        Toast.makeText(MainActivity.this,"click" + astroINList.get(0), Toast.LENGTH_SHORT).show();
+        MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
+        Toast.makeText(MainActivity.this, "click" + astroINList.get(0), Toast.LENGTH_SHORT).show();
         mRecyclerView.setAdapter(adapter);
+
+//        //recyclerview setup
+//        mRecyclerView = (RecyclerView) findViewById(R.id.rv);
+//        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        mRecyclerView.setLayoutManager(manager);
+//        MainRvAdapter adapter = new MainRvAdapter(1,2, astroSTList, astroINList, arrayList);
+//        Toast.makeText(MainActivity.this, "click" + astroINList.get(0), Toast.LENGTH_SHORT).show();
+//        mRecyclerView.setAdapter(adapter);
+
+//        mRecyclerView2 = (RecyclerView) findViewById(R.id.rv2);
+//        LinearLayoutManager manager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        mRecyclerView2.setLayoutManager(manager2);
+//        MainRvAdapter adapter2 = new MainRvAdapter(1,2, astroSTList, astroINList, arrayList);
+//        Toast.makeText(MainActivity.this, "click" + astroINList.get(0), Toast.LENGTH_SHORT).show();
+////        mRecyclerView2.setAdapter(adapter2);
+
 
 
 //        //notification
@@ -94,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
 //
 
 
-
         DBHelper dbHelper = DBHelper.getInstance(this);
 
         ContentValues contentValues = new ContentValues();
@@ -105,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
         contentValues.put(ProviderContract.NYT.COL_5, "e");
         getContentResolver().insert(ProviderContract.NYT.CONTENT_URI, contentValues);
         dbHelper.addItems(contentValues);
-
 
 
     }

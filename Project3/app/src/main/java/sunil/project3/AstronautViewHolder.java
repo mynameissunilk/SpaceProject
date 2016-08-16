@@ -9,16 +9,19 @@ import android.widget.TextView;
  * Created by ander on 8/16/2016.
  */
 public class AstronautViewHolder extends RecyclerView.ViewHolder{
-    TextView mInnerTextView, mLargeTextView, mSmallTextView;
-    ImageView mImageView;
+    TextView mLargeTextView, mSmallTextView;
+    ImageView mImageViewLarge;
+//    TextView mLargeTextView, mSmallTextView, mImageText;
+//    ImageView mImageViewLarge;
 
     public AstronautViewHolder(View itemView) {
         super(itemView);
 
-        mInnerTextView = (TextView) itemView.findViewById(R.id.textChild);
+        mImageViewLarge = (ImageView) itemView.findViewById(R.id.image_child_large);
         mSmallTextView = (TextView) itemView.findViewById(R.id.short_text);
 //        mLargeTextView = (TextView) itemView.findViewById(R.id.long_text);
-        mImageView = (ImageView) itemView.findViewById(R.id.imageChild);
+//        mImageViewSmaller = (ImageView) itemView.findViewById(R.id.image_child_small);
+//        mImageText = (ImageView) itemView.findViewById(R.id.image_child_small);
 
     }
 }

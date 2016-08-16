@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.provider.CalendarContract;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,11 +14,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import sunil.project3.CardObjects.CardObject;
+import sunil.project3.CardObjects.GuardianObj;
+import sunil.project3.CardObjects.NYTObj;
+import sunil.project3.CardObjects.TwitterObj;
 
 /**
  * Created by owlslubic on 8/15/16.
@@ -25,24 +33,21 @@ import java.util.ArrayList;
 public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     public ArrayList<String> mInnerText;
-    public ArrayList<String> mList;
+    //    public ArrayList<String> mList;
+    public List<CardObject> mList;
     public ArrayList<String> mShortText;
     int mViewType;
     RecyclerView.ViewHolder mViewHolder;
     AstronautViewHolder AVH;
+    private static final String TAG = "MainRvAdapter";
+    int populationQ;
+    TwitterObj twitterObj;
+    NYTObj nytObj;
+    GuardianObj guardianObj;
 
-    // for one viewGroup
-    public MainRvAdapter(int viewType, ArrayList<String> shortText, ArrayList<String> innerText
-            , ArrayList<String> list) {
-        this.mList = list;
-        mViewType = viewType;
-        this.mShortText = shortText;
-        this.mInnerText = innerText;
-    }
+    private final int TWITTER = 0, GUARDIAN = 1, NYT = 2;
 
-    // for another view group
-    public MainRvAdapter(int viewType, ArrayList<String> list){
-        mViewType = viewType;
+    public MainRvAdapter(List<CardObject> list) {
         this.mList = list;
     }
 
@@ -50,69 +55,113 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     @Override
+    public int getItemViewType(int position) {
+        if (mList.get(position) instanceof NYTObj) {
+            return NYT;
+        } else if (mList.get(position) instanceof TwitterObj) {
+            return TWITTER;
+        } else if (mList.get(position) instanceof GuardianObj) {
+            return GUARDIAN;
+        }
+        return -1;
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // retrieving the context of this adapter
         mContext = parent.getContext();
 
         // choosing and inflating the view type
-        switch (mViewType) {
-            case 0:
+        switch (viewType) {
+            case TWITTER:
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
                 mViewHolder = new MainRvViewHolder(view);
                 break;
-            case 1:
+            case NYT:
                 View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview2, parent, false);
                 mViewHolder = new AstronautViewHolder(view2);
+                break;
+            case GUARDIAN:
+                View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview2, parent, false);
+                mViewHolder = new AstronautViewHolder(view3);
                 break;
         }
         return mViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         // getting all the items in the following table
-        ArrayList array = DBHelper.getInstance(mContext).getAllItemsArrayList();
+//        ArrayList array = DBHelper.getInstance(mContext).getAllItemsArrayList();
 
+        if (mList.get(position) instanceof NYTObj) {
+             twitterObj = (TwitterObj) mList.get(position);
+        } else if (mList.get(position) instanceof TwitterObj) {
+            nytObj = (NYTObj) mList.get(position);
+        } else if (mList.get(position) instanceof GuardianObj) {
+            guardianObj = (GuardianObj) mList.get(position);
+        }
+
+//        TwitterHolder twitterHolder = (TwitterHolder)mViewHolder;
         // populating the view type
-        switch (mViewType) {
+        switch (mViewHolder.getItemViewType()) {
             default:
-            case 0:
+            case TWITTER:
                 MainRvViewHolder MVH = (MainRvViewHolder) holder;
-                MVH.mT1.setText(array.get(position).toString());
+                MVH.mT1.setText(twitterObj.getmName());
 //                MVH.mT2.setText(array.get(position).toString());
 //                MVH.mT3.setText(array.get(position).toString());
 //                MVH.mT4.setText(array.get(position).toString());
 //                MVH.mT5.setText(array.get(position).toString());
                 break;
-            case 1:
+            case NYT:
                 AVH = (AstronautViewHolder) holder;
-                AVH.mImageView.setImageResource(android.R.drawable.ic_input_add);
-                if(!mShortText.get(0).isEmpty()) {
-                    AVH.mSmallTextView.setText(mShortText.get(position));
-                }
-                if(!mInnerText.get(0).isEmpty()) {
-                    AVH.mInnerTextView.setText(mInnerText.get(position));
-                    AVH.mInnerTextView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            int num = AVH.mSmallTextView.getHeight();
-                            if (num < 300) {
-                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(400, 300);
-                                AVH.mSmallTextView.setLayoutParams(parms);
-                            }
-                            else {
-                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(400, 0);
-                                AVH.mSmallTextView.setLayoutParams(parms);
-                            }
+                AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
+                AVH.mSmallTextView.setText(nytObj.getmSnippet());
+                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i(TAG, "onClick: " + position);
+                        int num = view.getHeight();
+                        int num2 = view.getWidth();
+                        if (num < 200) {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
+                            view.setLayoutParams(parms);
+
+                        } else {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
+                            view.setLayoutParams(parms);
                         }
-                    });
-                }
+                    }
+                });
+                break;
+            case GUARDIAN:
+                AVH = (AstronautViewHolder) holder;
+                AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
+                AVH.mSmallTextView.setText(guardianObj.getmTitle());
+                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i(TAG, "onClick: " + position);
+                        int num = view.getHeight();
+                        int num2 = view.getWidth();
+                        if (num < 200) {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
+                            view.setLayoutParams(parms);
+
+                        } else {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
+                            view.setLayoutParams(parms);
+                        }
+                    }
+                });
                 break;
         }
-
     }
 
     @Override
@@ -124,15 +173,4 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onClick(View view) {
 
     }
-
-//    @Override
-//    public void onClick(View view) {
-////        switch (mViewType){
-////            case 0:
-////                AVH.mLargeTextView.setVisibility(View.VISIBLE);
-//                AVH.mSmallTextView.setVisibility(View.VISIBLE);
-//                AVH.mSmallTextView.setLayoutParams(new FrameLayout.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, 200));
-//        Toast.makeText(mContext,"click" + view.getHeight(), Toast.LENGTH_SHORT).show();
-////        }
-//    }
 }
