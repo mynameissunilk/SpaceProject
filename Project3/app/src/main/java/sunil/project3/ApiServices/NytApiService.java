@@ -10,7 +10,7 @@ public interface NytApiService {
 
     // endpoints don't have to be perfect
     // retrofit overrides errything... (thankgod)
-    @GET("/articlesearch.json?&sort=newest&fq=type_of_material:(%22News%22)&fq=section_name:(%22Science%22)&q=nasa&q=space")
+    @GET("/svc/search/v2/articlesearch.json?sort=newest&fq=type_of_material=News&fq=section_name=Science&q=nasa&q=space")
     Call<Doc>getArticle(
             @Query("api-key") String apikey);
 

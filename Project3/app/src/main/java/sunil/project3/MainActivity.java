@@ -148,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
 /*
 
-        // NYT NEEDS WORK !@#$
+        // NYT WORKS, QUERY NEEDS WORK...
+        
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -168,16 +169,17 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Doc>() {
             @Override
             public void onResponse(Call<Doc> call, Response<Doc> response) {
-                Log.i("NYT","CONNECTION ESTABLISHED");
+                Log.i("NYT","CONNECTED! ");
+
             }
 
             @Override
             public void onFailure(Call<Doc> call, Throwable t) {
-                Log.i("FAILURE","YOU ARE STUPID!");
+                Log.i("NYT","FAILED!");
             }
         });
-        */
 
+*/
 
 /*
         byte[] concatArray = twitTbcrypt.getBytes();
