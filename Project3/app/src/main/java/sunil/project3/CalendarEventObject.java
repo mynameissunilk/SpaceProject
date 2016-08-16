@@ -1,16 +1,65 @@
 package sunil.project3;
 
+import android.database.Cursor;
+
 /**
  * Created by owlslubic on 8/15/16.
  */
 public class CalendarEventObject {
-    String mEventTitle, mEventDate, mDetailUrl;
+    String mEventTitle, mEventDate, mDetailUrl, mWeekDay;
+    int mYear, mMonth, mDay, mHour, mMinute;
 
-    public CalendarEventObject(String eventTitle, String eventDate, String detailUrl) {
-        mEventTitle = eventTitle;
-        mEventDate = eventDate;
-        mDetailUrl = detailUrl;
+    public String getmEventTitle() {
+        return mEventTitle;
+    }
 
+    public String getmEventDate() {
+        return mWeekDay + ", " + mMonth + " " + mDay + ", " + mYear + " at " + mHour + ":" + mMinute;
 
     }
+
+    public String getmDetailUrl() {
+        return mDetailUrl;
+    }
+
+
+    public int getmYear() {
+        return mYear;
+    }
+
+    public int getmMonth() {
+        return mMonth;
+    }
+
+    public int getmDay() {
+        return mDay;
+    }
+
+    public int getmHour() {
+        return mHour;
+    }
+
+    public int getmMinute() {
+        return mMinute;
+    }
+
+    public String getmWeekDay() {
+        return mWeekDay;
+    }
+
+
+    public CalendarEventObject(String eventTitle, String weekDay, int year, int month, int day, int hour, int minute, String detailUrl) {
+        mEventTitle = eventTitle;
+        mWeekDay = weekDay;
+        mYear = year;
+        mMonth = month;
+        mDay = day;
+        mHour = hour;
+        mMinute = minute;
+        mDetailUrl = detailUrl;
+
+    }
+
+
+
 }
