@@ -30,6 +30,10 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder> {
     public ArrayList<CalendarEventObject> eventList;
     Context context;
 
+//    public MainRvAdapter(ArrayList<String> list, Context context) {
+//        this.list = list;
+//        this.context = context;
+//    }
 
     public MainRvAdapter(ArrayList<CalendarEventObject> list, Context context) {
         this.eventList = list;
@@ -45,11 +49,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder> {
     public MainRvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_cardview, parent, false);
         MainRvViewHolder viewHolder = new MainRvViewHolder(view);
-
-        //for inflating different card layouts
-//        if(viewType == CARDVIEW_TYPE_1){
-//              View view = ...
-//              viewholder = new Otherviewholder}
 
 
         return viewHolder;
@@ -74,8 +73,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainRvViewHolder> {
                 Uri uri = Uri.parse(eventList.get(position).getmDetailUrl());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 context.startActivity(intent);
-
-
             }
         });
         holder.mEventTitle.setText(eventList.get(position).getmEventTitle());
