@@ -1,5 +1,6 @@
 package sunil.project3;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import java.util.ArrayList;
 
 /**
  * Created by ander on 8/15/2016.
@@ -70,6 +73,24 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(Table_NYT, null,null,null,null,null,null);
         return cursor;
+    }
+
+    public ArrayList<String> getAllItemsArrayList() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList array = new ArrayList();
+        Cursor cursor = db.query(Table_NYT, null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                String c1 = cursor.getString(cursor.getColumnIndex(COL_1));
+                String c2 = cursor.getString(cursor.getColumnIndex(COL_2));
+                String c3 = cursor.getString(cursor.getColumnIndex(COL_3));
+                String c4 = cursor.getString(cursor.getColumnIndex(COL_4));
+                String c5 = cursor.getString(cursor.getColumnIndex(COL_5));
+                array.add(c1);array.add(c2);array.add(c3);array.add(c4);array.add(c5);
+                cursor.moveToNext();
+            }
+        }
+        return array;
     }
 
     public long addItems(ContentValues values) {
