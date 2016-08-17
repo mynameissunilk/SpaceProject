@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         TwitterObj twitterObj1 = new TwitterObj("www.me.com", "my name 194u1", "me", "10/10/2010", "you");
         GuardianObj guardianObj1 = new GuardianObj("brilliant title", "10/10/2010", "www.me.com");
         NYTObj nytObj1 = new NYTObj("brilliant headline", "brilliant snippet", "amazing url", "10/10/2010");

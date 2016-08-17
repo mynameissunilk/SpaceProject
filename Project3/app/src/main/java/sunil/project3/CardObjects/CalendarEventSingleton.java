@@ -71,6 +71,7 @@ public class CalendarEventSingleton {
         }
     }
 
+
     public ArrayList<CalendarEventObject> getEventList(){
         eventList = new ArrayList<>();
         eventList.add(new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100"));

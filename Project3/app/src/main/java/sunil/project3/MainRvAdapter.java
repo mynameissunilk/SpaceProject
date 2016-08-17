@@ -157,7 +157,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
 //            case CALENDAR:
 //                calVH = (CalendarViewHolder) holder;
-//                if (mEventList.size() > 0) {
+//                if (mEventList.size() <6) {
 //                    calVH.mEventTitle.setText(mEventList.get(0).getmEventTitle());
 //                    calVH.mEventTitle2.setText(mEventList.get(1).getmEventTitle());
 //                    calVH.mEventTitle3.setText(mEventList.get(2).getmEventTitle());
@@ -172,20 +172,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //
 //                }
 //                break;
-//        case 2:
-//        calVH = (CalendarViewHolder) holder;
-//        if (mEventList.size() > 0) {
-//            calVH.mEventTitle.setText(mEventList.get(0).getmEventTitle());
-//            calVH.mEventTitle2.setText(mEventList.get(1).getmEventTitle());
-//            calVH.mEventTitle3.setText(mEventList.get(2).getmEventTitle());
-//            calVH.mEventTitle4.setText(mEventList.get(3).getmEventTitle());
-//            calVH.mEventTitle5.setText(mEventList.get(4).getmEventTitle());
 //
-//            calVH.mEventDate.setText(mEventList.get(0).getmEventDate());
-//            calVH.mEventDate2.setText(mEventList.get(1).getmEventDate());
-//            calVH.mEventDate3.setText(mEventList.get(2).getmEventDate());
-//            calVH.mEventDate4.setText(mEventList.get(3).getmEventDate());
-//            calVH.mEventDate5.setText(mEventList.get(4).getmEventDate());
 //
 //            calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
 //                @Override
