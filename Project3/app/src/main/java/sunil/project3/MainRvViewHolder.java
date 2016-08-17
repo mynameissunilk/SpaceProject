@@ -29,6 +29,6 @@ public class MainRvViewHolder extends RecyclerView.ViewHolder{
         mT3 = (TextView) itemView.findViewById(R.id.text_view3);
         mT4 = (TextView) itemView.findViewById(R.id.text_view4);
         mT5 = (TextView) itemView.findViewById(R.id.text_view5);
-        mBuffer = (TextView) itemView.findViewById(R.id.buffer);
+//        mBuffer = (TextView) itemView.findViewById(R.id.buffer);
     }
 }

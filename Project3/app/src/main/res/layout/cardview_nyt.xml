@@ -8,13 +8,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
         card_view:cardElevation="3dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        card_view:cardBackgroundColor="@color/OpaqueCream"
+        card_view:theme="@style/Base.Theme.AppCompat.Light">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,10 +26,12 @@
 
                 <ImageView
                     android:id="@+id/image_child_large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="180dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
                     android:elevation="10dp"
-                    android:scaleType="fitXY"></ImageView>
+                    android:scaleType="fitXY"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -81,13 +80,13 @@
                             android:alpha="0.5"/>
                     </LinearLayout>
                 </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginLeft="10dp">
                 <TextView
                     android:id="@+id/snippetNYT"
                     android:layout_width="match_parent"
@@ -101,6 +100,7 @@
                     android:layout_height="0px"
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center"
+                    android:textSize="8dp"
                     android:textColor="@color/DarkBlue" />
                 </LinearLayout>
 
@@ -109,15 +109,14 @@
     </android.support.v7.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/buffer"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:alpha=".3"
-        android:background="@color/DarkBlue" />
-
+    <!--<TextView-->
+        <!--android:id="@+id/buffer"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="4px"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_margin="1dp"-->
+        <!--android:alpha=".3"-->
+        <!--android:background="@color/DarkBlue" />-->
 
 
 </LinearLayout>

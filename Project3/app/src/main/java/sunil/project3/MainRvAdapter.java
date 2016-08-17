@@ -77,8 +77,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // choosing and inflating the view type
         switch (viewType) {
             case TWITTER:
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
-                mViewHolder = new MainRvViewHolder(view);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_twitter, parent, false);
+                mViewHolder = new TwitterViewHolder(view);
                 break;
             case NYT:
                 View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_nyt, parent, false);
@@ -122,8 +122,12 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case TWITTER:
 //                if(getItemCount())
                 if (mList.get(position) instanceof TwitterObj) {
-                    MainRvViewHolder MVH = (MainRvViewHolder) holder;
-                    MVH.mT1.setText(twitterObj.getmName());
+                    TwitterViewHolder MVH = (TwitterViewHolder) holder;
+                    MVH.mName.setText(twitterObj.getmName());
+                    MVH.mUser.setText(twitterObj.getmUser());
+                    MVH.mDate.setText(twitterObj.getmDate());
+                    MVH.mTweet.setText(twitterObj.getmTweet());
+                    Picasso.with(mContext).load(twitterObj.getmUrl()).into(MVH.mUrl);
                 }
 //                MVH.mT2.setText(array.get(position).toString());
 //                MVH.mT3.setText(array.get(position).toString());
@@ -131,7 +135,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                MVH.mT5.setText(array.get(position).toString());
                 break;
             case NYT:
-//                MainRvViewHolder cannot be cast to AstronautViewHolder
+//                TwitterViewHolder cannot be cast to AstronautViewHolder
                 if (mList.get(position) instanceof NYTObj) {
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
                     Picasso.with(mContext)
@@ -149,7 +153,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             if (num < 200) {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 200);
-                                params.setMargins(30,30,30,30);
+                                params.setMargins(40,30,40,30);
                                 view.setLayoutParams(params);
 
                                 LinearLayout.LayoutParams bufferParams1 = new LinearLayout.LayoutParams(num2, ViewGroup.LayoutParams.WRAP_CONTENT);
