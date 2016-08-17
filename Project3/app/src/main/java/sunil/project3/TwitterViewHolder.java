@@ -1,4 +1,4 @@
-package sunil.project3.viewholders;
+package sunil.project3;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,8 +6,10 @@ import android.view.View;
 /**
  * Created by owlslubic on 8/16/16.
  */
-public class GuardianViewHolder extends RecyclerView.ViewHolder {
-    public GuardianViewHolder(View itemView) {
+public class TwitterViewHolder extends RecyclerView.ViewHolder {
+
+
+    public TwitterViewHolder(View itemView) {
         super(itemView);
     }
 }

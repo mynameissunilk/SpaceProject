@@ -7,12 +7,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import sunil.project3.R;
+
 /**
  * Created by owlslubic on 8/15/16.
  */
 public class MainRvViewHolder extends RecyclerView.ViewHolder{
-
-
 
     TextView mTextView,mBuffer;
     TextView mT1,mT2,mT3,mT4,mT5;

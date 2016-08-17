@@ -20,6 +20,7 @@ import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
 import sunil.project3.CardObjects.NYTObj;
+import sunil.project3.CardObjects.NasaObj;
 import sunil.project3.CardObjects.TwitterObj;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
         String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
         String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-//
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
 
         TwitterObj twitterObj1 = new TwitterObj(temp1, temp2, temp3, temp4, temp5);
         TwitterObj twitterObj2 = new TwitterObj(temp1, temp2, temp3, temp4, temp5);
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
         NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
         NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
 
 
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
@@ -56,9 +60,11 @@ public class MainActivity extends AppCompatActivity {
 //        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
 
         masterList.add(twitterObj1);
+        masterList.add(nasaObj1);
         masterList.add(twitterObj2);
         masterList.add(guardianObj1);
         masterList.add(nytObj2);
+        masterList.add(nasaObj2);
         masterList.add(guardianObj2);
         masterList.add(nytObj1);
 
