@@ -58,7 +58,7 @@ public class CalendarEventSingleton {
         beginTime.set(year, month, day, hour, minute);
         startMillis = beginTime.getTimeInMillis();
         Calendar endTime = Calendar.getInstance();
-        endTime.set(year, month, day, hour, minute+1);
+        endTime.set(year, month, day, hour, minute+10);
         endMillis = endTime.getTimeInMillis();
         Log.i(TAG, "addCalendarEvent: begin time is "+beginTime);
 
