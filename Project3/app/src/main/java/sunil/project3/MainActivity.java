@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -22,6 +24,7 @@ import sunil.project3.ApiServices.NprService;
 import sunil.project3.ApiServices.NytApiService;
 import sunil.project3.ApiServices.TwitterApiService;
 import sunil.project3.NPR.ContentNpr;
+import sunil.project3.NPR.Story;
 import sunil.project3.NYT.ContentNyt;
 import sunil.project3.NYT.Doc;
 
@@ -328,6 +331,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ContentNpr> call, Response<ContentNpr> response) {
                 Log.i("SUCCESS:","HOORAY");
+
+
+
+                ArrayList<Story>responseCopy = new ArrayList<Story>(response.body().getList().getStory());
+                //responseCopy.get(0)
+
+
+                // copy the relevant items of responsecopy into an nprarticle list
+                ArrayList<NprArticle>nprList = new ArrayList<NprArticle>();
+
+                for(int i = 0; i < responseCopy.size(); i++){
+                    nprList.add(new NprArticle(
+                            responseCopy.get(i).getTitle().get$text(),
+                            responseCopy.get(i).getText().getParagraph().get(0).get$text(),
+                            responseCopy.get(i).getStoryDate().get$text(),
+                            responseCopy.get(i).getLink().get(0).get$text()
+                    ));
+                }
+
+                for(int i = 0; i <nprList.size();i++){
+                    Log.i("BLAH",nprList.get(i).getTitle());
+                }
+
             }
 
             @Override
@@ -336,7 +362,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 }
