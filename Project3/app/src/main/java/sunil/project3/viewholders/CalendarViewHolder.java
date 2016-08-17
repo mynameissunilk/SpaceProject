@@ -18,7 +18,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder {
 
     public CalendarViewHolder(View itemView) {
         super(itemView);
-        mCalendarCard = (CardView) itemView.findViewById(R.id.calendar_cardview);
+        mCalendarCard = (CardView) itemView.findViewById(R.id.calendar_single_event_card);
 
         mEventDate = (TextView) itemView.findViewById(R.id.textview_calendar_event_date);
         mEventTitle = (TextView) itemView.findViewById(R.id.textview_calendar_event_title);

@@ -45,15 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
-//        ArrayList<CalendarEventObject> eventList = CalendarEventSingleton.getInstance().getEventList();
-//        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
+        ArrayList<CalendarEventObject> eventList = CalendarEventSingleton.getInstance().getEventList();
+        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
 
-        masterList.add(twitterObj1);
-        masterList.add(twitterObj2);
-        masterList.add(guardianObj1);
-        masterList.add(nytObj2);
-        masterList.add(guardianObj2);
-        masterList.add(nytObj1);
+//        masterList.add(twitterObj1);
+//        masterList.add(twitterObj2);
+//        masterList.add(guardianObj1);
+//        masterList.add(nytObj2);
+//        masterList.add(guardianObj2);
+//        masterList.add(nytObj1);
 
 
         //recyclerview setup CARDOBJECTS

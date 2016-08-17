@@ -2,9 +2,12 @@ package sunil.project3;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +50,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return TWITTER;
         } else if (mList.get(position) instanceof GuardianObj) {
             return GUARDIAN;
-//        }else if (mList.get(position) instanceof CalendarEventObject){
-//            return CALENDAR;
+        }else if (mList.get(position) instanceof CalendarEventObject){
+            return CALENDAR;
         }
         return -1;
     }
@@ -72,9 +75,9 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview2, parent, false);
                 mViewHolder = new AstronautViewHolder(view3);
                 break;
-//            case CALENDAR:
-//                View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_cardview, parent, false);
-//                mViewHolder = new CalendarViewHolder(view4);
+            case CALENDAR:
+                View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_cardview, parent, false);
+                mViewHolder = new CalendarViewHolder(view4);
         }
         return mViewHolder;
     }
@@ -89,8 +92,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             twitterObj = (TwitterObj) mList.get(position);
         } else if (mList.get(position) instanceof GuardianObj) {
             guardianObj = (GuardianObj) mList.get(position);
-//        } else if (mList.get(position) instanceof CalendarEventObject) {
-//            calendarObj = (CalendarEventObject) mList.get(position);
+        } else if (mList.get(position) instanceof CalendarEventObject) {
+            calendarObj = (CalendarEventObject) mList.get(position);
         }
 
 
@@ -106,24 +109,24 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
                 AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
                 AVH.mSmallTextView.setText(nytObj.getmSnippet());
-//                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.i(TAG, "onClick: " + position);
-//                        int num = view.getHeight();
-//                        int num2 = view.getWidth();
-//                        if (num < 200) {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
-//                            view.setLayoutParams(parms);
-//
-//                        } else {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
-//                            view.setLayoutParams(parms);
-//                        }
-//                    }
-//                });
+                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i(TAG, "onClick: " + position);
+                        int num = view.getHeight();
+                        int num2 = view.getWidth();
+                        if (num < 200) {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
+                            view.setLayoutParams(parms);
+
+                        } else {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
+                            view.setLayoutParams(parms);
+                        }
+                    }
+                });
                 break;
             case TWITTER:
                 if(mViewHolder.getItemViewType()==TWITTER) {
@@ -141,43 +144,43 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 AVH = (AstronautViewHolder) holder;
                 AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
                 AVH.mSmallTextView.setText(guardianObj.getmTitle());
-//                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.i(TAG, "onClick: " + position);
-//                        int num = view.getHeight();
-//                        int num2 = view.getWidth();
-//                        if (num < 200) {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
-//                            view.setLayoutParams(parms);
-//
-//                        } else {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
-//                            view.setLayoutParams(parms);
-//                        }
-//                    }
-//                });
+                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i(TAG, "onClick: " + position);
+                        int num = view.getHeight();
+                        int num2 = view.getWidth();
+                        if (num < 200) {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
+                            view.setLayoutParams(parms);
+
+                        } else {
+                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
+                            view.setLayoutParams(parms);
+                        }
+                    }
+                });
                 break;
-//            case CALENDAR:
-//                calVH = (CalendarViewHolder) holder;
-//                if (mEventList.size() <6) {
-//                    calVH.mEventTitle.setText(mEventList.get(0).getmEventTitle());
+            case CALENDAR:
+                calVH = (CalendarViewHolder) holder;
+                if (mEventList.size() <6) {
+                    calVH.mEventTitle.setText(mEventList.get(position).getmEventTitle());
 //                    calVH.mEventTitle2.setText(mEventList.get(1).getmEventTitle());
 //                    calVH.mEventTitle3.setText(mEventList.get(2).getmEventTitle());
 //                    calVH.mEventTitle4.setText(mEventList.get(3).getmEventTitle());
 //                    calVH.mEventTitle5.setText(mEventList.get(4).getmEventTitle());
 //
-//                    calVH.mEventDate.setText(mEventList.get(0).getmEventDate());
+                    calVH.mEventDate.setText(mEventList.get(position).getmEventDate());
 //                    calVH.mEventDate2.setText(mEventList.get(1).getmEventDate());
 //                    calVH.mEventDate3.setText(mEventList.get(2).getmEventDate());
 //                    calVH.mEventDate4.setText(mEventList.get(3).getmEventDate());
 //                    calVH.mEventDate5.setText(mEventList.get(4).getmEventDate());
 //
-//                }
-//                break;
-//
+                }
+                break;
+
 //
 //            calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
 //                @Override
