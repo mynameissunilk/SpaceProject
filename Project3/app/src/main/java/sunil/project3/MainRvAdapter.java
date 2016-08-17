@@ -2,9 +2,13 @@ package sunil.project3;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,7 @@ import sunil.project3.viewholders.CalendarViewHolder;
  * Created by owlslubic on 8/15/16.
  */
 public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+//public class MainRvAdapter extends BaseAdapter implements View.OnClickListener {
     public List<CardObject> mList;
     RecyclerView.ViewHolder mViewHolder;
     ArrayList<CalendarEventObject> mEventList;
@@ -29,7 +34,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     TwitterObj twitterObj;
     NYTObj nytObj;
     GuardianObj guardianObj;
-    AstronautViewHolder AVH;
+//    AstronautViewHolder AVH;
     CalendarViewHolder calVH;
     Context mContext;
     private final int TWITTER = 0, GUARDIAN = 1, NYT = 2, CALENDAR = 3;
@@ -37,7 +42,15 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public MainRvAdapter(List<CardObject> list) {
         this.mList = list;
     }
-
+//
+    public int getViewTypeCount() {
+        return 2;
+    }
+//
+//    @Override
+//    public int getCount() {
+//        return mData.size();
+//    }
 
     @Override
     public int getItemViewType(int position) {
@@ -98,62 +111,69 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (mViewHolder.getItemViewType()) {
             default:
             case TWITTER:
-                MainRvViewHolder MVH = (MainRvViewHolder) holder;
-                MVH.mT1.setText(twitterObj.getmName());
+//                if(getItemCount())
+                if (mList.get(position) instanceof TwitterObj) {
+                    MainRvViewHolder MVH = (MainRvViewHolder) holder;
+                    MVH.mT1.setText(twitterObj.getmName());
+                }
 //                MVH.mT2.setText(array.get(position).toString());
 //                MVH.mT3.setText(array.get(position).toString());
 //                MVH.mT4.setText(array.get(position).toString());
 //                MVH.mT5.setText(array.get(position).toString());
                 break;
             case NYT:
+//                MainRvViewHolder cannot be cast to AstronautViewHolder
+                if (mList.get(position) instanceof NYTObj) {
+                    AstronautViewHolder AVH = (AstronautViewHolder) holder;
+                    AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
+                    AVH.mSmallTextView.setText(nytObj.getmSnippet());
 
-//                MainRvViewHolder cannot be cast to sunil.project3.AstronautViewHolder
+                    AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.i(TAG, "onClick: " + position);
+                            int num = view.getHeight();
+                            int num2 = view.getWidth();
+                            if (num < 200) {
+                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
+                                view.setLayoutParams(parms);
 
-                AVH = (AstronautViewHolder) holder;
-                AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
-                AVH.mSmallTextView.setText(nytObj.getmSnippet());
-//                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.i(TAG, "onClick: " + position);
-//                        int num = view.getHeight();
-//                        int num2 = view.getWidth();
-//                        if (num < 200) {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
-//                            view.setLayoutParams(parms);
-//
-//                        } else {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
-//                            view.setLayoutParams(parms);
-//                        }
-//                    }
-//                });
+                            } else {
+                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
+                                view.setLayoutParams(parms);
+                            }
+                        }
+                    });
+                }
                 break;
 
             case GUARDIAN:
-                AVH = (AstronautViewHolder) holder;
-                AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
-                AVH.mSmallTextView.setText(guardianObj.getmTitle());
-//                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.i(TAG, "onClick: " + position);
-//                        int num = view.getHeight();
-//                        int num2 = view.getWidth();
-//                        if (num < 200) {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
-//                            view.setLayoutParams(parms);
-//
-//                        } else {
-//                            Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-//                            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
-//                            view.setLayoutParams(parms);
-//                        }
-//                    }
-//                });
+                if (mList.get(position) instanceof GuardianObj) {
+                    AstronautViewHolder AVH = (AstronautViewHolder) holder;
+                    AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
+                    AVH.mSmallTextView.setText(guardianObj.getmTitle());
+
+                    AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.i(TAG, "onClick: " + position);
+                            int num = view.getHeight();
+                            int num2 = view.getWidth();
+                            if (num < 200) {
+                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 200);
+                                view.setLayoutParams(parms);
+
+                            } else {
+                                Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
+                                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(num2, 75);
+                                view.setLayoutParams(parms);
+                            }
+                        }
+                    });
+                }
                 break;
 //            case CALENDAR:
 //                calVH = (CalendarViewHolder) holder;
