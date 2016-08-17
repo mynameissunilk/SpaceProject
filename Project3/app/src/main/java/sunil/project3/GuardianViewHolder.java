@@ -19,7 +19,7 @@ public class GuardianViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         mImageViewLarge = (ImageView) itemView.findViewById(R.id.image_child_large);
         mTitle = (TextView) itemView.findViewById(R.id.title_text_guardian);
-        mBufferInner = (TextView) itemView.findViewById(R.id.bufferInner);
+//        mBufferInner = (TextView) itemView.findViewById(R.id.bufferInner);
 
 
         mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_guardian);

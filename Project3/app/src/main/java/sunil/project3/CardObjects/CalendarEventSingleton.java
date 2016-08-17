@@ -31,7 +31,7 @@ public class CalendarEventSingleton {
     private static final String TAG = "CalendarEventSingleton";
     private static CalendarEventSingleton sInstance;
 
-    public ArrayList<CalendarEventObject> eventList;
+    public ArrayList<CalendarEventObject> eventList = new ArrayList<>();
     public int year, month, day, hour, minute;
 
     private CalendarEventSingleton(){}
@@ -88,7 +88,10 @@ public class CalendarEventSingleton {
 
 
     public ArrayList<CalendarEventObject> getEventList(){
-        eventList = new ArrayList<>();
+        if(eventList.size() > 0){
+            eventList.clear();
+        }
+
         eventList.add(new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100"));
         eventList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
         eventList.add(new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100"));
@@ -99,5 +102,6 @@ public class CalendarEventSingleton {
         eventList.add(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
     return eventList;
     }
+
 
 }

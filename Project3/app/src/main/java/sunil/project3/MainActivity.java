@@ -44,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
         String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
         String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
         String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
 
-        TwitterObj twitterObj1 = new TwitterObj(temp1, temp2, temp3, temp4, temp5);
-        TwitterObj twitterObj2 = new TwitterObj(temp1, temp2, temp3, temp4, temp5);
+        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
         GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
         GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
         NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
@@ -56,18 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
+
         masterList.add(nasaObj1);
         masterList.add(nasaObj2);
-        ArrayList<CalendarEventObject> eventList = CalendarEventSingleton.getInstance().getEventList();
-        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
-        masterList.add(twitterObj1);
-        masterList.add(twitterObj2);
         masterList.add(guardianObj1);
         masterList.add(guardianObj2);
+        masterList.add(twitterObj1);
+        masterList.add(twitterObj2);
+        ArrayList<CalendarEventObject> eventList = CalendarEventSingleton.getInstance().getEventList();
+        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
         masterList.add(nytObj1);
         masterList.add(nytObj2);
+        masterList.add(nytObj1);
+        masterList.add(nytObj2);
+
+
 
 
 

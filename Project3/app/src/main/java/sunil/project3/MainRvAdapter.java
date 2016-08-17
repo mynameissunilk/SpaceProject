@@ -1,6 +1,5 @@
 package sunil.project3;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -90,8 +89,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // choosing and inflating the view type
         switch (viewType) {
             case TWITTER:
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
-                mViewHolder = new MainRvViewHolder(view);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_twitter, parent, false);
+                mViewHolder = new TwitterViewHolder(view);
                 break;
             case NYT:
                 View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_nyt, parent, false);
@@ -132,18 +131,23 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // populating the view type
         switch (mViewHolder.getItemViewType()) {
             default:
-
             case TWITTER:
 //                if(getItemCount())
                 if (mList.get(position) instanceof TwitterObj) {
-                    MainRvViewHolder MVH = (MainRvViewHolder) holder;
-                    MVH.mT1.setText(twitterObj.getmName());
+                    TwitterViewHolder MVH = (TwitterViewHolder) holder;
 
-//                    if(mCounter == 1){
-//                        //insert section header
-//                        mCounter++;
-//                    }
+                    if (mCounterTwitter == 1) {
+                        //insert section header
+                        MVH.mSectionHeader.setText("See What Astronauts Have to Say");
+                        MVH.mSectionHeader.setVisibility(View.VISIBLE);
+                        mCounterTwitter++;
+                    }
 
+                    MVH.mName.setText(twitterObj.getmName());
+                    MVH.mUser.setText(twitterObj.getmUser());
+                    MVH.mDate.setText(twitterObj.getmDate());
+                    MVH.mTweet.setText(twitterObj.getmTweet());
+                    Picasso.with(mContext).load(twitterObj.getmUrl()).into(MVH.mUrl);
                 }
 //                MVH.mT2.setText(array.get(position).toString());
 //                MVH.mT3.setText(array.get(position).toString());
@@ -152,7 +156,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             case NYT:
                 if (mList.get(position) instanceof NYTObj) {
-
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
 
                     if (mCounterNYT == 1) {
@@ -167,7 +170,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .into(NYT.mImageViewLarge);
                     NYT.mHeadder.setText(nytObj.getmHeadline());
 
-
                     NYT.mHeadder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -178,7 +180,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             if (num < 200) {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 200);
-                                params.setMargins(30, 30, 30, 30);
+                                params.setMargins(40, 30, 40, 30);
                                 view.setLayoutParams(params);
 
                                 LinearLayout.LayoutParams bufferParams1 = new LinearLayout.LayoutParams(num2, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -206,9 +208,9 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     });
                 }
                 break;
+
             case GUARDIAN:
                 if (mList.get(position) instanceof GuardianObj) {
-
                     final GuardianViewHolder GVH = (GuardianViewHolder) holder;
                     if (mCounterGuardian == 1) {
                         //insert section header
@@ -222,7 +224,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
                             .into(GVH.mImageViewLarge);
                     GVH.mTitle.setText(guardianObj.getmTitle());
-
 
                     GVH.mTitle.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -253,15 +254,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 if (mList.get(position) instanceof CalendarEventObject) {
                     calVH = (CalendarViewHolder) holder;
-                    mEventList = CalendarEventSingleton.getInstance().getEventList();
-
-                    if (mEventList.size() < 9) {
-//                        if (mCounterCalendar == 1) {
-//                            //insert section header
-//                            calVH.mSectionHeader.setText("Upcoming Astronomical Events");
-//                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
-//                            mCounterCalendar++;
-//                        }
+//                    mEventList = CalendarEventSingleton.getInstance().getEventList();
+//
+//                    if (mEventList.size() < 9) {
+                        if (mCounterCalendar
+                                == 1) {
+                            //insert section header
+                            calVH.mSectionHeader.setText("Upcoming Astronomical Events");
+                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
+                            mCounterCalendar++;
+                        }
                         calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                         calVH.mEventDate.setText(calendarObj.getmEventDate());
                         calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -275,12 +277,11 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             public void onClick(View view) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW);
                                 intent.setData(Uri.parse(calendarObj.getmDetailUrl()));
+                                mContext.startActivity(intent);
                             }
                         });
-
-
                     }
-                }
+//                }
                 break;
         }
     }
