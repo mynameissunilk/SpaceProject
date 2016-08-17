@@ -133,13 +133,18 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             default:
             case TWITTER:
 //                if(getItemCount())
+
                 if (mList.get(position) instanceof TwitterObj) {
                     TwitterViewHolder MVH = (TwitterViewHolder) holder;
+                    Log.i(TAG, "twitter counter is: " + mCounterCalendar);
 
                     if (mCounterTwitter == 1) {
                         //insert section header
+                        int width = MVH.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        MVH.mSectionHeader.setLayoutParams(params);
                         MVH.mSectionHeader.setText("See What Astronauts Have to Say");
-                        MVH.mSectionHeader.setVisibility(View.VISIBLE);
+//                        MVH.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterTwitter++;
                     }
 
@@ -157,11 +162,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case NYT:
                 if (mList.get(position) instanceof NYTObj) {
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
-
+                    Log.i(TAG, "nyt counter is: " + mCounterCalendar);
                     if (mCounterNYT == 1) {
                         //insert section header
+
+//                        int width = NYT.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        NYT.mSectionHeader.setLayoutParams(params);
+
                         NYT.mSectionHeader.setText("Stories from The New York Times");
-                        NYT.mSectionHeader.setVisibility(View.VISIBLE);
+//                        NYT.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterNYT++;
                     }
 
@@ -212,10 +222,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case GUARDIAN:
                 if (mList.get(position) instanceof GuardianObj) {
                     final GuardianViewHolder GVH = (GuardianViewHolder) holder;
+                    Log.i(TAG, "guardian counter is: " + mCounterCalendar);
                     if (mCounterGuardian == 1) {
                         //insert section header
+
+//                        int width = GVH.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        GVH.mSectionHeader.setLayoutParams(params);
+
                         GVH.mSectionHeader.setText("Stories from The Guardian");
-                        GVH.mSectionHeader.setVisibility(View.VISIBLE);
+//                        GVH.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterGuardian++;
                     }
 
@@ -229,7 +245,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             Log.i(TAG, "onClick: " + position);
-
                         }
                     });
                 }
@@ -238,10 +253,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case NASA:
                 if (mList.get(position) instanceof NasaObj) {
                     final NasaViewHolder NVH = (NasaViewHolder) holder;
+                    Log.i(TAG, "nasa counter is: " + mCounterCalendar);
                     if (mCounterNasa == 1) {
                         //insert section header
+//                        int width = NVH.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        NVH.mSectionHeader.setLayoutParams(params);
+
+
                         NVH.mSectionHeader.setText("NASA's Picture of the Day");
-                        NVH.mSectionHeader.setVisibility(View.VISIBLE);
+//                        NVH.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterNasa++;
                     }
                     Picasso.with(mContext)
@@ -257,15 +278,22 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                    mEventList = CalendarEventSingleton.getInstance().getEventList();
 //
 //                    if (mEventList.size() < 9) {
-                        if (mCounterCalendar
-                                == 1) {
+                    Log.i(TAG, "calendar counter is: " + mCounterCalendar);
+                        if (mCounterCalendar == 1) {
+
                             //insert section header
-                            calVH.mSectionHeader.setText("Upcoming Astronomical Events");
-                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
+
+//                            int width = calVH.mSectionHeader.getWidth();
+//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                            calVH.mSectionHeader.setLayoutParams(params);
+
+                            calVH.mSectionHeader.setText("Add Upcoming Astronomical Events to Your Calendar");
+//                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
                             mCounterCalendar++;
                         }
                         calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                         calVH.mEventDate.setText(calendarObj.getmEventDate());
+
                         calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

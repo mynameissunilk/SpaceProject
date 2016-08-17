@@ -1,5 +1,6 @@
 package sunil.project3;
 
+import android.content.res.Configuration;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
 
 
-
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
 
         masterList.add(nasaObj1);
@@ -74,12 +75,11 @@ public class MainActivity extends AppCompatActivity {
         masterList.add(nytObj2);
 
 
-
-
-
         //recyclerview setup CARDOBJECTS
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            manager.setOrientation(LinearLayout.VERTICAL);} else {manager.setOrientation(LinearLayout.HORIZONTAL);}
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
         mRecyclerView.setAdapter(adapter);
@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
 //        contentValues.put(ProviderContract.NYT.COL_5, "e");
 //        getContentResolver().insert(ProviderContract.NYT.CONTENT_URI, contentValues);
 //        dbHelper.addItems(contentValues);
-
 
 
 //
