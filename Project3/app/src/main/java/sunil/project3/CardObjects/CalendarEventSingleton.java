@@ -1,20 +1,14 @@
-package sunil.project3.calendar;
+package sunil.project3.CardObjects;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.provider.CalendarContract;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import sunil.project3.R;
 
 /**
  * Created by owlslubic on 8/15/16.
@@ -23,6 +17,7 @@ import sunil.project3.R;
 //THIS WORKS ON ANDERS'S PHONE, BUT NOT ON MINE. TEST MORE LATER
 
 public class CalendarEventSingleton {
+    private static final String TAG = "CalendarEventSingleton";
     private static CalendarEventSingleton sInstance;
 
     public ArrayList<CalendarEventObject> eventList;
@@ -37,10 +32,6 @@ public class CalendarEventSingleton {
         return sInstance;
     }
 
-//    public CalendarEvent(ArrayList<CalendarEventObject> list, Context context) {
-//        this.eventList = list;
-//        this.context = context;
-//    }
 
     public void addCalendarEvent(int position, Context context) {
         long startMillis = 0;
@@ -69,10 +60,16 @@ public class CalendarEventSingleton {
         contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
 
         Toast.makeText(context, eventList.get(position).getmEventTitle() + " added to your calendar", Toast.LENGTH_SHORT).show();
-
     }
 
+    public void addEventsToMasterList(ArrayList<CalendarEventObject> eventList){
 
+        eventList = getEventList();
+        for (int i = 0; i < eventList.size(); i++) {
+            CardObjSingleton.getInstance().addToMasterList(eventList.get(i));
+            Log.i(TAG, "addEventsToMasterList: "+i);
+        }
+    }
 
     public ArrayList<CalendarEventObject> getEventList(){
         eventList = new ArrayList<>();
@@ -84,7 +81,6 @@ public class CalendarEventSingleton {
         eventList.add(new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100"));
         eventList.add(new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100"));
         eventList.add(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
-
     return eventList;
     }
 

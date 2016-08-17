@@ -1,11 +1,11 @@
-package sunil.project3.calendar;
+package sunil.project3.CardObjects;
 
 import android.database.Cursor;
 
 /**
  * Created by owlslubic on 8/15/16.
  */
-public class CalendarEventObject {//extends CardObj
+public class CalendarEventObject extends CardObject{
     String mEventTitle, mEventDate, mDetailUrl, mWeekDay;
     int mYear, mMonth, mDay, mHour, mMinute;
 
