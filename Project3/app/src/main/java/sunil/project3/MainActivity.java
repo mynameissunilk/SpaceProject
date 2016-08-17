@@ -314,6 +314,8 @@ public class MainActivity extends AppCompatActivity {
 
 */
 
+        /*
+
         HttpLoggingInterceptor nprceptor = new HttpLoggingInterceptor();
         nprceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient nprClient = new OkHttpClient.Builder().addInterceptor(nprceptor).build();
@@ -351,7 +353,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 for(int i = 0; i <nprList.size();i++){
-                    Log.i("BLAH",nprList.get(i).getTitle());
+                    Log.i("TITLE",nprList.get(i).getTitle());
+                    Log.i("DESC",nprList.get(i).getParagraph());
+                    Log.i("DATE",nprList.get(i).getDate());
+                    Log.i("URL",nprList.get(i).getURL());
+
                 }
 
             }
@@ -361,6 +367,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("FAILURE","FAILURE");
             }
         });
+*/
+
+
 
     }
 }
