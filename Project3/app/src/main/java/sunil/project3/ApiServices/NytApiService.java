@@ -18,6 +18,4 @@ public interface NytApiService {
     @GET("/svc/search/v2/articlesearch.json?sort=newest&fq=type_of_material=News&fq=section_name=Science&q=nasa+space")
     Call<ContentNyt>getArticle(
             @Query("api-key") String apikey);
-
-
 }

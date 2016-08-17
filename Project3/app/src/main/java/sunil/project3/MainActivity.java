@@ -5,32 +5,23 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import sunil.project3.ApiServices.GuardianApiService;
-import sunil.project3.ApiServices.NasaApiService;
+import sunil.project3.ApiServices.NprService;
 import sunil.project3.ApiServices.NytApiService;
 import sunil.project3.ApiServices.TwitterApiService;
-import sunil.project3.Guardian.Content;
-import sunil.project3.Guardian.ResponseBody;
+import sunil.project3.NPR.ContentNpr;
 import sunil.project3.NYT.ContentNyt;
 import sunil.project3.NYT.Doc;
 
@@ -41,10 +32,17 @@ public class MainActivity extends AppCompatActivity {
     public static final String guardianKey = "84a85242-3b93-42f2-8952-138f45f50dee";
 
     public static final String nytURL = "https://api.nytimes.com/svc/search/v2/";
-    public static final String nytKey = "73f5f97cf52247a7a83b9f24299a23e2";
+    public static final String nytKey ="73f5f97cf52247a7a83b9f24299a23e2";
+
+
+            //"4a3efda1da0840c5929ff4e7758f0b59";
+            //"73f5f97cf52247a7a83b9f24299a23e2";
 
     public static final String nasaURL = "https://api.nasa.gov/planetary/";
     public static final String nasaKey = "IsXUyhCSGkUP5QHrAAYITkO2PyqGeawPISAwZXRr";
+
+    public static final String nprURL = "http://api.npr.org/";
+    public static final String nprKey = "MDI1OTA2MzQxMDE0NzEzODI2NTU4NjNkMA000";
 
     //public static final String instaauthURL="https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=cod";
     public static final String twittokenURL = "https://api.twitter.com/";
@@ -54,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String twitBase = "https://api.twitter.com/"; //ugh i'm dumb
     public static String twitenc64;
     public static String twitToken;
+
+
 
 
     @Override
@@ -188,8 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
 */
 
-
-
+/*
         // NYT WORKS, QUERY NEEDS WORK...
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -211,14 +210,20 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ContentNyt>() {
             @Override
             public void onResponse(Call<ContentNyt> call, Response<ContentNyt> response) {
-                Log.i("NYT","CONNECTED! ");
 
-                List<Doc> docList = response.body().getResponse().getDocs();
 
-                for(int i = 0; i <docList.size();i++){
-                    Log.i("CONTENTS: ",docList.get(i).getHeadline().toString());
+                try {
+                    Log.i("NYT","CONNECTED! ");
+                    ArrayList<Doc> docList = new ArrayList<>();//(ArrayList<Doc>) response.body().getResponse().getDocs();
+
+                    for (int i = 0; i < docList.size(); i++) {
+                        docList.add(response.body().getResponse().getDocs().get(i));
+                        // hmm still failing, what the fuck is going on ...
+                    }
                 }
-
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -226,6 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("NYT","FAILED!");
             }
         });
+
+        */
 
 /*
 
@@ -301,7 +308,34 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 */
+
+        HttpLoggingInterceptor nprceptor = new HttpLoggingInterceptor();
+        nprceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient nprClient = new OkHttpClient.Builder().addInterceptor(nprceptor).build();
+
+        Retrofit nprfit = new Retrofit.Builder()
+                .baseUrl(nprURL)
+                .client(nprClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        NprService nprService = nprfit.create(NprService.class);
+
+        Call<ContentNpr>nprCall = nprService.getArticle(nprKey);
+        nprCall.enqueue(new Callback<ContentNpr>() {
+            @Override
+            public void onResponse(Call<ContentNpr> call, Response<ContentNpr> response) {
+                Log.i("SUCCESS:","HOORAY");
+            }
+
+            @Override
+            public void onFailure(Call<ContentNpr> call, Throwable t) {
+                Log.i("FAILURE","FAILURE");
+            }
+        });
+
 
     }
 
