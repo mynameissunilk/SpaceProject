@@ -37,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TwitterObj twitterObj1 = new TwitterObj("www.me.com", "my name 194u1", "me", "10/10/2010", "you");
-        GuardianObj guardianObj1 = new GuardianObj("brilliant title", "10/10/2010", "www.me.com");
-        NYTObj nytObj1 = new NYTObj("brilliant headline", "brilliant snippet", "amazing url", "10/10/2010");
-        TwitterObj twitterObj2 = new TwitterObj("www.me.com", "my name", "me", "10/10/2010", "you");
-        NYTObj nytObj2 = new NYTObj("brilliant headline", "brilliant snippet", "amazing url", "10/10/2010");
-        GuardianObj guardianObj2 = new GuardianObj("brilliant title", "10/10/2010", "www.me.com");
+        GuardianObj guardianObj1 = new GuardianObj("GUARDIAN", "10/10/2010", "www.me.com");
+        NYTObj nytObj1 = new NYTObj("NYT1", "NYT!", "amazing url", "10/10/2010");
+        TwitterObj twitterObj2 = new TwitterObj("www.me.com", "tweeeeto", "me", "10/10/2010", "you");
+        NYTObj nytObj2 = new NYTObj("NYT2", "brilliant snippet from nyt2", "amazing url", "10/10/2010");
+        GuardianObj guardianObj2 = new GuardianObj("guardienne", "10/10/2010", "www.me.com");
 
 
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();

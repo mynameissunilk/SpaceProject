@@ -24,21 +24,21 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder {
         mEventTitle = (TextView) itemView.findViewById(R.id.textview_calendar_event_title);
         mAddEvent = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar);
 
-        mEventDate2 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date2);
-        mEventTitle2 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title2);
-        mAddEvent2 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar2);
-
-        mEventDate3 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date3);
-        mEventTitle3 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title3);
-        mAddEvent3 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar3);
-
-        mEventDate4 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date4);
-        mEventTitle4 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title4);
-        mAddEvent4 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar4);
-
-        mEventDate5 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date5);
-        mEventTitle5 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title5);
-        mAddEvent5 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar5);
+//        mEventDate2 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date2);
+//        mEventTitle2 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title2);
+//        mAddEvent2 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar2);
+//
+//        mEventDate3 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date3);
+//        mEventTitle3 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title3);
+//        mAddEvent3 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar3);
+//
+//        mEventDate4 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date4);
+//        mEventTitle4 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title4);
+//        mAddEvent4 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar4);
+//
+//        mEventDate5 = (TextView) itemView.findViewById(R.id.textview_calendar_event_date5);
+//        mEventTitle5 = (TextView) itemView.findViewById(R.id.textview_calendar_event_title5);
+//        mAddEvent5 = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar5);
 
     }
 }

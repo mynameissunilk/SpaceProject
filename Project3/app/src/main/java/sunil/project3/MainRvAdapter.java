@@ -97,19 +97,13 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // populating the view type
         switch (mViewHolder.getItemViewType()) {
             default:
-            case TWITTER:
-                MainRvViewHolder MVH = (MainRvViewHolder) holder;
-                MVH.mT1.setText(twitterObj.getmName());
-//                MVH.mT2.setText(array.get(position).toString());
-//                MVH.mT3.setText(array.get(position).toString());
-//                MVH.mT4.setText(array.get(position).toString());
-//                MVH.mT5.setText(array.get(position).toString());
-                break;
+
             case NYT:
 
 //                MainRvViewHolder cannot be cast to sunil.project3.AstronautViewHolder
-
-                AVH = (AstronautViewHolder) holder;
+                if(mViewHolder.getItemViewType()==NYT) {
+                    AVH = (AstronautViewHolder) holder;
+                }
                 AVH.mImageViewLarge.setImageResource(android.R.drawable.ic_input_add);
                 AVH.mSmallTextView.setText(nytObj.getmSnippet());
 //                AVH.mSmallTextView.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +124,17 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                        }
 //                    }
 //                });
+                break;
+            case TWITTER:
+                if(mViewHolder.getItemViewType()==TWITTER) {
+                    MainRvViewHolder MVH = (MainRvViewHolder) holder;
+
+                    MVH.mT1.setText(twitterObj.getmName());
+                }
+//                MVH.mT2.setText(array.get(position).toString());
+//                MVH.mT3.setText(array.get(position).toString());
+//                MVH.mT4.setText(array.get(position).toString());
+//                MVH.mT5.setText(array.get(position).toString());
                 break;
 
             case GUARDIAN:
