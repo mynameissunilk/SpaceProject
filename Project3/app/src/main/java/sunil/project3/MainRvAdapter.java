@@ -26,7 +26,6 @@ import sunil.project3.viewholders.CalendarViewHolder;
  * Created by owlslubic on 8/15/16.
  */
 public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-    //public class MainRvAdapter extends BaseAdapter implements View.OnClickListener {
     public List<CardObject> mList;
     RecyclerView.ViewHolder mViewHolder;
     ArrayList<CalendarEventObject> mEventList;
@@ -97,7 +96,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-//        //determining type of object
+        //determining type of object
         if (mList.get(position) instanceof NYTObj) {
             nytObj = (NYTObj) mList.get(position);
         } else if (mList.get(position) instanceof TwitterObj) {
@@ -114,7 +113,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             default:
 
             case TWITTER:
-//                if(getItemCount())
                 if (mList.get(position) instanceof TwitterObj) {
                     MainRvViewHolder MVH = (MainRvViewHolder) holder;
                     MVH.mT1.setText(twitterObj.getmName());

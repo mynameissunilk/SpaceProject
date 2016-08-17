@@ -36,18 +36,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        TwitterObj twitterObj1 = new TwitterObj("www.me.com", "my name 194u1", "me", "10/10/2010", "you");
-//        GuardianObj guardianObj1 = new GuardianObj("GUARDIAN", "10/10/2010", "www.me.com");
-//        NYTObj nytObj1 = new NYTObj("NYT1", "NYT!", "amazing url", "10/10/2010");
-//        TwitterObj twitterObj2 = new TwitterObj("www.me.com", "tweeeeto", "me", "10/10/2010", "you");
-//        NYTObj nytObj2 = new NYTObj("NYT2", "brilliant snippet from nyt2", "amazing url", "10/10/2010");
-//        GuardianObj guardianObj2 = new GuardianObj("guardienne", "10/10/2010", "www.me.com");
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
         String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
         String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
         String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
         String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-//
 
         TwitterObj twitterObj1 = new TwitterObj(temp1, temp2, temp3, temp4, temp5);
         TwitterObj twitterObj2 = new TwitterObj(temp1, temp2, temp3, temp4, temp5);

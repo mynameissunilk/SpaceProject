@@ -1,14 +1,21 @@
 package sunil.project3.CardObjects;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import sunil.project3.MainActivity;
 
 /**
  * Created by owlslubic on 8/15/16.
@@ -17,6 +24,10 @@ import java.util.Calendar;
 //THIS WORKS ON ANDERS'S PHONE, BUT NOT ON MINE. TEST MORE LATER
 
 public class CalendarEventSingleton {
+    private static final int PERMISSIONS_REQUEST_WRITE_CONTACTS = 0;
+
+
+
     private static final String TAG = "CalendarEventSingleton";
     private static CalendarEventSingleton sInstance;
 
@@ -33,6 +44,7 @@ public class CalendarEventSingleton {
     }
 
 
+    //um currently it's adding these to september?
     public void addCalendarEvent(int position, Context context) {
         long startMillis = 0;
         long endMillis = 0;
@@ -48,6 +60,7 @@ public class CalendarEventSingleton {
         Calendar endTime = Calendar.getInstance();
         endTime.set(year, month, day, hour, minute+1);
         endMillis = endTime.getTimeInMillis();
+        Log.i(TAG, "addCalendarEvent: begin time is "+beginTime);
 
         ContentResolver contentResolver = context.getContentResolver();
         ContentValues values = new ContentValues();
@@ -57,6 +70,8 @@ public class CalendarEventSingleton {
         values.put(CalendarContract.Events.DESCRIPTION, eventList.get(position).getmDetailUrl());
         values.put(CalendarContract.Events.CALENDAR_ID, 3);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/New_York");
+        //using hardcoded calendar id because requesting the READ_CALENDAR permission was giving me trouble when I tried to query for the id,
+        //I'll come back to it, and checking permissions, when other stuff works
         contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
 
         Toast.makeText(context, eventList.get(position).getmEventTitle() + " added to your calendar", Toast.LENGTH_SHORT).show();
