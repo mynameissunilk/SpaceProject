@@ -21,7 +21,7 @@ public interface TwitterApiService {
 
 
     @GET("1.1/statuses/user_timeline.json")
-    Call<okhttp3.ResponseBody>getTimeline(
+    Call<TwitterContent>getTimeline(
             @Header("Authorization") String auth,
             @Header("Content-Type") String appjson,
             @Query("screen_name") String screenName,

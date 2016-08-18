@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import sunil.project3.CardObjects.CalendarEventObject;
+import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
 import sunil.project3.CardObjects.NYTObj;
@@ -24,25 +26,33 @@ import sunil.project3.CardObjects.TwitterObj;
  * Created by owlslubic on 8/15/16.
  */
 public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-//public class MainRvAdapter extends BaseAdapter implements View.OnClickListener {
     public List<CardObject> mList;
     RecyclerView.ViewHolder mViewHolder;
     ArrayList<CalendarEventObject> mEventList;
     private static final String TAG = "MainRvAdapter";
-    CalendarEventObject calendarObj;
     TwitterObj twitterObj;
     NprArticle nprObj;
     GuardianArticle guardianObj;
     APOD nasaObj;
+    CalendarEventObject calendarObj;
 //    AstronautViewHolder AVH;
     CalendarViewHolder calVH;
     Context mContext;
     private final int TWITTER = 0, GUARDIAN = 1, NPR = 2, CALENDAR = 3, NASA = 4;
 
+    //instantiate counter for section headings
+    int mCounterNYT, mCounterNasa, mCounterGuardian, mCounterCalendar, mCounterTwitter;
+
     public MainRvAdapter(List<CardObject> list) {
         this.mList = list;
+        mCounterNYT = 0;
+        mCounterCalendar = 0;
+        mCounterNasa = 0;
+        mCounterGuardian = 0;
+        mCounterTwitter = 0;
     }
-//
+
+    //
     public int getViewTypeCount() {
         return 4;
     }
@@ -64,6 +74,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //            return CALENDAR;
         } else if (mList.get(position) instanceof APOD) {
             return NASA;
+        } else if (mList.get(position) instanceof CalendarEventObject) {
+            return CALENDAR;
         }
         return -1;
     }
@@ -91,9 +103,9 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_nasa, parent, false);
                 mViewHolder = new NasaViewHolder(view4);
                 break;
-//            case CALENDAR:
-//                View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_cardview, parent, false);
-//                mViewHolder = new CalendarViewHolder(view4);
+            case CALENDAR:
+                View view5 = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_single_event_card, parent, false);
+                mViewHolder = new CalendarViewHolder(view5);
         }
         return mViewHolder;
     }
@@ -118,25 +130,48 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // populating the view type
         switch (mViewHolder.getItemViewType()) {
             default:
+
             case TWITTER:
 //                if(getItemCount())
+
                 if (mList.get(position) instanceof TwitterObj) {
                     TwitterViewHolder MVH = (TwitterViewHolder) holder;
+                    Log.i(TAG, "twitter counter is: " + mCounterCalendar);
+
+                    if (mCounterTwitter == 0) {
+                        //insert section header
+                        int width = MVH.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        MVH.mSectionHeader.setLayoutParams(params);
+                        MVH.mSectionHeader.setText("See What Astronauts Have to Say");
+//                        MVH.mSectionHeader.setVisibility(View.VISIBLE);
+                        mCounterTwitter++;
+                    }
+
                     MVH.mName.setText(twitterObj.getmName());
                     MVH.mUser.setText(twitterObj.getmUser());
                     MVH.mDate.setText(twitterObj.getmDate());
                     MVH.mTweet.setText(twitterObj.getmTweet());
                     Picasso.with(mContext).load(twitterObj.getmUrl()).into(MVH.mUrl);
                 }
-//                MVH.mT2.setText(array.get(position).toString());
-//                MVH.mT3.setText(array.get(position).toString());
-//                MVH.mT4.setText(array.get(position).toString());
-//                MVH.mT5.setText(array.get(position).toString());
                 break;
+
             case NPR:
-//                TwitterViewHolder cannot be cast to AstronautViewHolder
                 if (mList.get(position) instanceof NYTObj) {
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
+                    Log.i(TAG, "nyt counter is: " + mCounterCalendar);
+                    if (mCounterNYT == 0) {
+                        //insert section header
+
+//                        int width = NYT.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        NYT.mSectionHeader.setLayoutParams(params);
+
+                        NYT.mSectionHeader.setText("Stories from The New York Times");
+//                        NYT.mSectionHeader.setVisibility(View.VISIBLE);
+                        mCounterNYT++;
+                    }
+
                     Picasso.with(mContext)
                             .load("http://sleepypod.com/latest/wp-content/uploads/2016/03/the-new-york-times.jpg")
                             .into(NYT.mImageViewLarge);
@@ -152,11 +187,11 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             if (num < 200) {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 200);
-                                params.setMargins(40,30,40,30);
+                                params.setMargins(40, 30, 40, 30);
                                 view.setLayoutParams(params);
 
                                 LinearLayout.LayoutParams bufferParams1 = new LinearLayout.LayoutParams(num2, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                bufferParams1.setMargins(30,5,30,5);
+                                bufferParams1.setMargins(30, 5, 30, 5);
                                 NYT.mSnippet.setLayoutParams(bufferParams1);
                                 NYT.mDate.setLayoutParams(bufferParams1);
 
@@ -169,7 +204,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             } else {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 199);
-                                params.setMargins(30,0,30,0);
+                                params.setMargins(30, 0, 30, 0);
                                 view.setLayoutParams(params);
 
                                 LinearLayout.LayoutParams bufferParams = new LinearLayout.LayoutParams(num2, 0);
@@ -184,6 +219,19 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case GUARDIAN:
                 if (mList.get(position) instanceof GuardianObj) {
                     final GuardianViewHolder GVH = (GuardianViewHolder) holder;
+                    Log.i(TAG, "guardian counter is: " + mCounterCalendar);
+                    if (mCounterGuardian == 0) {
+                        //insert section header
+
+//                        int width = GVH.mSectionHeader.getWidth();
+//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        GVH.mSectionHeader.setLayoutParams(params);
+
+                        GVH.mSectionHeader.setText("Stories from The Guardian");
+//                        GVH.mSectionHeader.setVisibility(View.VISIBLE);
+                        mCounterGuardian++;
+                    }
+
                     Picasso.with(mContext)
                             .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
                             .into(GVH.mImageViewLarge);
@@ -193,7 +241,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             Log.i(TAG, "onClick: " + position);
-
                         }
                     });
                 }
@@ -209,126 +256,54 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 }
 
-//            case CALENDAR:
-//                calVH = (CalendarViewHolder) holder;
-//                if (mEventList.size() <6) {
-//                    calVH.mEventTitle.setText(mEventList.get(0).getmEventTitle());
-//                    calVH.mEventTitle2.setText(mEventList.get(1).getmEventTitle());
-//                    calVH.mEventTitle3.setText(mEventList.get(2).getmEventTitle());
-//                    calVH.mEventTitle4.setText(mEventList.get(3).getmEventTitle());
-//                    calVH.mEventTitle5.setText(mEventList.get(4).getmEventTitle());
-//
-//                    calVH.mEventDate.setText(mEventList.get(0).getmEventDate());
-//                    calVH.mEventDate2.setText(mEventList.get(1).getmEventDate());
-//                    calVH.mEventDate3.setText(mEventList.get(2).getmEventDate());
-//                    calVH.mEventDate4.setText(mEventList.get(3).getmEventDate());
-//                    calVH.mEventDate5.setText(mEventList.get(4).getmEventDate());
-//
-//                }
-//                break;
-//
-//
-//            calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    CalendarEventSingleton.getInstance().addCalendarEvent(0, mContext);
-//                }
-//            });
-//            calVH.mAddEvent2.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    CalendarEventSingleton.getInstance().addCalendarEvent(1, mContext);
-//
-//                }
-//            });
-//            calVH.mAddEvent3.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    CalendarEventSingleton.getInstance().addCalendarEvent(2, mContext);
-//
-//                }
-//            });
-//            calVH.mAddEvent4.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    CalendarEventSingleton.getInstance().addCalendarEvent(3, mContext);
-//
-//                }
-//            });
-//            calVH.mAddEvent5.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    CalendarEventSingleton.getInstance().addCalendarEvent(4, mContext);
-//
-//                }
-//            });
-//        }
-//        break;
+            case CALENDAR:
+                if (mList.get(position) instanceof CalendarEventObject) {
+                    final CalendarViewHolder calVH = (CalendarViewHolder) holder;
+
+                    Log.i(TAG, "calendar counter is: " + mCounterCalendar);
+                        if (mCounterCalendar == 0) {
+                            //insert section header
+                            calVH.mSectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
+                            mCounterCalendar++;
+                        }
+//                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
+                    calVH.mEventTitle.setText(calendarObj.getmEventTitle());
+                    calVH.mEventDate.setText(calendarObj.getmEventDate());
 
 
+                    /**this is where the problem is. it sets the textviews fine, but in the inner classes, it can't tell which object it is */
+
+                        calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                CardObjSingleton.getInstance().addEventToCalendar(calendarObj, mContext);
+
+                                Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
+
+                            }
+                        });
+                        calVH.mCalendarCard.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+//                                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                                intent.setData(Uri.parse(calendarObj.getmDetailUrl()));
+//                                mContext.startActivity(intent);
+                                Toast.makeText(mContext, ""+calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                break;
         }
-
-
-//    @Override
-//    public void onClick(View view) {
-////        switch (mViewType){
-////            case 0:
-////                AVH.mLargeTextView.setVisibility(View.VISIBLE);
-//                AVH.mSmallTextView.setVisibility(View.VISIBLE);
-//                AVH.mSmallTextView.setLayoutParams(new FrameLayout.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, 200));
-//        Toast.makeText(mContext,"click" + view.getHeight(), Toast.LENGTH_SHORT).show();
-////        }
-//    }
-
-
-//
-//    @Override
-//    public void onBindViewHolder(MainRvViewHolder holder, final int position) {
-////        holder.mTextView.setText(list.get(position));
-//
-//        holder.mAddEvent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                //you should do this in an async task
-//                new CalendarEvent(eventList, mContext).addCalendarEvent(position);
-//
-//            }
-//        });
-//        holder.mCalendarCard.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Uri uri = Uri.parse(eventList.get(position).getmDetailUrl());
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                mContext.startActivity(intent);
-//            }
-//        });
-//        holder.mEventTitle.setText(eventList.get(position).getmEventTitle());
-//        holder.mEventDate.setText(eventList.get(position).getmEventDate());
-//
-//
-//    }
-//
-//    @Override
-//    public int getItemViewType(int position) {
-//        return super.getItemViewType(position);
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return eventList.size();
-//    }
-
-
     }
 
     @Override
-    public int getItemCount () {
+    public int getItemCount() {
         return mList.size();
     }
 
     @Override
-    public void onClick (View view){
+    public void onClick(View view) {
 
     }
 }

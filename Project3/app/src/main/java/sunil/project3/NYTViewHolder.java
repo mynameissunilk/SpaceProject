@@ -12,6 +12,8 @@ public class NYTViewHolder extends RecyclerView.ViewHolder{
     TextView mSnippet, mHeadder, mDate;
     ImageView mImageViewLarge;
 
+    TextView mSectionHeader;
+
     public NYTViewHolder(View itemView) {
         super(itemView);
 
@@ -19,6 +21,8 @@ public class NYTViewHolder extends RecyclerView.ViewHolder{
         mHeadder = (TextView) itemView.findViewById(R.id.short_text);
         mSnippet = (TextView) itemView.findViewById(R.id.snippetNYT);
         mDate = (TextView) itemView.findViewById(R.id.dateNYT);
+
+        mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_nyt);
 
     }
 }
