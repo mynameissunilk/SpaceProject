@@ -1,4 +1,4 @@
-package sunil.project3;
+package sunil.project3.CardObjects;
 
 import sunil.project3.CardObjects.CardObject;
 

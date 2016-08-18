@@ -22,7 +22,7 @@ public class NPRViewHolder extends RecyclerView.ViewHolder{
         mSnippet = (TextView) itemView.findViewById(R.id.snippetNYT);
         mDate = (TextView) itemView.findViewById(R.id.dateNYT);
 
-        mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_nyt);
+        mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_npr);
 
     }
 }

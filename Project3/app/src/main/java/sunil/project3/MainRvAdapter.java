@@ -16,12 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import sunil.project3.ApiServices.GuardianApiService;
+import sunil.project3.CardObjects.APOD;
 import sunil.project3.CardObjects.CalendarEventObject;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
-import sunil.project3.CardObjects.GuardianObj;
-import sunil.project3.CardObjects.NYTObj;
 import sunil.project3.CardObjects.TwitterObj;
 
 /**
@@ -70,7 +68,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return NPR;
         } else if (mList.get(position) instanceof TwitterObj) {
             return TWITTER;
-        } else if (mList.get(position) instanceof GuardianObj) {
+        } else if (mList.get(position) instanceof GuardianArticle) {
             return GUARDIAN;
         } else if (mList.get(position) instanceof APOD) {
             return NASA;
@@ -249,19 +247,26 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                        GVH.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterGuardian++;
                     }
-
-                    Picasso.with(mContext)
-                            .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
-                            .into(GVH.mImageViewLarge);
+//
+//                    Picasso.with(mContext)
+//                            .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
+//                            .into(GVH.mImageViewLarge);
                     GVH.mTitle.setText(guardianObj.getTitle());
 
-                    GVH.mTitle.setOnClickListener(new View.OnClickListener() {
+                    GVH.mShare.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.i(TAG, "onClick: " + position);
+                            Toast.makeText(mContext, "Sharing!", Toast.LENGTH_SHORT).show();
+                            //code for share feature, add this in whichever onClickListener should do
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, "lol.url");//guardianObj.getURL()
+                            shareIntent.setType("text/plain");
+                            mContext.startActivity(shareIntent);
                         }
                     });
-                    GVH.mImageViewLarge.setOnClickListener(new View.OnClickListener() {
+
+                    GVH.mLogo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(mContext,WebViewActivity.class);
