@@ -19,6 +19,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import sunil.project3.APOD;
+import sunil.project3.CardObjects.CalendarEventSingleton;
+import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.ContentNasa;
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
@@ -133,9 +136,8 @@ public class Endpoints {
                 String apodexplanation = response.body().getExplanation();
                 String apodUrl = response.body().getUrl();
 
-                Log.i("TITLE: ", apodTitle);
-                Log.i("EXPLANATION: ", apodexplanation);
-                Log.i("URL: ", apodUrl);
+                //CardObjSingleton.getInstance()
+                //return new APOD(apodTitle,apodexplanation,apodUrl);
 
             }
 
@@ -146,7 +148,7 @@ public class Endpoints {
         });
     }
 
-    public void connectNPR() {
+    public static void connectNPR() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient nprClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -266,6 +268,9 @@ public class Endpoints {
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
 
+
+
+
                 Gson gson = new Gson();
                 TwitterContent content = null;
                 try {
@@ -274,11 +279,6 @@ public class Endpoints {
                     e.printStackTrace();
                 }
 
-
-                Log.i("TWITTERTEST:",content.getText());
-                /*Log.i("TWEET: ",response.body().getText());
-                Log.i("USERIMAGE_URL: ", response.body().getUser().getProfileImageUrl());
-                Log.i("USERNAME: ",response.body().getEntities().getUserMentions().get(0).getName());*/
 
 
             }
@@ -289,7 +289,9 @@ public class Endpoints {
             }
         });
     }
-    public static void connectNYT() {
+
+
+/*    public static void connectNYT() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -329,5 +331,36 @@ public class Endpoints {
                 Log.i("NYT", "FAILED!");
             }
         });
-    }
+    }*/
+
+/*    public static void connectTwitterwithTokenCOPY(String bearerToken) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient twitterTokenClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(twitterBaseURL)
+                .client(twitterTokenClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TwitterApiService timelineService = retrofit.create(TwitterApiService.class);
+
+        Call<TwitterContent> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
+
+        timelineCall.enqueue(new Callback<TwitterContent>() {
+            @Override
+            public void onResponse(Call<TwitterContent> call, Response<TwitterContent> response) {
+                Log.i("@GET WITH TOKEN", " GOT TO GETTIMELINE() ONRESPONSE");
+
+            }
+
+            @Override
+            public void onFailure(Call<TwitterContent> call, Throwable t) {
+                Log.i("@GET WITH TOKEN", "FAILED");
+            }
+        });
+    }*/
 }
