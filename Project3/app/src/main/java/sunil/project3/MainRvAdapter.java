@@ -18,7 +18,6 @@ import sunil.project3.CardObjects.CalendarEventObject;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
 import sunil.project3.CardObjects.NYTObj;
-import sunil.project3.CardObjects.NasaObj;
 import sunil.project3.CardObjects.TwitterObj;
 
 /**
@@ -32,13 +31,13 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final String TAG = "MainRvAdapter";
     CalendarEventObject calendarObj;
     TwitterObj twitterObj;
-    NYTObj nytObj;
-    GuardianObj guardianObj;
-    NasaObj nasaObj;
+    NprArticle nprObj;
+    GuardianArticle guardianObj;
+    APOD nasaObj;
 //    AstronautViewHolder AVH;
     CalendarViewHolder calVH;
     Context mContext;
-    private final int TWITTER = 0, GUARDIAN = 1, NYT = 2, CALENDAR = 3, NASA = 4;
+    private final int TWITTER = 0, GUARDIAN = 1, NPR = 2, CALENDAR = 3, NASA = 4;
 
     public MainRvAdapter(List<CardObject> list) {
         this.mList = list;
@@ -56,14 +55,14 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemViewType(int position) {
         if (mList.get(position) instanceof NYTObj) {
-            return NYT;
+            return NPR;
         } else if (mList.get(position) instanceof TwitterObj) {
             return TWITTER;
         } else if (mList.get(position) instanceof GuardianObj) {
             return GUARDIAN;
 //        }else if (mList.get(position) instanceof CalendarEventObject){
 //            return CALENDAR;
-        } else if (mList.get(position) instanceof NasaObj) {
+        } else if (mList.get(position) instanceof APOD) {
             return NASA;
         }
         return -1;
@@ -80,8 +79,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_twitter, parent, false);
                 mViewHolder = new TwitterViewHolder(view);
                 break;
-            case NYT:
-                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_nyt, parent, false);
+            case NPR:
+                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_npr, parent, false);
                 mViewHolder = new NYTViewHolder(view2);
                 break;
             case GUARDIAN:
@@ -103,16 +102,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
 //        //determining type of object
-        if (mList.get(position) instanceof NYTObj) {
-            nytObj = (NYTObj) mList.get(position);
+        if (mList.get(position) instanceof NprArticle) {
+            nprObj = (NprArticle) mList.get(position);
         } else if (mList.get(position) instanceof TwitterObj) {
             twitterObj = (TwitterObj) mList.get(position);
-        } else if (mList.get(position) instanceof GuardianObj) {
-            guardianObj = (GuardianObj) mList.get(position);
+        } else if (mList.get(position) instanceof GuardianArticle) {
+            guardianObj = (GuardianArticle) mList.get(position);
 //        } else if (mList.get(position) instanceof CalendarEventObject) {
 //            calendarObj = (CalendarEventObject) mList.get(position);
-        } else if (mList.get(position) instanceof NasaObj) {
-            nasaObj = (NasaObj) mList.get(position);
+        } else if (mList.get(position) instanceof APOD) {
+            nasaObj = (APOD) mList.get(position);
         }
 
 
@@ -134,14 +133,14 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                MVH.mT4.setText(array.get(position).toString());
 //                MVH.mT5.setText(array.get(position).toString());
                 break;
-            case NYT:
+            case NPR:
 //                TwitterViewHolder cannot be cast to AstronautViewHolder
                 if (mList.get(position) instanceof NYTObj) {
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
                     Picasso.with(mContext)
                             .load("http://sleepypod.com/latest/wp-content/uploads/2016/03/the-new-york-times.jpg")
                             .into(NYT.mImageViewLarge);
-                    NYT.mHeadder.setText(nytObj.getmHeadline());
+                    NYT.mHeadder.setText(nprObj.getTitle());
 
                     NYT.mHeadder.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -161,8 +160,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 NYT.mSnippet.setLayoutParams(bufferParams1);
                                 NYT.mDate.setLayoutParams(bufferParams1);
 
-                                NYT.mSnippet.setText(nytObj.getmSnippet());
-                                NYT.mDate.setText(nytObj.getmDate());
+                                NYT.mSnippet.setText(nprObj.getParagraph());
+                                NYT.mDate.setText(nprObj.getDate());
                                 Log.i(TAG, "onBindViewHolder: the headder   " + NYT.mHeadder.getText().toString());
                                 Log.i(TAG, "onBindViewHolder: the snippet   " + NYT.mSnippet.getText().toString());
                                 Log.i(TAG, "onBindViewHolder: the date      " + NYT.mDate.getText().toString());
@@ -188,7 +187,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     Picasso.with(mContext)
                             .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
                             .into(GVH.mImageViewLarge);
-                    GVH.mTitle.setText(guardianObj.getmTitle());
+                    GVH.mTitle.setText(guardianObj.getTitle());
 
                     GVH.mTitle.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -201,12 +200,12 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
 
             case NASA:
-                if (mList.get(position) instanceof NasaObj){
+                if (mList.get(position) instanceof APOD){
                     final  NasaViewHolder NVH = (NasaViewHolder) holder;
                     Picasso.with(mContext)
-                            .load(nasaObj.getmUrl())
+                            .load(nasaObj.getURL())
                             .into(NVH.mNasaImageViewLarge);
-                    NVH.mTitleNasa.setText(nasaObj.getmTitle());
+                    NVH.mTitleNasa.setText(nasaObj.getTitle());
 
                 }
 

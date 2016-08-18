@@ -1,9 +1,11 @@
 package sunil.project3;
 
+import sunil.project3.CardObjects.CardObject;
+
 /**
  * Created by sunil on 8/17/16.
  */
-public class APOD {
+public class APOD extends CardObject{
     private String Title;
     private String Explanation;
     private String URL;
