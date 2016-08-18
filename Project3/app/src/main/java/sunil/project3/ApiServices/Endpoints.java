@@ -46,10 +46,11 @@ public class Endpoints {
     public static final String nprKey = "MDI1OTA2MzQxMDE0NzEzODI2NTU4NjNkMA000";
 
     // Twitter
-    public static final String twitterTokenURL = "https://api.twitter.com/";
-    //public static final String twitterConsumerKey = "tJF1TxJoPHGrjyTMzIAGqjpaE";
-    //public static final String twitterSecretKey = "T8IuaJBtYACzTRuWcPtIuVxEFDEFK6tgapgOqDbrS8IcGNu2NZ";
+    // old keys from the OAuth lab... they work, but I didn't realize what I was doing wrong till way after getting new keys... :/
+    // Consumer: "tJF1TxJoPHGrjyTMzIAGqjpaE"
+    // Secret: "T8IuaJBtYACzTRuWcPtIuVxEFDEFK6tgapgOqDbrS8IcGNu2NZ"
 
+    public static final String twitterTokenURL = "https://api.twitter.com/";
     public static final String twitterConsumerKey ="HT6chghQd3fjhQGTYDMhl7nX8";
     public static final String twitterSecretKey ="HdEim1rkLxHo5rFguQHxDm1E71Af2NOyBBn75vtfFvhoRy6Gez";
     public static final String twitterPreEncryption = twitterConsumerKey + ":" + twitterSecretKey;
@@ -253,21 +254,26 @@ public class Endpoints {
 
         TwitterApiService timelineService = retrofit.create(TwitterApiService.class);
 
-        Call<okhttp3.ResponseBody> timelineCall = timelineService.getTimeline(bearerToken, "nasa", 5);
+        Call<okhttp3.ResponseBody> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
 
         timelineCall.enqueue(new Callback<okhttp3.ResponseBody>() {
             @Override
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
-                Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
+                //Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
+                try {
+                    Log.i("TWEETS: ",response.body().string());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
             public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
-                Log.i("@GET WITH TOKEN", "FAILURE");
+                Log.v("@GET WITH TOKEN", "FAILED");
             }
         });
-
-
     }
     public static void connectNYT() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
