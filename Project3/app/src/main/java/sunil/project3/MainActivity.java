@@ -17,9 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-
 import java.util.List;
 
 import sunil.project3.CardObjects.CardObjSingleton;
@@ -43,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //facebook setup
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
         String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         NasaObj nasaObj3 = new NasaObj(marsUrl, temp5, temp1);
 
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
-
+        if (masterList.size()>0){masterList.clear();}
         CardObjSingleton.getInstance().addEventsToMasterList();
         masterList.add(nasaObj1);
         masterList.add(nasaObj2);
@@ -79,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
         masterList.add(twitterObj2);
         masterList.add(nytObj1);
         masterList.add(nytObj2);
-        masterList.add(nytObj1);
-        masterList.add(nytObj2);
+
 //        masterList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
 //        masterList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
         Log.i("list", "master list size: "+masterList.size());
@@ -95,18 +88,17 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
 
-//        //notification
+        //notification
         Intent intent = new Intent(MainActivity.this,MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent,0);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, 0);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
         notificationBuilder.setContentTitle("Don't you want to know what's going on in space?")
                 .setContentText("Come see what's new!")
                 .setAutoCancel(true)
-                .setPriority(Notification.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
         //use jobscheduler to determine when to periodically launch notification?
-        NotificationManagerCompat.from(MainActivity.this).notify(1, notificationBuilder.build());
+        NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
 
 
 //        DBHelper dbHelper = DBHelper.getInstance(this);

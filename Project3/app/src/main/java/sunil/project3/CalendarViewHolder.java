@@ -29,12 +29,12 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder {
         mAddEvent = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar);
 
 
-//        mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_calendar);
+        mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_calendar);
 
-        sectionHeader = new TextView(itemView.getContext());
-
-        LinearLayout cal = (LinearLayout) itemView.findViewById(R.id.linear_layout_calendar);
-        cal.addView(sectionHeader);
+//        sectionHeader = new TextView(itemView.getContext());
+//
+//        LinearLayout cal = (LinearLayout) itemView.findViewById(R.id.linear_layout_calendar);
+//        cal.addView(sectionHeader);
 
     }
 }

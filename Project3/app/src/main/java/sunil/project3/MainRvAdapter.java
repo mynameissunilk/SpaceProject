@@ -49,11 +49,11 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public MainRvAdapter(List<CardObject> list) {
         this.mList = list;
-        mCounterNYT = 1;
-        mCounterCalendar = 1;
-        mCounterNasa = 1;
-        mCounterGuardian = 1;
-        mCounterTwitter = 1;
+        mCounterNYT = 0;
+        mCounterCalendar = 0;
+        mCounterNasa = 0;
+        mCounterGuardian = 0;
+        mCounterTwitter = 0;
     }
 
     //
@@ -162,7 +162,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (mList.get(position) instanceof NYTObj) {
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
                     Log.i(TAG, "nyt counter is: " + mCounterCalendar);
-                    if (mCounterNYT == 1) {
+                    if (mCounterNYT == 0) {
                         //insert section header
 
 //                        int width = NYT.mSectionHeader.getWidth();
@@ -222,7 +222,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (mList.get(position) instanceof GuardianObj) {
                     final GuardianViewHolder GVH = (GuardianViewHolder) holder;
                     Log.i(TAG, "guardian counter is: " + mCounterCalendar);
-                    if (mCounterGuardian == 1) {
+                    if (mCounterGuardian == 0) {
                         //insert section header
 
 //                        int width = GVH.mSectionHeader.getWidth();
@@ -252,7 +252,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (mList.get(position) instanceof NasaObj) {
                     final NasaViewHolder NVH = (NasaViewHolder) holder;
                     Log.i(TAG, "nasa counter is: " + mCounterCalendar);
-                    if (mCounterNasa == 1) {
+                    if (mCounterNasa == 0) {
                         //insert section header
 //                        int width = NVH.mSectionHeader.getWidth();
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -273,16 +273,16 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     final CalendarViewHolder calVH = (CalendarViewHolder) holder;
 
                     Log.i(TAG, "calendar counter is: " + mCounterCalendar);
-                        if (mCounterCalendar == 1) {
+                        if (mCounterCalendar == 0) {
                             //insert section header
 //                            int width = calVH.mSectionHeader.getWidth();
 //                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                            calVH.mSectionHeader.setLayoutParams(params);
 
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
-                            params.setMargins(6,6,6,6);
-                            calVH.sectionHeader.setLayoutParams(params);
-                            calVH.sectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
+//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+//                            params.setMargins(6,6,6,6);
+//                            calVH.sectionHeader.setLayoutParams(params);
+                            calVH.mSectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
 //                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
                             mCounterCalendar++;
                         }
@@ -298,8 +298,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 CardObjSingleton.getInstance().addCalendarEvent(calendarObj, mContext);
 
                                 Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
-                                //append to master list
-                                //cut out some middle men
+
                             }
                         });
                         calVH.mCalendarCard.setOnClickListener(new View.OnClickListener() {

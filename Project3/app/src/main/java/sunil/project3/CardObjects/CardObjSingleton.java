@@ -74,19 +74,34 @@ public class CardObjSingleton {
 
 
     public void addEventsToMasterList() {
-        if (masterArray.size() != 0) {
-            masterArray.clear();
+
+//        if(masterArray.size()>0){masterArray.clear();}
+        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
+        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
+        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
+        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
+        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
+        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
+        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
+        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+
+        if (masterArray.contains(event)) {}
+        else if(masterArray.contains(event1)){}
+        else if(masterArray.contains(event2)){}
+        else if(masterArray.contains(event3)){}
+        else if(masterArray.contains(event4)){}
+        else if(masterArray.contains(event5)){}
+        else if(masterArray.contains(event6)){}
+        else{
+            masterArray.add(event);
+            masterArray.add(event1);
+            masterArray.add(event2);
+            masterArray.add(event3);
+            masterArray.add(event4);
+            masterArray.add(event5);
+            masterArray.add(event6);
+            masterArray.add(event7);
         }
-
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100"));
-        CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
-
         Log.i("list", "addEventsToMasterList, number of events is: " + CardObjSingleton.getInstance().getMasterList().size());
 
     }
