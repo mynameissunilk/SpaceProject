@@ -17,6 +17,7 @@
 
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardview_guardian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardElevation="3dp"
