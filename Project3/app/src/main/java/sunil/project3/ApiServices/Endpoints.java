@@ -266,8 +266,16 @@ public class Endpoints {
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
                 Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
 
-                TwitterContent content;
+                Gson gson = new Gson();
+                TwitterContent content = null;
+                try {
+                    content = new Gson().fromJson(response.body().string(),TwitterContent.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+
+                Log.i("TWITTERTEST:",content.getText());
                 /*Log.i("TWEET: ",response.body().getText());
                 Log.i("USERIMAGE_URL: ", response.body().getUser().getProfileImageUrl());
                 Log.i("USERNAME: ",response.body().getEntities().getUserMentions().get(0).getName());*/

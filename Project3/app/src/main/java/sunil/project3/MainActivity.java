@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Endpoints.connectTwitterforToken();
+
+/*
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
         String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
         String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
         mRecyclerView.setAdapter(adapter);
+*/
 
 
 //        //notification
