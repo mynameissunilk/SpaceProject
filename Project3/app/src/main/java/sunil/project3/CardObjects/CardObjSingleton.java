@@ -88,20 +88,21 @@ public class CardObjSingleton {
         if (masterArray.contains(event)) {}
         else if(masterArray.contains(event1)){}
         else if(masterArray.contains(event2)){}
-        else if(masterArray.contains(event3)){}
-        else if(masterArray.contains(event4)){}
-        else if(masterArray.contains(event5)){}
-        else if(masterArray.contains(event6)){}
+//        else if(masterArray.contains(event3)){}
+//        else if(masterArray.contains(event4)){}
+//        else if(masterArray.contains(event5)){}
+//        else if(masterArray.contains(event6)){}
         else{
             masterArray.add(event);
             masterArray.add(event1);
             masterArray.add(event2);
-            masterArray.add(event3);
-            masterArray.add(event4);
-            masterArray.add(event5);
-            masterArray.add(event6);
-            masterArray.add(event7);
+//            masterArray.add(event3);
+//            masterArray.add(event4);
+//            masterArray.add(event5);
+//            masterArray.add(event6);
+//            masterArray.add(event7);
         }
+        
         Log.i("list", "addEventsToMasterList, number of events is: " + CardObjSingleton.getInstance().getMasterList().size());
 
     }

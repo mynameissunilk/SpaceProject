@@ -140,7 +140,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     TwitterViewHolder MVH = (TwitterViewHolder) holder;
                     Log.i(TAG, "twitter counter is: " + mCounterCalendar);
 
-                    if (mCounterTwitter == 1) {
+                    if (mCounterTwitter == 0) {
                         //insert section header
                         int width = MVH.mSectionHeader.getWidth();
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -275,19 +275,14 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     Log.i(TAG, "calendar counter is: " + mCounterCalendar);
                         if (mCounterCalendar == 0) {
                             //insert section header
-//                            int width = calVH.mSectionHeader.getWidth();
-//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            calVH.mSectionHeader.setLayoutParams(params);
-
-//                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
-//                            params.setMargins(6,6,6,6);
-//                            calVH.sectionHeader.setLayoutParams(params);
                             calVH.mSectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
-//                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
                             mCounterCalendar++;
                         }
-                        calVH.mEventTitle.setText(calendarObj.getmEventTitle());
-                        calVH.mEventDate.setText(calendarObj.getmEventDate());
+                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
+                    calVH.mEventTitle.setText(calendarObj.getmEventTitle());
+                    calVH.mEventDate.setText(calendarObj.getmEventDate());
+
+
 
 
                     /**this is where the problem is. it sets the textviews fine, but in the inner classes, it can't tell which object it is */
@@ -295,7 +290,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                CardObjSingleton.getInstance().addCalendarEvent(calendarObj, mContext);
+
+                                CardObjSingleton.getInstance().addCalendarEvent(calendarObj, mContext.getApplicationContext());
 
                                 Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
 
@@ -304,9 +300,10 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         calVH.mCalendarCard.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setData(Uri.parse(calendarObj.getmDetailUrl()));
-                                mContext.startActivity(intent);
+//                                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                                intent.setData(Uri.parse(calendarObj.getmDetailUrl()));
+//                                mContext.startActivity(intent);
+                                Toast.makeText(mContext, ""+calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

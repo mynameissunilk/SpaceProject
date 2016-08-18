@@ -59,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
         NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
         NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
         NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "becauseee");
-        NasaObj nasaObj3 = new NasaObj(marsUrl, temp5, temp1);
+        NasaObj nasaObj3 = new NasaObj(eartUrl, temp5, temp1);
 
+        //populate the master list to feed into the recyclerview
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
         if (masterList.size()>0){masterList.clear();}
-        CardObjSingleton.getInstance().addEventsToMasterList();
         masterList.add(nasaObj1);
-        masterList.add(nasaObj2);
-        masterList.add(nasaObj3);
+//        masterList.add(nasaObj2);
+        CardObjSingleton.getInstance().addEventsToMasterList();
         masterList.add(guardianObj1);
         masterList.add(guardianObj2);
         masterList.add(twitterObj1);
@@ -89,20 +89,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         //notification
-        Intent intent = new Intent(MainActivity.this,MainActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, 0);
+        NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
+        textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
+                .setBigContentTitle("Come see what's new!");
+//                .setSummaryText("Sincerely, your pals at KLP LLC.");
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
-        notificationBuilder.setContentTitle("Don't you want to know what's going on in space?")
-                .setContentText("Come see what's new!")
+        notificationBuilder//.setContentTitle("Don't you want to know what's going on in space?")
+//                .setContentText("Come see what's new!")
                 .setAutoCancel(true)
+                .setStyle(textStyle)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
         //use jobscheduler to determine when to periodically launch notification?
         NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
 
 
 //        DBHelper dbHelper = DBHelper.getInstance(this);
-//
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(ProviderContract.NYT.COL_1, "a");
 //        contentValues.put(ProviderContract.NYT.COL_2, "b");
@@ -113,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
 //        dbHelper.addItems(contentValues);
 
 
-//
-//
 //        //temp card data
 //        ArrayList<String> arrayList = new ArrayList<>();
 //        arrayList.add("From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid. ");
