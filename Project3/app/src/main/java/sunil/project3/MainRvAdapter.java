@@ -272,11 +272,9 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             calVH.mSectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
                             mCounterCalendar++;
                         }
-                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
+//                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
                     calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                     calVH.mEventDate.setText(calendarObj.getmEventDate());
-
-
 
 
                     /**this is where the problem is. it sets the textviews fine, but in the inner classes, it can't tell which object it is */
@@ -285,7 +283,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             @Override
                             public void onClick(View view) {
 
-                                CardObjSingleton.getInstance().addEventToCalendar(calendarObj, mContext.getApplicationContext());
+                                CardObjSingleton.getInstance().addEventToCalendar(calendarObj, mContext);
 
                                 Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
 
