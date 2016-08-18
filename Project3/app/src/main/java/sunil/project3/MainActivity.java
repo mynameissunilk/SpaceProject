@@ -109,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
 
 
+//          //code for share feature, add this in whichever onClickListener should do
+//        Intent sendIntent = new Intent();
+//                     sendIntent.setAction(Intent.ACTION_SEND);
+//                       sendIntent.putExtra(Intent.EXTRA_TEXT, );//second parameter is whatever we wanna send as a string url
+//                       sendIntent.setType("text/plain");
+//                       startActivity(sendIntent);
+//
+
+
+
+        
+
 //        DBHelper dbHelper = DBHelper.getInstance(this);
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(ProviderContract.NYT.COL_1, "a");
