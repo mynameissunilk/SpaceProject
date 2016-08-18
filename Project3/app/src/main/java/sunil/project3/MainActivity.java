@@ -1,32 +1,27 @@
 package sunil.project3;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.provider.CalendarContract;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
-import java.util.Calendar;
 import java.util.List;
 
-import sunil.project3.CardObjects.CalendarEventObject;
-import sunil.project3.CardObjects.CalendarEventSingleton;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
@@ -52,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
 
-
-
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
         String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
         String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
@@ -72,13 +65,14 @@ public class MainActivity extends AppCompatActivity {
         NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
         NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
         NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "becauseee");
-
+        NasaObj nasaObj3 = new NasaObj(marsUrl, temp5, temp1);
 
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
 
         CardObjSingleton.getInstance().addEventsToMasterList();
         masterList.add(nasaObj1);
         masterList.add(nasaObj2);
+        masterList.add(nasaObj3);
         masterList.add(guardianObj1);
         masterList.add(guardianObj2);
         masterList.add(twitterObj1);
@@ -89,9 +83,7 @@ public class MainActivity extends AppCompatActivity {
         masterList.add(nytObj2);
 //        masterList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
 //        masterList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
-
         Log.i("list", "master list size: "+masterList.size());
-
 
         //recyclerview setup CARDOBJECTS
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
@@ -104,19 +96,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        //notification
-//        Intent intent = new Intent(MainActivity.this,MainActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent,0);
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-//       // notificationBuilder.setSmallIcon();
-//        notificationBuilder.setContentTitle("Don't you want to know what's going on in space?")
-//                .setContentText("Come see what's new!")
-//                .setAutoCancel(true)
-//                .setPriority(Notification.PRIORITY_DEFAULT)
-//                .setContentIntent(pendingIntent);
-//        //use jobscheduler to determine when to launch notification?
-//        NotificationManagerCompat.from(MainActivity.this).notify(1, notificationBuilder.build());
-//
-//
+        Intent intent = new Intent(MainActivity.this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent,0);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
+        notificationBuilder.setContentTitle("Don't you want to know what's going on in space?")
+                .setContentText("Come see what's new!")
+                .setAutoCancel(true)
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        //use jobscheduler to determine when to periodically launch notification?
+        NotificationManagerCompat.from(MainActivity.this).notify(1, notificationBuilder.build());
+
+
 //        DBHelper dbHelper = DBHelper.getInstance(this);
 //
 //        ContentValues contentValues = new ContentValues();
@@ -154,8 +146,4 @@ public class MainActivity extends AppCompatActivity {
 //        astroINList.add("Vanquish the impossthe. ");
 //        astroINList.add("Apollonius of Perga? Citizens .");
     }
-
-
-
-
 }

@@ -114,8 +114,6 @@ public class CalendarEventObject extends CardObject{
         CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
 
         Log.i("list", "addEventsToMasterList, number of events is: "+ CardObjSingleton.getInstance().getMasterList().size());
-
-
     }
 
 

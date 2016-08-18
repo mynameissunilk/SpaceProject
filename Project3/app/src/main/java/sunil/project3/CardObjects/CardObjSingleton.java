@@ -21,10 +21,11 @@ public class CardObjSingleton {
 
     public static CardObjSingleton instance;
 
-    private CardObjSingleton(){}
+    private CardObjSingleton() {
+    }
 
-    public static CardObjSingleton getInstance(){
-        if(instance == null){
+    public static CardObjSingleton getInstance() {
+        if (instance == null) {
             instance = new CardObjSingleton();
         }
         return instance;
@@ -34,12 +35,10 @@ public class CardObjSingleton {
         masterArray.add(cardObject);
     }
 
-    public List<CardObject> getMasterList(){
-        Log.i("list", "getMasterList size is: "+masterArray.size());
+    public List<CardObject> getMasterList() {
+        Log.i("list", "getMasterList size is: " + masterArray.size());
         return masterArray;
     }
-
-
 
 
     public void addCalendarEvent(CalendarEventObject event, Context context) {
@@ -75,6 +74,9 @@ public class CardObjSingleton {
 
 
     public void addEventsToMasterList() {
+        if (masterArray.size() != 0) {
+            masterArray.clear();
+        }
 
         CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100"));
         CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
@@ -85,8 +87,10 @@ public class CardObjSingleton {
         CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100"));
         CardObjSingleton.getInstance().addToMasterList(new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100"));
 
-        Log.i("list", "addEventsToMasterList, number of events is: "+ CardObjSingleton.getInstance().getMasterList().size());
+        Log.i("list", "addEventsToMasterList, number of events is: " + CardObjSingleton.getInstance().getMasterList().size());
 
     }
 
+
 }
+

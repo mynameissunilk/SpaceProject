@@ -1,10 +1,12 @@
 package sunil.project3;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,9 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import sunil.project3.CardObjects.CalendarEventObject;
-import sunil.project3.CardObjects.CalendarEventSingleton;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
@@ -234,7 +234,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mCounterGuardian++;
                     }
 
-
                     Picasso.with(mContext)
                             .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
                             .into(GVH.mImageViewLarge);
@@ -279,7 +278,11 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                            int width = calVH.mSectionHeader.getWidth();
 //                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                            calVH.mSectionHeader.setLayoutParams(params);
-                            calVH.mSectionHeader.setText("Add Upcoming Astronomical Events to Your Calendar");
+
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+                            params.setMargins(6,6,6,6);
+                            calVH.sectionHeader.setLayoutParams(params);
+                            calVH.sectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
 //                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
                             mCounterCalendar++;
                         }
