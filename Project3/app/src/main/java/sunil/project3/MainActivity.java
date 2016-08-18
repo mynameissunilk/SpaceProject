@@ -20,9 +20,14 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+
+import sunil.project3.CardObjects.CalendarEventObject;
 import java.util.List;
 
 import sunil.project3.ApiServices.Endpoints;
@@ -51,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Endpoints.connectTwitterforToken();
+        //Endpoints.connectTwitterforToken();
+
+        //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
+
+
+        Endpoints.connectGuardian();
+
+        /*mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
 
 
 //        CardObjSingleton.getInstance().addListToMasterList(Endpoints.connectGuardian());
@@ -109,10 +121,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
+>>>>>>> b4010cd11561afd98e05dda2627d69403327b306
         mToggle = (Button) findViewById(R.id.toggle);
-        mHorizontalCardView = (CardView) findViewById(R.id.horizontal_scrollview);
+        mHorizontalCardView = (CardView) findViewById(R.id.horizontal_scrollview);*/
 
 //        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+/*        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
         ArrayList<String> scrollViewURLS = new ArrayList<String>();
         scrollViewURLS.add(marsUrl);
         ImagScrollViewAdapter ImgAdapter = new ImagScrollViewAdapter(this, scrollViewURLS);
@@ -130,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "onClick: height " + height);
                 }
             }
-        });
+        });*/
 
 
         //notification
@@ -168,6 +182,44 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+<<<<<<< HEAD
+        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
+        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
+        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
+        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
+        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+
+        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
+        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
+        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
+        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
+        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
+=======
+//        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
+//        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
+//        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
+//        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
+//        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
+//        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+//        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+//        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+//        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+//
+//        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+//        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
+//        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
+//        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
+//        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
+//        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+//        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+>>>>>>> b4010cd11561afd98e05dda2627d69403327b306
 
 
 

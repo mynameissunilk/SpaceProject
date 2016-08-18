@@ -22,6 +22,8 @@ public class CardObjSingleton {
 
     public static CardObjSingleton instance;
 
+    private String token;
+
     private CardObjSingleton() {
     }
 
@@ -138,6 +140,10 @@ public class CardObjSingleton {
         Log.i("list", "addEventsToMasterList, number of events is: " + CardObjSingleton.getInstance().getMasterList().size());
 
     }
+
+    public void setToken(String s){token = s;}
+    public String getToken(){return token;}
+
 
 }
 
