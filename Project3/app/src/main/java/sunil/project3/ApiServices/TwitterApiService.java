@@ -7,6 +7,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import sunil.project3.Guardian.ResponseBody;
+import sunil.project3.Twitter.TwitterContent;
 
 
 public interface TwitterApiService {

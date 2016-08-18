@@ -8,18 +8,18 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Description {
+public class Url_____ {
 
     @SerializedName("urls")
     @Expose
-    private List<Url___> urls = new ArrayList<Url___>();
+    private List<Url______> urls = new ArrayList<Url______>();
 
     /**
      * 
      * @return
      *     The urls
      */
-    public List<Url___> getUrls() {
+    public List<Url______> getUrls() {
         return urls;
     }
 
@@ -28,7 +28,7 @@ public class Description {
      * @param urls
      *     The urls
      */
-    public void setUrls(List<Url___> urls) {
+    public void setUrls(List<Url______> urls) {
         this.urls = urls;
     }
 

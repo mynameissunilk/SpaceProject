@@ -6,21 +6,21 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Entities_ {
+public class Entities___ {
 
     @SerializedName("url")
     @Expose
-    private Url_ url;
+    private Url_____ url;
     @SerializedName("description")
     @Expose
-    private Description description;
+    private Description_ description;
 
     /**
      * 
      * @return
      *     The url
      */
-    public Url_ getUrl() {
+    public Url_____ getUrl() {
         return url;
     }
 
@@ -29,7 +29,7 @@ public class Entities_ {
      * @param url
      *     The url
      */
-    public void setUrl(Url_ url) {
+    public void setUrl(Url_____ url) {
         this.url = url;
     }
 
@@ -38,7 +38,7 @@ public class Entities_ {
      * @return
      *     The description
      */
-    public Description getDescription() {
+    public Description_ getDescription() {
         return description;
     }
 
@@ -47,7 +47,7 @@ public class Entities_ {
      * @param description
      *     The description
      */
-    public void setDescription(Description description) {
+    public void setDescription(Description_ description) {
         this.description = description;
     }
 

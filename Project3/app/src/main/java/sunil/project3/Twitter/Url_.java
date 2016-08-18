@@ -1,20 +1,21 @@
+
 package sunil.project3.Twitter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.annotation.Generated;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by sunil on 8/18/16.
- */
+@Generated("org.jsonschema2pojo")
 public class Url_ {
 
+    @SerializedName("urls")
+    @Expose
     private List<Url__> urls = new ArrayList<Url__>();
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     *
+     * 
      * @return
      *     The urls
      */
@@ -23,20 +24,12 @@ public class Url_ {
     }
 
     /**
-     *
+     * 
      * @param urls
      *     The urls
      */
     public void setUrls(List<Url__> urls) {
         this.urls = urls;
     }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-}
 
 }

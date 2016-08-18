@@ -8,28 +8,28 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Description {
+public class ExtendedEntities_ {
 
-    @SerializedName("urls")
+    @SerializedName("media")
     @Expose
-    private List<Url___> urls = new ArrayList<Url___>();
+    private List<Medium______> media = new ArrayList<Medium______>();
 
     /**
      * 
      * @return
-     *     The urls
+     *     The media
      */
-    public List<Url___> getUrls() {
-        return urls;
+    public List<Medium______> getMedia() {
+        return media;
     }
 
     /**
      * 
-     * @param urls
-     *     The urls
+     * @param media
+     *     The media
      */
-    public void setUrls(List<Url___> urls) {
-        this.urls = urls;
+    public void setMedia(List<Medium______> media) {
+        this.media = media;
     }
 
 }

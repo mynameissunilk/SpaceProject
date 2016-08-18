@@ -3,6 +3,8 @@ package sunil.project3.ApiServices;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ import sunil.project3.NPR.Story;
 import sunil.project3.NYT.ContentNyt;
 import sunil.project3.NYT.Doc;
 import sunil.project3.NprArticle;
+import sunil.project3.Twitter.TwitterContent;
 
 public class Endpoints {
 
@@ -174,12 +177,14 @@ public class Endpoints {
                             responseCopy.get(i).getLink().get(0).get$text()
                     ));
                 }
+
                 for (int i = 0; i < nprList.size(); i++) {
                     Log.i("TITLE", nprList.get(i).getTitle());
                     Log.i("DESC", nprList.get(i).getParagraph());
                     Log.i("DATE", nprList.get(i).getDate());
                     Log.i("URL", nprList.get(i).getURL());
                 }
+
             }
             @Override
             public void onFailure(Call<ContentNpr> call, Throwable t) {
@@ -259,19 +264,20 @@ public class Endpoints {
         timelineCall.enqueue(new Callback<okhttp3.ResponseBody>() {
             @Override
             public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
-                //Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
-                try {
-                    Log.i("TWEETS: ",response.body().string());
+                Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                TwitterContent content;
+
+                /*Log.i("TWEET: ",response.body().getText());
+                Log.i("USERIMAGE_URL: ", response.body().getUser().getProfileImageUrl());
+                Log.i("USERNAME: ",response.body().getEntities().getUserMentions().get(0).getName());*/
+
 
             }
 
             @Override
             public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
-                Log.v("@GET WITH TOKEN", "FAILED");
+                Log.i("@GET WITH TOKEN", "FAILED");
             }
         });
     }
