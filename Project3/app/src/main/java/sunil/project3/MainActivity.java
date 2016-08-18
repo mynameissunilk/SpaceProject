@@ -16,15 +16,20 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import sunil.project3.CardObjects.CalendarEventObject;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
 import sunil.project3.CardObjects.NYTObj;
 import sunil.project3.CardObjects.NasaObj;
 import sunil.project3.CardObjects.TwitterObj;
+import sunil.project3.ApiServices.Endpoints;
+
+
 
 public class MainActivity extends AppCompatActivity {
     public RecyclerView mRecyclerView;
@@ -40,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Endpoints.connectTwitterforToken();
 
+        //dummy data
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
         String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
         String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
@@ -50,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
         String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
         String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
-
         TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
         TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
         GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
@@ -58,14 +64,12 @@ public class MainActivity extends AppCompatActivity {
         NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
         NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
         NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
-        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "becauseee");
-        NasaObj nasaObj3 = new NasaObj(eartUrl, temp5, temp1);
+
 
         //populate the master list to feed into the recyclerview
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
         if (masterList.size()>0){masterList.clear();}
         masterList.add(nasaObj1);
-//        masterList.add(nasaObj2);
         CardObjSingleton.getInstance().addEventsToMasterList();
         masterList.add(guardianObj1);
         masterList.add(guardianObj2);
@@ -73,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
         masterList.add(twitterObj2);
         masterList.add(nytObj1);
         masterList.add(nytObj2);
-
 //        masterList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
 //        masterList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
         Log.i("list", "master list size: "+masterList.size());
+
+
 
         //recyclerview setup CARDOBJECTS
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
@@ -88,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
 
+
         //notification
         NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
         textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
                 .setBigContentTitle("Come see what's new!");
-//                .setSummaryText("Sincerely, your pals at KLP LLC.");
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
-        notificationBuilder//.setContentTitle("Don't you want to know what's going on in space?")
-//                .setContentText("Come see what's new!")
+        notificationBuilder.setContentTitle("Yoohoo....")
+
                 .setAutoCancel(true)
                 .setStyle(textStyle)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
@@ -115,6 +120,9 @@ public class MainActivity extends AppCompatActivity {
 //        dbHelper.addItems(contentValues);
 
 
+
+//
+//
 //        //temp card data
 //        ArrayList<String> arrayList = new ArrayList<>();
 //        arrayList.add("From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid. ");

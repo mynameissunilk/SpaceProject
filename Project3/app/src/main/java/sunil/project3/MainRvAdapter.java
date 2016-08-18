@@ -1,18 +1,13 @@
 package sunil.project3;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -238,7 +233,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .load("http://images-cdn.moviepilot.com/images/c_fill,h_1080,w_1920/t_mp_quality/u58jjbhpjnf8ccpwysct/first-star-trek-beyond-images-tease-new-friends-and-new-foes-spoilers-star-trek-3-g-752249.jpg")
                             .into(GVH.mImageViewLarge);
                     GVH.mTitle.setText(guardianObj.getmTitle());
-
                     GVH.mTitle.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -291,7 +285,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             @Override
                             public void onClick(View view) {
 
-                                CardObjSingleton.getInstance().addCalendarEvent(calendarObj, mContext.getApplicationContext());
+                                CardObjSingleton.getInstance().addEventToCalendar(calendarObj, mContext.getApplicationContext());
 
                                 Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
 
