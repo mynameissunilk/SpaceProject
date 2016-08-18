@@ -2,26 +2,59 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="16dp"
     tools:context="sunil.project3.MainActivity">
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/horizontal_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="800px"
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardBackgroundColor="@color/OpaqueDarkRed"
+        card_view:theme="@style/Base.Theme.AppCompat.Light">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Space Images"
+            android:elevation="15dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/cardview_light_background"/>
+
+        <ListView
+            android:id="@+id/HorizontalIMGlistView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/toggle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Toggle Daily Images"
+        android:elevation="15dp"
+        android:textSize="10dp"
+        android:background="@color/OpaqueDarkBlue"
+        android:gravity="center"
+        android:textColor="@color/LightBlue"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/rv"
-        android:layout_marginBottom="10dp"/>
-
-
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

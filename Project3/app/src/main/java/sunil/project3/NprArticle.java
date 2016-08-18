@@ -1,7 +1,9 @@
 package sunil.project3;
 
 
-public class NprArticle {
+import sunil.project3.CardObjects.CardObject;
+
+public class NprArticle extends CardObject{
 
     private String Title;
     private String Paragraph;
