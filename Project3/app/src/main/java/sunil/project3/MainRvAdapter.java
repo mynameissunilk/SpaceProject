@@ -16,10 +16,12 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import sunil.project3.CardObjects.CalendarEventObject;
 import sunil.project3.CardObjects.CalendarEventSingleton;
+import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.GuardianObj;
 import sunil.project3.CardObjects.NYTObj;
@@ -39,7 +41,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     GuardianObj guardianObj;
     CalendarEventObject calendarObj;
     NasaObj nasaObj;
-    CalendarViewHolder calVH;
     Context mContext;
     private final int TWITTER = 0, GUARDIAN = 1, NYT = 2, CALENDAR = 3, NASA = 4;
 
@@ -131,6 +132,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         // populating the view type
         switch (mViewHolder.getItemViewType()) {
             default:
+
             case TWITTER:
 //                if(getItemCount())
 
@@ -154,11 +156,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     MVH.mTweet.setText(twitterObj.getmTweet());
                     Picasso.with(mContext).load(twitterObj.getmUrl()).into(MVH.mUrl);
                 }
-//                MVH.mT2.setText(array.get(position).toString());
-//                MVH.mT3.setText(array.get(position).toString());
-//                MVH.mT4.setText(array.get(position).toString());
-//                MVH.mT5.setText(array.get(position).toString());
                 break;
+
             case NYT:
                 if (mList.get(position) instanceof NYTObj) {
                     final NYTViewHolder NYT = (NYTViewHolder) holder;
@@ -260,7 +259,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                        NVH.mSectionHeader.setLayoutParams(params);
 
-
                         NVH.mSectionHeader.setText("NASA's Picture of the Day");
 //                        NVH.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterNasa++;
@@ -272,21 +270,15 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
 
             case CALENDAR:
-
                 if (mList.get(position) instanceof CalendarEventObject) {
-                    calVH = (CalendarViewHolder) holder;
-//                    mEventList = CalendarEventSingleton.getInstance().getEventList();
-//
-//                    if (mEventList.size() < 9) {
+                    final CalendarViewHolder calVH = (CalendarViewHolder) holder;
+
                     Log.i(TAG, "calendar counter is: " + mCounterCalendar);
                         if (mCounterCalendar == 1) {
-
                             //insert section header
-
 //                            int width = calVH.mSectionHeader.getWidth();
 //                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                            calVH.mSectionHeader.setLayoutParams(params);
-
                             calVH.mSectionHeader.setText("Add Upcoming Astronomical Events to Your Calendar");
 //                            calVH.mSectionHeader.setVisibility(View.VISIBLE);
                             mCounterCalendar++;
@@ -294,10 +286,17 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                         calVH.mEventDate.setText(calendarObj.getmEventDate());
 
+
+                    /**this is where the problem is. it sets the textviews fine, but in the inner classes, it can't tell which object it is */
+
                         calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                CalendarEventSingleton.getInstance().addCalendarEvent(position, mContext);
+                                CardObjSingleton.getInstance().addCalendarEvent(calendarObj, mContext);
+
+                                Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
+                                //append to master list
+                                //cut out some middle men
                             }
                         });
                         calVH.mCalendarCard.setOnClickListener(new View.OnClickListener() {
@@ -309,7 +308,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             }
                         });
                     }
-//                }
                 break;
         }
     }

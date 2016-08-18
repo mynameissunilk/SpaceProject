@@ -1,6 +1,10 @@
 package sunil.project3;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.res.Configuration;
+import android.provider.CalendarContract;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +13,16 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+import java.util.Calendar;
 import java.util.List;
 
 import sunil.project3.CardObjects.CalendarEventObject;
@@ -39,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //facebook setup
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+
+
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
         String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
         String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
@@ -56,23 +71,26 @@ public class MainActivity extends AppCompatActivity {
         NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
         NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
         NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
-        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
+        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "becauseee");
 
 
         List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
 
+        CardObjSingleton.getInstance().addEventsToMasterList();
         masterList.add(nasaObj1);
         masterList.add(nasaObj2);
         masterList.add(guardianObj1);
         masterList.add(guardianObj2);
         masterList.add(twitterObj1);
         masterList.add(twitterObj2);
-        ArrayList<CalendarEventObject> eventList = CalendarEventSingleton.getInstance().getEventList();
-        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
         masterList.add(nytObj1);
         masterList.add(nytObj2);
         masterList.add(nytObj1);
         masterList.add(nytObj2);
+//        masterList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
+//        masterList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
+
+        Log.i("list", "master list size: "+masterList.size());
 
 
         //recyclerview setup CARDOBJECTS
@@ -136,4 +154,8 @@ public class MainActivity extends AppCompatActivity {
 //        astroINList.add("Vanquish the impossthe. ");
 //        astroINList.add("Apollonius of Perga? Citizens .");
     }
+
+
+
+
 }
