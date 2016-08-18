@@ -60,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
 //        Endpoints.connectTwitterforToken();
 
 
+        GuardianObj guardianObj1 = new GuardianObj("hello","i'm","alice");
+
+
+        List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
+        if (masterList.size()>0){masterList.clear();}
+        masterList.add(guardianObj1);
+
+
+
+
         //recyclerview setup CARDOBJECTS
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -96,11 +106,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //notification
+        NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
+        textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
+                .setBigContentTitle("Come see what's new!");
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
+        notificationBuilder.setContentTitle("Yoohoo....")
+
+                .setAutoCancel(true)
+                .setStyle(textStyle)
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
+        //use jobscheduler to determine when to periodically launch notification?
+        NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
+
     }
 
 }
 
-//        Endpoints.connectTwitterforToken();
+
 
         //dummy data
         /*
@@ -168,19 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //notification
-        NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
-        textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
-                .setBigContentTitle("Come see what's new!");
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
-        notificationBuilder.setContentTitle("Yoohoo....")
 
-                .setAutoCancel(true)
-                .setStyle(textStyle)
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
-        //use jobscheduler to determine when to periodically launch notification?
-        NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
 
 
 //          //code for share feature, add this in whichever onClickListener should do

@@ -1,6 +1,7 @@
 package sunil.project3;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import sunil.project3.ApiServices.GuardianApiService;
 import sunil.project3.CardObjects.CalendarEventObject;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
@@ -41,11 +43,11 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int TWITTER = 0, GUARDIAN = 1, NPR = 2, CALENDAR = 3, NASA = 4;
 
     //instantiate counter for section headings
-    int mCounterNYT, mCounterNasa, mCounterGuardian, mCounterCalendar, mCounterTwitter;
+    int mCounterNPR, mCounterNasa, mCounterGuardian, mCounterCalendar, mCounterTwitter;
 
     public MainRvAdapter(List<CardObject> list) {
         this.mList = list;
-        mCounterNYT = 0;
+        mCounterNPR = 0;
         mCounterCalendar = 0;
         mCounterNasa = 0;
         mCounterGuardian = 0;
@@ -64,14 +66,12 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if (mList.get(position) instanceof NYTObj) {
+        if (mList.get(position) instanceof NprArticle) {
             return NPR;
         } else if (mList.get(position) instanceof TwitterObj) {
             return TWITTER;
         } else if (mList.get(position) instanceof GuardianObj) {
             return GUARDIAN;
-//        }else if (mList.get(position) instanceof CalendarEventObject){
-//            return CALENDAR;
         } else if (mList.get(position) instanceof APOD) {
             return NASA;
         } else if (mList.get(position) instanceof CalendarEventObject) {
@@ -93,7 +93,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 break;
             case NPR:
                 View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_npr, parent, false);
-                mViewHolder = new NYTViewHolder(view2);
+                mViewHolder = new NPRViewHolder(view2);
                 break;
             case GUARDIAN:
                 View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_guardian, parent, false);
@@ -120,70 +120,77 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             twitterObj = (TwitterObj) mList.get(position);
         } else if (mList.get(position) instanceof GuardianArticle) {
             guardianObj = (GuardianArticle) mList.get(position);
-//        } else if (mList.get(position) instanceof CalendarEventObject) {
-//            calendarObj = (CalendarEventObject) mList.get(position);
+        } else if (mList.get(position) instanceof CalendarEventObject) {
+            calendarObj = (CalendarEventObject) mList.get(position);
         } else if (mList.get(position) instanceof APOD) {
             nasaObj = (APOD) mList.get(position);
         }
-
 
         // populating the view type
         switch (mViewHolder.getItemViewType()) {
             default:
 
             case TWITTER:
-//                if(getItemCount())
 
                 if (mList.get(position) instanceof TwitterObj) {
-                    TwitterViewHolder MVH = (TwitterViewHolder) holder;
+                    TwitterViewHolder TVH = (TwitterViewHolder) holder;
                     Log.i(TAG, "twitter counter is: " + mCounterCalendar);
 
                     if (mCounterTwitter == 0) {
                         //insert section header
-                        int width = MVH.mSectionHeader.getWidth();
+//                        int width = TVH.mSectionHeader.getWidth();
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                        MVH.mSectionHeader.setLayoutParams(params);
-                        MVH.mSectionHeader.setText("See What Astronauts Have to Say");
-//                        MVH.mSectionHeader.setVisibility(View.VISIBLE);
+                        TVH.mSectionHeader.setText("See What Astronauts Are Up To");
                         mCounterTwitter++;
                     }
 
-                    MVH.mName.setText(twitterObj.getmName());
-                    MVH.mUser.setText(twitterObj.getmUser());
-                    MVH.mDate.setText(twitterObj.getmDate());
-                    MVH.mTweet.setText(twitterObj.getmTweet());
-                    Picasso.with(mContext).load(twitterObj.getmUrl()).into(MVH.mUrl);
+                    //set card info
+                    TVH.mName.setText(twitterObj.getmName());
+                    TVH.mUser.setText(twitterObj.getmUser());
+                    TVH.mDate.setText(twitterObj.getmDate());
+                    TVH.mTweet.setText(twitterObj.getmTweet());
+                    Picasso.with(mContext).load(twitterObj.getmUrl()).into(TVH.mUrl);
+
+                    //to open the url in a webview
+                    TVH.mName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mContext,WebViewActivity.class);
+                            intent.putExtra("url",twitterObj.getmUrl());
+                            mContext.startActivity(intent);
+                        }
+                    });
+
                 }
                 break;
 
             case NPR:
-                if (mList.get(position) instanceof NYTObj) {
-                    final NYTViewHolder NYT = (NYTViewHolder) holder;
-                    Log.i(TAG, "nyt counter is: " + mCounterCalendar);
-                    if (mCounterNYT == 0) {
+                if (mList.get(position) instanceof NprArticle) {
+                    final NPRViewHolder NPR = (NPRViewHolder) holder;
+                    Log.i(TAG, "npr counter is: " + mCounterCalendar);
+                    if (mCounterNPR == 0) {
                         //insert section header
 
-//                        int width = NYT.mSectionHeader.getWidth();
+//                        int width = NPR.mSectionHeader.getWidth();
 //                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        NYT.mSectionHeader.setLayoutParams(params);
+//                        NPR.mSectionHeader.setLayoutParams(params);
 
-                        NYT.mSectionHeader.setText("Stories from The New York Times");
-//                        NYT.mSectionHeader.setVisibility(View.VISIBLE);
-                        mCounterNYT++;
+                        NPR.mSectionHeader.setText("Recent Stories from The New York Times");
+                        mCounterNPR++;
                     }
-
                     Picasso.with(mContext)
                             .load("http://sleepypod.com/latest/wp-content/uploads/2016/03/the-new-york-times.jpg")
-                            .into(NYT.mImageViewLarge);
-                    NYT.mHeadder.setText(nprObj.getTitle());
+                            .into(NPR.mImageViewLarge);
+                    NPR.mHeadder.setText(nprObj.getTitle());
 
-                    NYT.mHeadder.setOnClickListener(new View.OnClickListener() {
+                    NPR.mHeadder.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Log.i(TAG, "onClick: " + position);
                             int num = view.getHeight();
                             int num2 = view.getWidth();
-//
+
                             if (num < 200) {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 200);
@@ -192,14 +199,14 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                                 LinearLayout.LayoutParams bufferParams1 = new LinearLayout.LayoutParams(num2, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 bufferParams1.setMargins(30, 5, 30, 5);
-                                NYT.mSnippet.setLayoutParams(bufferParams1);
-                                NYT.mDate.setLayoutParams(bufferParams1);
+                                NPR.mSnippet.setLayoutParams(bufferParams1);
+                                NPR.mDate.setLayoutParams(bufferParams1);
 
-                                NYT.mSnippet.setText(nprObj.getParagraph());
-                                NYT.mDate.setText(nprObj.getDate());
-                                Log.i(TAG, "onBindViewHolder: the headder   " + NYT.mHeadder.getText().toString());
-                                Log.i(TAG, "onBindViewHolder: the snippet   " + NYT.mSnippet.getText().toString());
-                                Log.i(TAG, "onBindViewHolder: the date      " + NYT.mDate.getText().toString());
+                                NPR.mSnippet.setText(nprObj.getParagraph());
+                                NPR.mDate.setText(nprObj.getDate());
+                                Log.i(TAG, "onBindViewHolder: the headder   " + NPR.mHeadder.getText().toString());
+                                Log.i(TAG, "onBindViewHolder: the snippet   " + NPR.mSnippet.getText().toString());
+                                Log.i(TAG, "onBindViewHolder: the date      " + NPR.mDate.getText().toString());
 
                             } else {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
@@ -208,16 +215,27 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 view.setLayoutParams(params);
 
                                 LinearLayout.LayoutParams bufferParams = new LinearLayout.LayoutParams(num2, 0);
-                                NYT.mSnippet.setLayoutParams(bufferParams);
-                                NYT.mDate.setLayoutParams(bufferParams);
+                                NPR.mSnippet.setLayoutParams(bufferParams);
+                                NPR.mDate.setLayoutParams(bufferParams);
                             }
                         }
                     });
+
+                    //to open the url in a webview
+                    NPR.mImageViewLarge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mContext,WebViewActivity.class);
+                            intent.putExtra("url", nprObj.getURL());
+                            mContext.startActivity(intent);
+                        }
+                    });
+
                 }
                 break;
 
             case GUARDIAN:
-                if (mList.get(position) instanceof GuardianObj) {
+                if (mList.get(position) instanceof GuardianArticle) {
                     final GuardianViewHolder GVH = (GuardianViewHolder) holder;
                     Log.i(TAG, "guardian counter is: " + mCounterCalendar);
                     if (mCounterGuardian == 0) {
@@ -243,6 +261,18 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             Log.i(TAG, "onClick: " + position);
                         }
                     });
+                    GVH.mImageViewLarge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mContext,WebViewActivity.class);
+                                    intent.putExtra("url",guardianObj.getURL());
+                            mContext.startActivity(intent);
+                            Toast.makeText(mContext, "find out more about "+guardianObj.getTitle(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
                 }
                 break;
 
@@ -253,6 +283,17 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .load(nasaObj.getURL())
                             .into(NVH.mNasaImageViewLarge);
                     NVH.mTitleNasa.setText(nasaObj.getTitle());
+                    //need a place for explanation
+
+                    //to open the url in a webview
+                    NVH.mNasaImageViewLarge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(mContext,WebViewActivity.class);
+                            intent.putExtra("url", nasaObj.getURL());
+                            mContext.startActivity(intent);
+                        }
+                    });
 
                 }
 
@@ -283,9 +324,15 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                             }
                         });
+
+                        //open detail url in webview
                         calVH.mCalendarCard.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+                                Intent intent = new Intent(mContext,WebViewActivity.class);
+                                intent.putExtra("url", calendarObj.getmDetailUrl());
+                                mContext.startActivity(intent);
 //                                Intent intent = new Intent(Intent.ACTION_VIEW);
 //                                intent.setData(Uri.parse(calendarObj.getmDetailUrl()));
 //                                mContext.startActivity(intent);

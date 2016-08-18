@@ -23,6 +23,7 @@
             android:name=".Table1ContentProvider"
             android:authorities="sunil.project3.Table1ContentProvider" />
 
+        <activity android:name=".WebViewActivity"></activity>
     </application>
 
 </manifest>

@@ -8,13 +8,13 @@ import android.widget.TextView;
 /**
  * Created by ander on 8/17/2016.
  */
-public class NYTViewHolder extends RecyclerView.ViewHolder{
+public class NPRViewHolder extends RecyclerView.ViewHolder{
     TextView mSnippet, mHeadder, mDate;
     ImageView mImageViewLarge;
 
     TextView mSectionHeader;
 
-    public NYTViewHolder(View itemView) {
+    public NPRViewHolder(View itemView) {
         super(itemView);
 
         mImageViewLarge = (ImageView) itemView.findViewById(R.id.image_child_large);
