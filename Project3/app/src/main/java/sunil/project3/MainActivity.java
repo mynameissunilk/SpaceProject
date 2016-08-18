@@ -1,46 +1,25 @@
 package sunil.project3;
 
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ViewFlipper;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
-import java.util.List;
+import sunil.project3.ApiServices.Endpoints;
 
-import sunil.project3.CardObjects.CalendarEventObject;
-import sunil.project3.CardObjects.CalendarEventSingleton;
-import sunil.project3.CardObjects.CardObjSingleton;
-import sunil.project3.CardObjects.CardObject;
-import sunil.project3.CardObjects.GuardianObj;
-import sunil.project3.CardObjects.NYTObj;
-import sunil.project3.CardObjects.NasaObj;
-import sunil.project3.CardObjects.TwitterObj;
+
 
 public class MainActivity extends AppCompatActivity {
 //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -62,23 +41,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        Endpoints.connectTwitterforToken();
+
         mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
         mToggle = (Button) findViewById(R.id.toggle);
         mHorizontalCardView = (CardView) findViewById(R.id.horizontal_scrollview);
 
         String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
-        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
-        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
-
-
         ArrayList<String> scrollViewURLS = new ArrayList<String>();
-        scrollViewURLS.add(eartUrl);
         scrollViewURLS.add(marsUrl);
-        scrollViewURLS.add(person1);
-        scrollViewURLS.add(person2);
-
         ImagScrollViewAdapter ImgAdapter = new ImagScrollViewAdapter(this, scrollViewURLS);
+
         mListView.setAdapter(ImgAdapter);
         mToggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /*
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+
+
+        ArrayList<String> scrollViewURLS = new ArrayList<String>();
+        scrollViewURLS.add(eartUrl);
+        scrollViewURLS.add(marsUrl);
+        scrollViewURLS.add(person1);
+        scrollViewURLS.add(person2);
+
 
 
         String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
@@ -144,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
         mRecyclerView.setAdapter(adapter);
+*/
 
 
 //        //notification
