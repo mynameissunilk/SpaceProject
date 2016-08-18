@@ -17,9 +17,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sunil.project3.APOD;
 import sunil.project3.CardObjects.CardObjSingleton;
+import sunil.project3.CardObjects.CardObject;
 import sunil.project3.ContentNasa;
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
+import sunil.project3.GuardianArticle;
 import sunil.project3.NPR.ContentNpr;
 import sunil.project3.NPR.Story;
 import sunil.project3.NYT.ContentNyt;
@@ -62,6 +64,7 @@ public class Endpoints {
     // API Call/Endpoint Methods
     // All calls use Retrofit, OkhttpInterceptor, and GSON POJO's
     // Except for getting Twitter's OAuth token, where I used JSON...
+
     public static void connectGuardian() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -85,11 +88,17 @@ public class Endpoints {
                 try {
 
                     List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
-
+                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
                     // print articles & links
                     for (int i = 0; i < guardianArticles.size(); i++) {
-                        Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                     //   Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                        guardianArticleList.add(new GuardianArticle(
+                                guardianArticles.get(i).getWebTitle(),
+                                guardianArticles.get(i).getApiUrl()));
+                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
+                        //CardObjSingleton.getInstance().addToMasterList(guardianArticleList);
                     }
+
 
 
                     Log.i("SUCCESS", "CONNECTED");

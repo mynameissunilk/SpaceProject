@@ -62,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Endpoints.connectTwitterforToken();
+        //Endpoints.connectTwitterforToken();
 
-        Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
+        //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
 
+
+        Endpoints.connectGuardian();
 
         /*mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
 
