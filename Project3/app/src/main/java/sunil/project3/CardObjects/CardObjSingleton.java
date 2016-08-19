@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import sunil.project3.DBHelper;
+
 /**
  * Created by ander on 8/16/2016.
  */
@@ -34,9 +36,6 @@ public class CardObjSingleton {
         return instance;
     }
 
-//    public void addToMasterList(CardObject cardObject) {
-//        masterArray.add(cardObject);
-//    }
 
     //takes the lists returned by API Endpoints class and adds them... to the master list, which is what populates the RecyclerView
     public void addListToMasterList(ArrayList<CardObject> list){
@@ -76,15 +75,17 @@ public class CardObjSingleton {
         values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/New_York");
         //using hardcoded calendar id because requesting the READ_CALENDAR permission was giving me trouble when I tried to query for the id,
         //I'll come back to it, and checking permissions, when other stuff works
-        contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+//        contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+
 
         Toast.makeText(context, event.getmEventTitle() + " added to your calendar", Toast.LENGTH_SHORT).show();
     }
 
 
 
-    public void addEventListToMasterList(){
 
+
+    public void addEventListToMasterList(){
 
         CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
         CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
