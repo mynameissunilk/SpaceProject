@@ -3,8 +3,19 @@
 
 trello:
 https://trello.com/b/MwNm8Yw1/space-projectuser personas:
+
 https://docs.google.com/document/d/1GzrJTgMt4MnQybXrpbO7dC8SDx8NHbnwUgfN3sdxMhA/edit?usp=sharingresearch plan:
+
+
 https://docs.google.com/document/d/1_W9iE-4CG7yhcS_iwNKLl_nWD_iLZvNSpmlZJKrdMpc/edit?usp=sharinginterviews and competitive research:
+
+
 https://docs.google.com/document/d/1oaJpLaS_W0OxT0OXQRJauV273llX7SQDfU4NXeQAyBw/editfirst prototype:
+
+
 https://popapp.in/projects/57b0980929de692f29355d41/previewsecond prototype:
+
+
 https://popapp.in/projects/57b34a83d15d26580119ecef/preview
+
+
