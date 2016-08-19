@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
         Endpoints.connectGuardian();
 
-        DBHelper helper = DBHelper.getInstance(this).addGuardianToTable(Endpoints.connectGuardian(););
+        DBHelper helper = DBHelper.getInstance(this);
+
 
 
 
@@ -147,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
         //inserting astronomical event objects into database
         //i know this doesn't belong here in oncreate, but i don't know where to put it
-        DBHelper helper = DBHelper.getInstance(this);
         helper.deleteCalendarTableContents();
         CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 0, 0, "https://in-the-sky.org/news.php?id=20160819_18_100");
         CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 0,0, "https://in-the-sky.org/news.php?id=20160821_11_100");
@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event7);
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
-        Log.i("guardian", "calendar events added to master: "+ );
 
 
     }

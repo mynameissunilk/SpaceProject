@@ -10,6 +10,7 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 
 import sunil.project3.CardObjects.CalendarEventObject;
+import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 
 /**
@@ -149,6 +150,31 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addListToTable(ArrayList<CardObject> list){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i) instanceof NprArticle){
+                NprArticle npr = (NprArticle) list.get(i);
+                cv.put(NPR_TITLE_COL, npr.getTitle());
+                cv.put(NPR_ABSTRACT_COL, npr.getParagraph());
+                cv.put(NPR_DATE_COL, npr.getDate());
+                cv.put(NPR_URL_COL, npr.getURL());
+                db.insert(Table_NPR, null, cv);
+            }
+            else if(list.get(i) instanceof GuardianArticle){
+                GuardianArticle g = (GuardianArticle) list.get(i);
+                cv.put(GUARDIAN_TITLE_COL, g.getTitle());
+                cv.put(GUARDIAN_URL_COL, g.getURL());
+                db.insert(Table_Guardian, null, cv);
+            }
+        }
+        db.close();
+    }
+
+
+
     public void addAPODToTable(APOD a) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -158,6 +184,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(Table_APOD, null, cv);
         db.close();
     }
+
+
+
+
 
     public void addNPRToTable(NprArticle npr) {
         SQLiteDatabase db = getWritableDatabase();
@@ -186,10 +216,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    /**
-     * will these methods know to create different objects? how does it know to do more than one row
-     * isn't that why we loop thru? idk im tired
-     */
 
     public GuardianArticle createArticleFromTable() {
         //GuardianArticle guardianArticle;
@@ -262,6 +288,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return astroEvents;
     }
 
+
+
+
+
+    /** stuff we are not using just now */
 
 //    public void addToTable(String url, String snippet, String para, String imgUrl, String headline) {
 //        SQLiteDatabase db = getWritableDatabase();
