@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.util.Base64;
 import android.util.Log;
 
@@ -91,6 +92,7 @@ import sunil.project3.NPR.Story;
 import sunil.project3.Twitter.TwitterContent;
 
 
+
 public class MainActivity extends AppCompatActivity {
 
     // The Guardian
@@ -141,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -174,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         // NOW CREATE OBJECTS FROM THE TABLE
-
 
 
         //recyclerview setup
@@ -747,3 +749,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+
