@@ -261,7 +261,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 GuardianArticle g = new GuardianArticle(cursor.getString(cursor.getColumnIndex(GUARDIAN_TITLE_COL)),
                         cursor.getString(cursor.getColumnIndex(GUARDIAN_URL_COL)));
                 guardianList.add(g);
-                cursor.moveToNext(); 
+                cursor.moveToNext();
             }
         }
         cursor.close();
