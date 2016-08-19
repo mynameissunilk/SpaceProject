@@ -19,14 +19,13 @@ import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-<<<<<<< HEAD
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-=======
 import android.util.Base64;
 import android.util.Log;
->>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
+
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -84,14 +83,12 @@ import sunil.project3.CardObjects.TwitterObj;
 import sunil.project3.ApiServices.NprService;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
-<<<<<<< HEAD
-=======
+
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
 import sunil.project3.NPR.ContentNpr;
 import sunil.project3.NPR.Story;
 import sunil.project3.Twitter.TwitterContent;
->>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 
 
 public class MainActivity extends AppCompatActivity {
@@ -125,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String twitterBaseURL = "https://api.twitter.com/"; //ugh i'm dumb
     public static String encryptedKey64;
     public static String twitToken;
-    private static final String TAG = "MainActivity";
+
 
 
     //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -133,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     public RecyclerView mRecyclerView2;
     public ImageView mImageView1, mImageView2, mImageView3, mImageView4, mImageScrape;
     HorizontalScrollView mHorizontalScrollView;
-<<<<<<< HEAD
+
     ImageButton mToggle;
 
     CursorAdapter mCursorAdapter;
@@ -141,14 +138,7 @@ public class MainActivity extends AppCompatActivity {
     CardView mWebScrapeCardView;
     ImageView mImageView;
     private static final String TAG = "MainActivity";
-=======
-    Button mToggle;
-    CursorAdapter mCursorAdapter;
-    ListView mListView;
-    CardView mHorizontalCardView;
 
-
->>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 
 
     /**
@@ -161,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         mToggle = (ImageButton) findViewById(R.id.toggle);
         mWebScrapeCardView = (CardView) findViewById(R.id.webScrapeCardView);
         mImageView = (ImageView) findViewById(R.id.imageScrape);
@@ -171,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setShowHideAnimationEnabled(true);
 
 //        Endpoints.connectTwitterforToken();
-=======
+
         // SQLite HELPER
         DBHelper helper = DBHelper.getInstance(this);
 
@@ -181,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         connectNasa();
 
         connectNPR();
->>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
+
 
         // NOW CREATE OBJECTS FROM THE TABLE
 
@@ -444,7 +434,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-<<<<<<< HEAD
+
     public class SetDailyPhotos extends AsyncTask<Void, Void, String> {
         String mURL;
         private static final String TAG = "SetDailyPhotos";
@@ -523,8 +513,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-}
-=======
+
+
     // ENDPOINTS BELOW PLEASE LET THE ENDPOINTS BE AT THE BOTTOM OF THIS ;)
     public  void connectGuardian() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -676,7 +666,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public  void connectTwitterforToken() {
+    public void connectTwitterforToken() {
         byte[] concatArray = twitterPreEncryption.getBytes();
         encryptedKey64 = Base64.encodeToString(concatArray, Base64.NO_WRAP);
 
@@ -757,4 +747,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
->>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
