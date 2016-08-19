@@ -102,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -155,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
 
 
+        
     }
 
 

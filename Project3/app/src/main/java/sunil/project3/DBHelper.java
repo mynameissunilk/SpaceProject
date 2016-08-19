@@ -242,16 +242,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-
-    //THIS METHOD DOESNT WORK Unable to start activity ComponentInfo{sunil.project3/sunil.project3.MainActivity}: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 8
-//    public CalendarEventObject createCalendarEventObjectFromTable() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        String query = "SELECT * FROM " + Table_Astro_Events;
-//        Cursor cursor = db.rawQuery(query, null);
-////        cursor.close(); CLOSE THIS EVENTUALLY.......
-//        return new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)), cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL), cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL), cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
-//    }
-
     public NprArticle createNPRFromTable() {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + Table_APOD;
@@ -259,6 +249,45 @@ public class DBHelper extends SQLiteOpenHelper {
 //        cursor.close(); CLOSE THIS EVENTUALLY.......
         return new NprArticle(cursor.getString(cursor.getColumnIndex(NPR_TITLE_COL)), cursor.getString(cursor.getColumnIndex(NPR_ABSTRACT_COL)), cursor.getString(cursor.getColumnIndex(NPR_DATE_COL)), cursor.getString(cursor.getColumnIndex(NPR_URL_COL)));
     }
+
+    public ArrayList<CardObject> getGuardianListFromDb() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CardObject> guardianList = new ArrayList<>();
+        String query = "SELECT * FROM " + Table_Guardian;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                GuardianArticle g = new GuardianArticle(cursor.getString(cursor.getColumnIndex(GUARDIAN_TITLE_COL)),
+                        cursor.getString(cursor.getColumnIndex(GUARDIAN_URL_COL)));
+                guardianList.add(g);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return guardianList;
+    }
+
+    public ArrayList<CardObject> getNPRListFromDb() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CardObject> nprList = new ArrayList<>();
+        String query = "SELECT * FROM " + Table_NPR;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                NprArticle npr = new NprArticle(cursor.getString(cursor.getColumnIndex(NPR_TITLE_COL)),
+                        cursor.getString(cursor.getColumnIndex(NPR_ABSTRACT_COL)),
+                        cursor.getString(cursor.getColumnIndex(NPR_DATE_COL)),
+                        cursor.getString(cursor.getColumnIndex(NPR_URL_COL)));
+                nprList.add(npr);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return nprList;
+    }
+
+
+    //CALENDAR BUSINESS
 
     public void deleteCalendarTableContents() {
         SQLiteDatabase db = getWritableDatabase();
@@ -287,6 +316,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         return astroEvents;
     }
+
 
 
 
