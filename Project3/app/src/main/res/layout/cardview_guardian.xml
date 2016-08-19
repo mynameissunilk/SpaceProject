@@ -59,7 +59,7 @@
                         android:adjustViewBounds="true"
                         android:elevation="10dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/guardian_default_Image"></ImageView>
+                        android:src="@drawable/guardian_default_image"></ImageView>
 
                     <ImageView
                         android:id="@+id/image_child_small"
@@ -97,7 +97,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@id/linear_layout_guardian"
+                        android:id="@+id/linear_layout_guardian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
