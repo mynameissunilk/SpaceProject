@@ -32,6 +32,8 @@ import sunil.project3.Twitter.TwitterContent;
 
 public class Endpoints {
 
+/*   Initially, I thought this was a nice way to declutter the MainActivity before merging with the team, doesn't rly help us atm..
+
     // The Guardian
     public static final String guardianURL = "http://content.guardianapis.com/";
     public static final String guardianKey = "84a85242-3b93-42f2-8952-138f45f50dee";
@@ -293,7 +295,7 @@ public class Endpoints {
     }
 
 
-/*    public static void connectNYT() {
+*//*    public static void connectNYT() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -333,9 +335,9 @@ public class Endpoints {
                 Log.i("NYT", "FAILED!");
             }
         });
-    }*/
+    }*//*
 
-/*    public static void connectTwitterwithTokenCOPY(String bearerToken) {
+*//*    public static void connectTwitterwithTokenCOPY(String bearerToken) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient twitterTokenClient = new OkHttpClient.Builder()
