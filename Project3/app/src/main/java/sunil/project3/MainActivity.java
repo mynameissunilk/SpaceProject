@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         connectNPR();
 
         // NOW CREATE OBJECTS FROM THE TABLE
-        
+
 
 
         //recyclerview setup
