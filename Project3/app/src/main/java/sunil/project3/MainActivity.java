@@ -170,18 +170,17 @@ public class MainActivity extends AppCompatActivity {
 
         // TALK TO ENDPOINTS, WRITE RESULT OBJECTS TO TABLE
         connectGuardian();
-
         connectNasa();
-
         connectNPR();
 
 
         // NOW CREATE OBJECTS FROM THE TABLE
         CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
+        cardsing.addObjectToMasterList(helper.createAPODFromTable());
         cardsing.addListToMasterList(helper.getGuardianListFromDb());
         cardsing.addListToMasterList(helper.getNPRListFromDb());
-        cardsing.addObjectToMasterList(helper.createAPODFromTable());
+
 
 
         //recyclerview setup
@@ -556,7 +555,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
                         guardianArticleList.add(new GuardianArticle(
                                 guardianArticles.get(i).getWebTitle(),
-                                guardianArticles.get(i).getApiUrl()));
+                                guardianArticles.get(i).getWebUrl()));
 
                         // write guardian articles to Guardian table!
                         DBHelper helper1 = DBHelper.getInstance(MainActivity.this);
