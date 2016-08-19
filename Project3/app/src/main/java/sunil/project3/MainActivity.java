@@ -12,6 +12,8 @@ import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Base64;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -19,10 +21,34 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import sunil.project3.ApiServices.GuardianApiService;
+import sunil.project3.ApiServices.NasaApiService;
+import sunil.project3.ApiServices.NprService;
+import sunil.project3.ApiServices.TwitterApiService;
 import sunil.project3.CardObjects.CalendarEventObject;
 
 import sunil.project3.ApiServices.Endpoints;
 import sunil.project3.CardObjects.CardObjSingleton;
+import sunil.project3.CardObjects.CardObject;
+import sunil.project3.Guardian.Content;
+import sunil.project3.Guardian.ResponseBody;
+import sunil.project3.NPR.ContentNpr;
+import sunil.project3.NPR.Story;
+import sunil.project3.Twitter.TwitterContent;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     public ImageView mImageView1, mImageView2, mImageView3, mImageView4;
     HorizontalScrollView mHorizontalScrollView;
     Button mToggle;
-
     CursorAdapter mCursorAdapter;
     ListView mListView;
     CardView mHorizontalCardView;
@@ -46,7 +71,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
+//        Endpoints.connectGuardian();
+
         Endpoints.connectGuardian();
+
+        DBHelper helper = DBHelper.getInstance(this).addGuardianToTable(Endpoints.connectGuardian(););
+
 
 
         //recyclerview setup
@@ -64,12 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
         //notification
         NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
-        textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
+        textStyle.bigText("Don't you want to know what's going on in space?")
                 .setBigContentTitle("Come see what's new!");
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
-        notificationBuilder.setContentTitle("Yoohoo....")
-
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        notificationBuilder.setContentTitle("Hey, Space Cadet...")
                 .setAutoCancel(true)
                 .setStyle(textStyle)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
@@ -80,17 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         //inserting astronomical event objects into database
-        //i know this shouldnt be here in oncreate, but i don't know where to put it
+        //i know this doesn't belong here in oncreate, but i don't know where to put it
         DBHelper helper = DBHelper.getInstance(this);
         helper.deleteCalendarTableContents();
-        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
-        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
-        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
-        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
-        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
-        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
+        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 0, 0, "https://in-the-sky.org/news.php?id=20160819_18_100");
+        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 0,0, "https://in-the-sky.org/news.php?id=20160821_11_100");
+        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 0, 0, "https://in-the-sky.org/news.php?id=20160822_09_100");
+        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 01, 00, "https://in-the-sky.org/news.php?id=20160822_15_100");
+        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 0, 0, "https://in-the-sky.org/news.php?id=20160822_16_100");
+        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 0, 0, "https://in-the-sky.org/news.php?id=20160823_18_100");
         CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
-        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 0, 0, "https://in-the-sky.org/data/object.php?id=103071");
         helper.addCalendarToTable(event);
         helper.addCalendarToTable(event1);
         helper.addCalendarToTable(event2);
@@ -101,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event7);
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
-
+        Log.i("guardian", "calendar events added to master: "+ );
 
 
     }
@@ -221,6 +250,237 @@ public class MainActivity extends AppCompatActivity {
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
+
+
+    // ENDPOINTS BELOW
+    public static void connectGuardian() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(guardianURL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GuardianApiService guardianService = retrofit.create(GuardianApiService.class);
+
+        Call<Content> call = guardianService.getArticles(guardianKey);
+
+        call.enqueue(new Callback<Content>() {
+            @Override
+            public void onResponse(Call<Content> call, Response<Content> response) {
+                try {
+
+                    List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
+//                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
+                    ArrayList<CardObject> guardianArticleList = new ArrayList<CardObject>();
+
+                    // print articles & links
+                    for (int i = 0; i < guardianArticles.size(); i++) {
+                        Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                        guardianArticleList.add(new GuardianArticle(
+                                guardianArticles.get(i).getWebTitle(),
+                                guardianArticles.get(i).getApiUrl()));
+//                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
+                        //CardObjSingleton.getInstance().addListToMasterList(guardianArticleList);
+                        Log.i("guardian", "onResponse: number of articles:  "+guardianArticles.size());
+                        Log.i("guardian", "master list size:  "+CardObjSingleton.getInstance().getMasterList().size());
+                        DBHelper helper = DBHelper.getInstance(this);
+                        helper.addGuardianToTable(new GuardianArticle(
+                                guardianArticles.get(i).getWebTitle(),
+                                guardianArticles.get(i).getApiUrl()));
+                    }
+
+
+
+                    Log.i("SUCCESS", "CONNECTED");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Content> call, Throwable t) {
+                Log.i("FAILURE", "FAILED TO CONNECT");
+            }
+        });
+    }
+
+    public static void connectNasa() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor) // the logging interceptor
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(nasaURL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        NasaApiService nasaService = retrofit.create(NasaApiService.class);
+
+        Call<ContentNasa> call = nasaService.getAPOD(nasaKey);
+
+        call.enqueue(new Callback<ContentNasa>() {
+            @Override
+            public void onResponse(Call<ContentNasa> call, Response<ContentNasa> response) {
+
+                String apodTitle = response.body().getTitle();
+                String apodexplanation = response.body().getExplanation();
+                String apodUrl = response.body().getUrl();
+
+
+                //return new APOD(apodTitle,apodexplanation,apodUrl);
+
+            }
+
+            @Override
+            public void onFailure(Call<ContentNasa> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void connectNPR() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient nprClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Retrofit nprfit = new Retrofit.Builder()
+                .baseUrl(nprURL)
+                .client(nprClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        NprService nprService = nprfit.create(NprService.class);
+
+        Call<ContentNpr> nprCall = nprService.getArticle(nprKey);
+        nprCall.enqueue(new Callback<ContentNpr>() {
+            @Override
+            public void onResponse(Call<ContentNpr> call, Response<ContentNpr> response) {
+                Log.i("SUCCESS:", "HOORAY");
+
+                ArrayList<Story> responseCopy = new ArrayList<Story>(response.body().getList().getStory());
+
+                // copy the relevant items of responsecopy into an nprarticle list
+                ArrayList<NprArticle> nprList = new ArrayList<NprArticle>();
+                for (int i = 0; i < responseCopy.size(); i++) {
+                    nprList.add(new NprArticle(
+                            responseCopy.get(i).getTitle().get$text(),
+                            responseCopy.get(i).getText().getParagraph().get(0).get$text(),
+                            responseCopy.get(i).getStoryDate().get$text(),
+                            responseCopy.get(i).getLink().get(0).get$text()
+                    ));
+                }
+
+                for (int i = 0; i < nprList.size(); i++) {
+                    Log.i("TITLE", nprList.get(i).getTitle());
+                    Log.i("DESC", nprList.get(i).getParagraph());
+                    Log.i("DATE", nprList.get(i).getDate());
+                    Log.i("URL", nprList.get(i).getURL());
+                }
+
+            }
+            @Override
+            public void onFailure(Call<ContentNpr> call, Throwable t) {
+                Log.i("FAILURE", "FAILURE");
+            }
+        });
+    }
+
+    public static void connectTwitterforToken() {
+        byte[] concatArray = twitterPreEncryption.getBytes();
+        encryptedKey64 = Base64.encodeToString(concatArray, Base64.NO_WRAP);
+
+        // twitter oauth
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(twitterTokenURL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TwitterApiService twitterService = retrofit.create(TwitterApiService.class);
+
+        final String twitAuth = "Basic " + encryptedKey64;
+
+        Call<okhttp3.ResponseBody> call = twitterService.getToken(twitAuth, "application/x-www-form-urlencoded;charset=UTF-8", "client_credentials");
+        call.enqueue(new Callback<okhttp3.ResponseBody>() {
+            @Override
+            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+                Log.i("TWITTER", "GETTING TOKEN URL...");
+                String output = null;
+                try {
+                    output = response.body().string();
+                    // sometimes fancy gson needs to go !@#$ off
+                    JSONObject jason = new JSONObject(output);
+                    twitToken = jason.getString("access_token");
+
+                    connectTwitterwithToken("Bearer "+twitToken);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+                Log.i("FAILURE", "DID NOT GET TOKEN");
+            }
+        });
+
+    }
+
+    public static void connectTwitterwithToken(String bearerToken) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient twitterTokenClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(twitterBaseURL)
+                .client(twitterTokenClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TwitterApiService timelineService = retrofit.create(TwitterApiService.class);
+
+        Call<TwitterContent> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
+
+        timelineCall.enqueue(new Callback<TwitterContent>() {
+            @Override
+            public void onResponse(Call<TwitterContent> call, Response<TwitterContent> response) {
+                Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
+
+            }
+
+            @Override
+            public void onFailure(Call<TwitterContent> call, Throwable t) {
+                Log.i("@GET WITH TOKEN", "FAILED");
+            }
+        });
+    }
+
+
+
+
+
+
 
 
 }

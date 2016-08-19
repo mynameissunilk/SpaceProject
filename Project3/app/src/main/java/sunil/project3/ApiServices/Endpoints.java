@@ -19,6 +19,7 @@ import sunil.project3.APOD;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.ContentNasa;
+import sunil.project3.DBHelper;
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
 import sunil.project3.GuardianArticle;
@@ -61,6 +62,9 @@ public class Endpoints {
     public static String encryptedKey64;
     public static String twitToken;
 
+
+
+
     // API Call/Endpoint Methods
     // All calls use Retrofit, OkhttpInterceptor, and GSON POJO's
     // Except for getting Twitter's OAuth token, where I used JSON...
@@ -88,15 +92,23 @@ public class Endpoints {
                 try {
 
                     List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
-                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
+//                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
+                    ArrayList<CardObject>guardianArticleList = new ArrayList<CardObject>();
+
                     // print articles & links
                     for (int i = 0; i < guardianArticles.size(); i++) {
-                     //   Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                        Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
                         guardianArticleList.add(new GuardianArticle(
                                 guardianArticles.get(i).getWebTitle(),
                                 guardianArticles.get(i).getApiUrl()));
-                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
-                        //CardObjSingleton.getInstance().addToMasterList(guardianArticleList);
+//                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
+                        //CardObjSingleton.getInstance().addListToMasterList(guardianArticleList);
+                        Log.i("guardian", "onResponse: number of articles:  "+guardianArticles.size());
+                        Log.i("guardian", "master list size:  "+CardObjSingleton.getInstance().getMasterList().size());
+                        DBHelper helper = DBHelper.getInstance(this);
+                        helper.addGuardianToTable(new GuardianArticle(
+                                guardianArticles.get(i).getWebTitle(),
+                                guardianArticles.get(i).getApiUrl()));
                     }
 
 

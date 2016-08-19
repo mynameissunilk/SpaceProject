@@ -75,72 +75,73 @@ public class CardObjSingleton {
         values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/New_York");
         //using hardcoded calendar id because requesting the READ_CALENDAR permission was giving me trouble when I tried to query for the id,
         //I'll come back to it, and checking permissions, when other stuff works
-//        contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
 
+        contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
 
         Toast.makeText(context, event.getmEventTitle() + " added to your calendar", Toast.LENGTH_SHORT).show();
     }
 
 
 
-
-
-    public void addEventListToMasterList(){
-
-        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
-        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
-        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
-        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
-        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
-        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
-        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
-        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
-
-        events.add(event);
-        events.add(event1);
-        events.add(event2);
-        events.add(event3);
-        events.add(event4);
-        events.add(event5);
-        events.add(event6);
-        events.add(event7);
-
-
-    }
+    //the methods below are now done via the dbhelper method getEventListFromDb() and adding that to master in mainactivity
+//
+//
+//    public void addEventListToMasterList(){
+//
+//        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
+//        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
+//        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
+//        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
+//        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
+//        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
+//        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
+//        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+//
+//        events.add(event);
+//        events.add(event1);
+//        events.add(event2);
+//        events.add(event3);
+//        events.add(event4);
+//        events.add(event5);
+//        events.add(event6);
+//        events.add(event7);
+//
+//
+//    }
 
     //adds object by object
-    public void addEventsToMasterList() {
-        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
-        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
-        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
-        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
-        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
-        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
-        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
-        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
-
-//        if (masterArray.contains(event)) {
-//        } else if (masterArray.contains(event1)) {
-//        } else if (masterArray.contains(event2)) {
-//        } else if (masterArray.contains(event3)) {
-//        }
-//        else if(masterArray.contains(event4)){}
-//        else if(masterArray.contains(event5)){}
-//        else if(masterArray.contains(event6)){}
-//        else if(masterArray.contains(event7)){}
-//        else {
-        masterArray.add(event);
-        masterArray.add(event1);
-        masterArray.add(event2);
-        masterArray.add(event3);
-        masterArray.add(event4);
-        masterArray.add(event5);
-        masterArray.add(event6);
-        masterArray.add(event7);
-//        }
-        Log.i("list", "addEventsToMasterList, number of events is: " + CardObjSingleton.getInstance().getMasterList().size());
-
-    }
+//    public void addEventsToMasterList() {
+//        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
+//        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
+//        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
+//        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
+//        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
+//        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
+//        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
+//        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+//
+////        if (masterArray.contains(event)) {
+////        } else if (masterArray.contains(event1)) {
+////        } else if (masterArray.contains(event2)) {
+////        } else if (masterArray.contains(event3)) {
+////        }
+////        else if(masterArray.contains(event4)){}
+////        else if(masterArray.contains(event5)){}
+////        else if(masterArray.contains(event6)){}
+////        else if(masterArray.contains(event7)){}
+////        else {
+//        masterArray.add(event);
+//        masterArray.add(event1);
+//        masterArray.add(event2);
+//        masterArray.add(event3);
+//        masterArray.add(event4);
+//        masterArray.add(event5);
+//        masterArray.add(event6);
+//        masterArray.add(event7);
+////        }
+//        Log.i("list", "addEventsToMasterList, number of events is: " + CardObjSingleton.getInstance().getMasterList().size());
+//
+//    }
 
     public void setToken(String s){token = s;}
     public String getToken(){return token;}
