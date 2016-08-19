@@ -201,34 +201,36 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     int height = mWebScrapeCardView.getHeight();
                     if (height < 100) {
-                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         mToggle.setImageResource(R.mipmap.up);
                         Log.i(TAG, "onClick: height " + height);
                     } else {
-                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(100, 0));
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
                         Log.i(TAG, "onClick: height " + height);
                         mToggle.setImageResource(R.mipmap.down);
                     }
                 }
             });
         }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mToggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int height = mWebScrapeCardView.getHeight();
+                    if (height < 100) {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        Log.i(TAG, "onClick: height " + height);
+                    } else {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
+                        Log.i(TAG, "onClick: height " + height);
+                    }
+                }
+            });
+        }
+
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
         mRecyclerView.setAdapter(adapter);
-
-        mToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int height = mWebScrapeCardView.getHeight();
-                if (height < 100) {
-                    mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    Log.i(TAG, "onClick: height " + height);
-                } else {
-                    mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
-                    Log.i(TAG, "onClick: height " + height);
-                }
-            }
-        });
 
 
         //notification
