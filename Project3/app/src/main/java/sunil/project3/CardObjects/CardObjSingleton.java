@@ -9,7 +9,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import sunil.project3.DBHelper;
 
@@ -39,6 +41,11 @@ public class CardObjSingleton {
 
     //takes the lists returned by API Endpoints class and adds them... to the master list, which is what populates the RecyclerView
     public void addListToMasterList(ArrayList<CardObject> list){
+
+
+        Set<CardObject> set = new HashSet<CardObject>(list);
+        if(set.size()< list.size())
+            
         masterArray.addAll(list);
     }
 

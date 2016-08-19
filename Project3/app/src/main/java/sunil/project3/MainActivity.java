@@ -178,25 +178,25 @@ public class MainActivity extends AppCompatActivity {
         // NOW CREATE OBJECTS FROM THE TABLE
         CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
-        if (helper.checkAPOD() == true) {
-            cardsing.addObjectToMasterList(helper.createAPODFromTable());
-        }
-        if (helper.checkGuardian() == true) {
-            cardsing.addListToMasterList(helper.getGuardianListFromDb());
-        }
-        if (helper.checkNPR() == true) {
-            cardsing.addListToMasterList(helper.getNPRListFromDb());
-        }
+        cardsing.addObjectToMasterList(helper.createAPODFromTable());
 
 
+        cardsing.addListToMasterList(helper.getGuardianListFromDb());
 
-//        SetDailyPhotos setDailyPhotos = new SetDailyPhotos();
-//        setDailyPhotos.execute();
-        String marsUrl = "http://highmars.org/wp-content/uploads/2016" + "/05/high-mars-10.jpg";
+        cardsing.addListToMasterList(helper.getNPRListFromDb());
+
+        CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
+
+
+        //HARDCODING TWEETS IN BECAUSE TWITTER API SHOULD WORK BY ALL LOGICAL REASONS... BUT DOESN'T.
+        // THIS IS JUST TO SHOW THE CONCEPT
+//        TwitterObj tweet = new TwitterObj()
+
 
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016" + "/05/high-mars-10.jpg";
 
         mImageScrape = (ImageView) findViewById(R.id.imageScrape);
 

@@ -169,6 +169,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .load("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/2000px-National_Public_Radio_logo.svg.png")
                             .into(NPR.mImageViewLarge);
                     NPR.mHeadder.setText(nprObj.getTitle());
+                    NPR.mDescription.setText(nprObj.getParagraph());
+                    NPR.mDate.setText(nprObj.getDate());
 
                     NPR.mHeadder.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -207,6 +209,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 LinearLayout.LayoutParams bufferParams = new LinearLayout.LayoutParams(num2, 0);
                                 NPR.mSnippet.setLayoutParams(bufferParams);
                                 NPR.mDate.setLayoutParams(bufferParams);
+
                             }
                         }
                     });
@@ -272,8 +275,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             .load(nasaObj.getURL())
                             .into(NVH.mNasaImageViewLarge);
                     NVH.mTitleNasa.setText(nasaObj.getTitle());
-                    //need a place for explanation
-
+                    NVH.mExplanation.setText(nasaObj.getExplanation());
 
                     //to open the url in a webview
                     NVH.mNasaImageViewLarge.setOnClickListener(new View.OnClickListener() {

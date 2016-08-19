@@ -19,7 +19,7 @@ import sunil.project3.CardObjects.CardObject;
 public class DBHelper extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "spaceDB";
 
     // content provider
@@ -141,6 +141,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SQL_DELETE_CALENDAR_TABLE = "DROP TABLE IF EXISTS " + Table_Astro_Events;
 
 
+
+
+
     public void addGuardianToTable(GuardianArticle g) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -161,13 +164,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 cv.put(NPR_ABSTRACT_COL, npr.getParagraph());
                 cv.put(NPR_DATE_COL, npr.getDate());
                 cv.put(NPR_URL_COL, npr.getURL());
-                db.insert(Table_NPR, null, cv);
+                db.insertWithOnConflict(Table_NPR,null,cv,SQLiteDatabase.CONFLICT_REPLACE);
             }
             else if(list.get(i) instanceof GuardianArticle){
                 GuardianArticle g = (GuardianArticle) list.get(i);
                 cv.put(GUARDIAN_TITLE_COL, g.getTitle());
                 cv.put(GUARDIAN_URL_COL, g.getURL());
-                db.insert(Table_Guardian, null, cv);
+                db.insertWithOnConflict(Table_Guardian, null, cv,SQLiteDatabase.CONFLICT_REPLACE);
             }
         }
         db.close();
