@@ -3,58 +3,58 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="#00000000"
     android:orientation="vertical"
     tools:context="sunil.project3.MainActivity">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/horizontal_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="800px"
-        card_view:cardElevation="3dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardBackgroundColor="@color/OpaqueDarkRed"
-        card_view:theme="@style/Base.Theme.AppCompat.Light">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Daily Space Images"
-            android:elevation="15dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="30dp"
-            android:layout_margin="10dp"
-            android:textColor="@color/cardview_light_background"/>
-
-        <ListView
-            android:id="@+id/HorizontalIMGlistView"
+        <android.support.v7.widget.CardView
+            android:id="@+id/webScrapeCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
+            android:layout_height="800px"
+            card_view:cardBackgroundColor="@color/OpaqueDarkRed"
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:theme="@style/Base.Theme.AppCompat.Light">
 
-    </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/imageScrape"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
 
-    <Button
-        android:id="@+id/toggle"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="Toggle Daily Images"
-        android:elevation="15dp"
-        android:textSize="10dp"
-        android:background="@color/OpaqueDarkBlue"
-        android:gravity="center"
-        android:textColor="@color/LightBlue"/>
+        </android.support.v7.widget.CardView>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="40dp">
-    </android.support.v7.widget.RecyclerView>
+        <ImageButton
+            android:id="@+id/toggle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="top"
+            android:layout_margin="10dp"
+            android:alpha="0.4"
+            android:background="#00000000"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:src="@mipmap/down"
+            android:text="Toggle Daily Images"
+            android:textColor="@color/LightBlue"
+            android:textSize="10dp" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"></android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </LinearLayout>

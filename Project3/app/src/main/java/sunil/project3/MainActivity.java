@@ -1,8 +1,15 @@
 package sunil.project3;
 
+import android.app.ActionBar;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -12,13 +19,39 @@ import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+<<<<<<< HEAD
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+=======
 import android.util.Base64;
 import android.util.Log;
+>>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.reflect.Array;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.squareup.picasso.Picasso;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 import org.json.JSONException;
@@ -41,14 +74,24 @@ import sunil.project3.ApiServices.NprService;
 import sunil.project3.ApiServices.TwitterApiService;
 import sunil.project3.CardObjects.CalendarEventObject;
 
+import java.util.List;
+
 import sunil.project3.ApiServices.Endpoints;
+//import sunil.project3.CardObjects.APOD;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
+import sunil.project3.CardObjects.TwitterObj;
+import sunil.project3.ApiServices.NprService;
+import sunil.project3.CardObjects.CardObjSingleton;
+import sunil.project3.CardObjects.CardObject;
+<<<<<<< HEAD
+=======
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
 import sunil.project3.NPR.ContentNpr;
 import sunil.project3.NPR.Story;
 import sunil.project3.Twitter.TwitterContent;
+>>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 
 
 public class MainActivity extends AppCompatActivity {
@@ -88,20 +131,47 @@ public class MainActivity extends AppCompatActivity {
     //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public RecyclerView mRecyclerView;
     public RecyclerView mRecyclerView2;
-    public ImageView mImageView1, mImageView2, mImageView3, mImageView4;
+    public ImageView mImageView1, mImageView2, mImageView3, mImageView4, mImageScrape;
     HorizontalScrollView mHorizontalScrollView;
+<<<<<<< HEAD
+    ImageButton mToggle;
+
+    CursorAdapter mCursorAdapter;
+    ListView mListView;
+    CardView mWebScrapeCardView;
+    ImageView mImageView;
+    private static final String TAG = "MainActivity";
+=======
     Button mToggle;
     CursorAdapter mCursorAdapter;
     ListView mListView;
     CardView mHorizontalCardView;
 
 
+>>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+//    private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
+        mToggle = (ImageButton) findViewById(R.id.toggle);
+        mWebScrapeCardView = (CardView) findViewById(R.id.webScrapeCardView);
+        mImageView = (ImageView) findViewById(R.id.imageScrape);
+
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#5E35B1"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+        getSupportActionBar().setShowHideAnimationEnabled(true);
+
+//        Endpoints.connectTwitterforToken();
+=======
         // SQLite HELPER
         DBHelper helper = DBHelper.getInstance(this);
 
@@ -111,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         connectNasa();
 
         connectNPR();
+>>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 
         // NOW CREATE OBJECTS FROM THE TABLE
 
@@ -119,14 +190,46 @@ public class MainActivity extends AppCompatActivity {
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016" + "/05/high-mars-10.jpg";
+
+        SetDailyPhotos setDailyPhotos = new SetDailyPhotos();
+        setDailyPhotos.execute();
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            manager.setOrientation(LinearLayout.VERTICAL);
-        } else {
-            manager.setOrientation(LinearLayout.HORIZONTAL);
+
+            mToggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int height = mWebScrapeCardView.getHeight();
+                    if (height < 100) {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
+                        mToggle.setImageResource(R.mipmap.up);
+                        Log.i(TAG, "onClick: height " + height);
+                    } else {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(100, 0));
+                        Log.i(TAG, "onClick: height " + height);
+                        mToggle.setImageResource(R.mipmap.down);
+                    }
+                }
+            });
         }
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
         mRecyclerView.setAdapter(adapter);
+
+        mToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int height = mWebScrapeCardView.getHeight();
+                if (height < 100) {
+                    mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    Log.i(TAG, "onClick: height " + height);
+                } else {
+                    mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
+                    Log.i(TAG, "onClick: height " + height);
+                }
+            }
+        });
 
 
         //notification
@@ -141,8 +244,6 @@ public class MainActivity extends AppCompatActivity {
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
         //use jobscheduler to determine when to periodically launch notification?
         NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
-
-
 
 
         //inserting astronomical event objects into database
@@ -165,13 +266,65 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event5);
         helper.addCalendarToTable(event6);
         helper.addCalendarToTable(event7);
+        /*
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
 
+        ArrayList<String> scrollViewURLS = new ArrayList<String>();
+        scrollViewURLS.add(eartUrl);
+        scrollViewURLS.add(marsUrl);
+        scrollViewURLS.add(person1);
+        scrollViewURLS.add(person2);
 
+<<<<<<< HEAD
+
+=======
     }
+>>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
 
 
+
+//        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
+//        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
+//        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
+//        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
+//        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
+//        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+//        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+//        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+//        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+//
+//        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+//        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
+//        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
+//        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
+//        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
+//        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+//        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+//        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
+
+////        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
+////        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
+////        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
+////        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
+////        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
+////        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+////        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+////        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+////        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+////
+////        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+////        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
+////        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
+////        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
+////        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
+////        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+////        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+//
 
     /**  all this fun stuff that we are not currently using ..
      * i'll just leave it here. just in case*/
@@ -186,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
 //        navigationView.setNavigationItemSelectedListener(this);
 
 
-    //code for share feature, add this in whichever onClickListener should do
+        //code for share feature, add this in whichever onClickListener should do
 //                            Intent shareIntent = new Intent();
 //                            shareIntent.setAction(Intent.ACTION_SEND);
 //                            shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());//second parameter is whatever we wanna send as a string url
@@ -204,8 +357,7 @@ public class MainActivity extends AppCompatActivity {
 //        getContentResolver().insert(ProviderContract.NYT.CONTENT_URI, contentValues);
 //        dbHelper.addItems(contentValues);
 
-//
-//
+
 //        //temp card data
 //        ArrayList<String> arrayList = new ArrayList<>();
 //        arrayList.add("From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid. ");
@@ -229,8 +381,12 @@ public class MainActivity extends AppCompatActivity {
 //        astroINList.add("Vanquish the impossthe. ");
 //        astroINList.add("Apollonius of Perga? Citizens .");
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+//        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
 
-//    @Override
+    //    @Override
 //    public void onBackPressed() {
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -288,6 +444,87 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
+<<<<<<< HEAD
+    public class SetDailyPhotos extends AsyncTask<Void, Void, String> {
+        String mURL;
+        private static final String TAG = "SetDailyPhotos";
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                Document document = Jsoup.connect("http://apod.nasa.gov/apod/astropix.html").get();
+                Log.i(TAG, "doInBackground: document" + document);
+                Elements img = document.select("p a img");
+
+                Log.i(TAG, "doInBackground image element: " + img);
+                String imgSource = img.attr("src");
+                Log.i(TAG, "doInBackground: image source " + imgSource);
+                mURL = imgSource;
+
+                Log.i(TAG, "doInBackground: url" + mURL);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String string) {
+            super.onPostExecute(string);
+            mImageScrape = (ImageView) findViewById(R.id.imageScrape);
+//            mImageScrape.setImageBitmap(mBitmap);
+//            http://apod.nasa.gov/
+            String total = "http://apod.nasa.gov/" + mURL;
+            Picasso.with(MainActivity.this).load(total).into(mImageScrape);
+            Log.i(TAG, "onPostExecute: " + total);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+//        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://sunil.project3/http/host/path")
+        );
+//        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://sunil.project3/http/host/path")
+        );
+//        AppIndex.AppIndexApi.end(client, viewAction);
+//        client.disconnect();
+    }
+
+
+}
+=======
     // ENDPOINTS BELOW PLEASE LET THE ENDPOINTS BE AT THE BOTTOM OF THIS ;)
     public  void connectGuardian() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -520,3 +757,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+>>>>>>> 93574c9aeaf7665b05bf2753759cc25a8ac88f1a
