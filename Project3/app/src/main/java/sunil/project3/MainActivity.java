@@ -46,6 +46,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -177,22 +178,30 @@ public class MainActivity extends AppCompatActivity {
         // NOW CREATE OBJECTS FROM THE TABLE
         CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
-        cardsing.addObjectToMasterList(helper.createAPODFromTable());
-        cardsing.addListToMasterList(helper.getGuardianListFromDb());
-        cardsing.addListToMasterList(helper.getNPRListFromDb());
+        if (helper.checkAPOD() == true) {
+            cardsing.addObjectToMasterList(helper.createAPODFromTable());
+        }
+        if (helper.checkGuardian() == true) {
+            cardsing.addListToMasterList(helper.getGuardianListFromDb());
+        }
+        if (helper.checkNPR() == true) {
+            cardsing.addListToMasterList(helper.getNPRListFromDb());
+        }
 
 
+
+//        SetDailyPhotos setDailyPhotos = new SetDailyPhotos();
+//        setDailyPhotos.execute();
+        String marsUrl = "http://highmars.org/wp-content/uploads/2016" + "/05/high-mars-10.jpg";
 
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        String marsUrl = "http://highmars.org/wp-content/uploads/2016" + "/05/high-mars-10.jpg";
 
-        SetDailyPhotos setDailyPhotos = new SetDailyPhotos();
-        setDailyPhotos.execute();
+        mImageScrape = (ImageView) findViewById(R.id.imageScrape);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-
+            Picasso.with(MainActivity.this).load("https://cdn.spacetelescope.org/archives/images/screen/heic1509a.jpg").into(mImageScrape);
             mToggle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -210,19 +219,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mToggle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int height = mWebScrapeCardView.getHeight();
-                    if (height < 100) {
-                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                        Log.i(TAG, "onClick: height " + height);
-                    } else {
-                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
-                        Log.i(TAG, "onClick: height " + height);
-                    }
-                }
-            });
+            manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         }
 
         mRecyclerView.setLayoutManager(manager);
@@ -442,43 +439,52 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-
-    public class SetDailyPhotos extends AsyncTask<Void, Void, String> {
-        String mURL;
-        private static final String TAG = "SetDailyPhotos";
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            try {
-                Document document = Jsoup.connect("http://apod.nasa.gov/apod/astropix.html").get();
-                Log.i(TAG, "doInBackground: document" + document);
-                Elements img = document.select("p a img");
-
-                Log.i(TAG, "doInBackground image element: " + img);
-                String imgSource = img.attr("src");
-                Log.i(TAG, "doInBackground: image source " + imgSource);
-                mURL = imgSource;
-
-                Log.i(TAG, "doInBackground: url" + mURL);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String string) {
-            super.onPostExecute(string);
-            mImageScrape = (ImageView) findViewById(R.id.imageScrape);
-//            mImageScrape.setImageBitmap(mBitmap);
-//            http://apod.nasa.gov/
-            String total = "http://apod.nasa.gov/" + mURL;
-            Picasso.with(MainActivity.this).load(total).into(mImageScrape);
-            Log.i(TAG, "onPostExecute: " + total);
-        }
-    }
+//
+//    public class SetDailyPhotos extends AsyncTask<Void, Void, String> {
+//        String mURL;
+//        private static final String TAG = "SetDailyPhotos";
+//
+//        @Override
+//        protected String doInBackground(Void... voids) {
+//            try {
+////                Document document = Jsoup.connect("http://apod.nasa.gov/apod/astropix.html").get();
+////                Log.i(TAG, "doInBackground: document" + document);
+////                Elements img = document.select("p a img");
+//
+//                Document document = Jsoup.connect("http://www.esa.int").get();
+//                Log.i(TAG, "doInBackground: document" + document);
+//                Elements img = document.select(".slides_control img");
+////                Elements img = div.select("img").get(3);
+//
+//
+//                Log.i(TAG, "doInBackground image element: " + img);
+//
+//                String imgSource = img.attr("src");
+//                Log.i(TAG, "doInBackground: image source " + imgSource);
+//                mURL = imgSource;
+//
+//                Log.i(TAG, "doInBackground: url" + mURL);
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(String string) {
+//            super.onPostExecute(string);
+//            mImageScrape = (ImageView) findViewById(R.id.imageScrape);
+////            mImageScrape.setImageBitmap(mBitmap);
+////            http://apod.nasa.gov/
+////            String total = "http://apod.nasa.gov/" + mURL;
+////            String total = "http://www.esa.int" + mURL;
+////            Picasso.with(MainActivity.this).load(total).into(mImageScrape);
+//            Picasso.with(MainActivity.this).load("https://cdn.spacetelescope.org/archives/images/screen/heic1509a.jpg").into(mImageScrape);
+////            Log.i(TAG, "onPostExecute: " + total);
+//        }
+//    }
 
     @Override
     public void onStart() {

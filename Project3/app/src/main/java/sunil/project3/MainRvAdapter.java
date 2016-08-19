@@ -2,6 +2,7 @@ package sunil.project3;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -229,24 +230,26 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     Log.i(TAG, "guardian counter is: " + mCounterCalendar);
                     if (mCounterGuardian == 0) {
                         //insert section header
-                        GVH.mSectionHeader.setText("Stories from The Guardian");
+//                        GVH.mSectionHeader.setText("Stories from The Guardian");
                         mCounterGuardian++;
                     }
 
                     GVH.mTitle.setText(guardianObj.getTitle());
-                    GVH.mShare.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(mContext, "Sharing " + guardianObj.getTitle(), Toast.LENGTH_SHORT).show();
-                            guardianObj = (GuardianArticle) mList.get(position);
-                            //code for share feature
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());
-                            shareIntent.setType("text/plain");
-                            mContext.startActivity(shareIntent);
-                        }
-                    });
+                    if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        GVH.mShare.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(mContext, "Sharing " + guardianObj.getTitle(), Toast.LENGTH_SHORT).show();
+                                guardianObj = (GuardianArticle) mList.get(position);
+                                //code for share feature
+                                Intent shareIntent = new Intent();
+                                shareIntent.setAction(Intent.ACTION_SEND);
+                                shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());
+                                shareIntent.setType("text/plain");
+                                mContext.startActivity(shareIntent);
+                            }
+                        });
+                    }
 
                     GVH.mLogo.setOnClickListener(new View.OnClickListener() {
                         @Override

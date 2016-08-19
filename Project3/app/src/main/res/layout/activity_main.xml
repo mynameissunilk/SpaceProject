@@ -5,20 +5,101 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00000000"
     android:orientation="vertical"
     tools:context="sunil.project3.MainActivity">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/webScrapeCardView"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            card_view:cardBackgroundColor="@color/OpaqueDarkRed"
-            card_view:cardElevation="3dp"
-            card_view:cardUseCompatPadding="true"
-            card_view:theme="@style/Base.Theme.AppCompat.Light">
+    <android.support.v7.widget.CardView
+        android:id="@+id/webScrapeCardView"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        card_view:cardBackgroundColor="@color/OpaqueDarkRed"
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:theme="@style/Base.Theme.AppCompat.Light">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:letterSpacing="0.1"
+                    android:layout_margin="10dp"
+                    android:text="WELCOME TO SPACE NEWS"
+                    android:textColor="#ffffff"
+                    android:textSize="40dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:letterSpacing="0.1"
+                    android:layout_margin="10dp"
+                    android:alpha="0.9"
+                    android:text="Below you will see articles from various sources:"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:alpha="0.9"
+                    android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:letterSpacing="0.1"
+                        android:text="NASA Daily Picture"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:letterSpacing="0.1"
+                        android:text="The Guardian"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:letterSpacing="0.1"
+                        android:text="Twitter"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:letterSpacing="0.1"
+                        android:text="NPR"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageScrape"
@@ -26,9 +107,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
+                android:alpha="0.5"
                 android:scaleType="fitXY" />
 
-        </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
 
     <RelativeLayout
         android:layout_width="wrap_content"

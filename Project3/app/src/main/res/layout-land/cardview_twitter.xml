@@ -11,15 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/section_header_npr"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:rotation="-90"
-            android:text="NPR"
-            android:textDirection="firstStrong"
-            android:textSize="16sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/section_header_npr"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:rotation="-90"-->
+            <!--android:text="NPR"-->
+            <!--android:textDirection="firstStrong"-->
+            <!--android:textSize="16sp" />-->
 
 
         <android.support.v7.widget.CardView
@@ -28,7 +28,8 @@
             card_view:cardBackgroundColor="@color/OpaqueLightBlue"
             card_view:cardElevation="3dp"
             card_view:cardUseCompatPadding="true"
-            card_view:theme="@style/Base.Theme.AppCompat.Light">
+            card_view:theme="@style/Base.Theme.AppCompat.Light"
+            android:layout_gravity="center_vertical">
 
 
             <LinearLayout

@@ -249,6 +249,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return apod;
     }
 
+    public boolean checkAPOD() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + Table_APOD, null);
+        Boolean rowExists;
+        if (mCursor.moveToFirst()){// do nothing
+            return true;
+        } else {// Table is Empty
+             return false;
+        }
+    }
 
     public NprArticle createNPRFromTable() {
         SQLiteDatabase db = getReadableDatabase();
@@ -275,6 +285,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return guardianList;
     }
 
+
+    public boolean checkGuardian() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + Table_Guardian, null);
+        Boolean rowExists;
+        if (mCursor.moveToFirst()){// do nothing
+            return true;
+        } else {// Table is Empty
+            return false;
+        }
+    }
+
     public ArrayList<CardObject> getNPRListFromDb() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<CardObject> nprList = new ArrayList<>();
@@ -293,6 +315,17 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return nprList;
+    }
+
+    public boolean checkNPR() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + Table_NPR, null);
+        Boolean rowExists;
+        if (mCursor.moveToFirst()){// do nothing
+            return true;
+        } else {// Table is Empty
+            return false;
+        }
     }
 
 
