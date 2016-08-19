@@ -171,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
         // NOW CREATE OBJECTS FROM THE TABLE
 
 
+
+
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
