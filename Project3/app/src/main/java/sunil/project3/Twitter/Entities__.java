@@ -8,30 +8,30 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Entities {
+public class Entities__ {
 
     @SerializedName("hashtags")
     @Expose
-    private List<Hashtag> hashtags = new ArrayList<Hashtag>();
+    private List<Hashtag_> hashtags = new ArrayList<Hashtag_>();
     @SerializedName("symbols")
     @Expose
     private List<Object> symbols = new ArrayList<Object>();
     @SerializedName("user_mentions")
     @Expose
-    private List<UserMention> userMentions = new ArrayList<UserMention>();
+    private List<UserMention_> userMentions = new ArrayList<UserMention_>();
     @SerializedName("urls")
     @Expose
-    private List<Url> urls = new ArrayList<Url>();
+    private List<Url____> urls = new ArrayList<Url____>();
     @SerializedName("media")
     @Expose
-    private List<Medium> media = new ArrayList<Medium>();
+    private List<Medium____> media = new ArrayList<Medium____>();
 
     /**
      * 
      * @return
      *     The hashtags
      */
-    public List<Hashtag> getHashtags() {
+    public List<Hashtag_> getHashtags() {
         return hashtags;
     }
 
@@ -40,7 +40,7 @@ public class Entities {
      * @param hashtags
      *     The hashtags
      */
-    public void setHashtags(List<Hashtag> hashtags) {
+    public void setHashtags(List<Hashtag_> hashtags) {
         this.hashtags = hashtags;
     }
 
@@ -67,7 +67,7 @@ public class Entities {
      * @return
      *     The userMentions
      */
-    public List<UserMention> getUserMentions() {
+    public List<UserMention_> getUserMentions() {
         return userMentions;
     }
 
@@ -76,7 +76,7 @@ public class Entities {
      * @param userMentions
      *     The user_mentions
      */
-    public void setUserMentions(List<UserMention> userMentions) {
+    public void setUserMentions(List<UserMention_> userMentions) {
         this.userMentions = userMentions;
     }
 
@@ -85,7 +85,7 @@ public class Entities {
      * @return
      *     The urls
      */
-    public List<Url> getUrls() {
+    public List<Url____> getUrls() {
         return urls;
     }
 
@@ -94,7 +94,7 @@ public class Entities {
      * @param urls
      *     The urls
      */
-    public void setUrls(List<Url> urls) {
+    public void setUrls(List<Url____> urls) {
         this.urls = urls;
     }
 
@@ -103,7 +103,7 @@ public class Entities {
      * @return
      *     The media
      */
-    public List<Medium> getMedia() {
+    public List<Medium____> getMedia() {
         return media;
     }
 
@@ -112,7 +112,7 @@ public class Entities {
      * @param media
      *     The media
      */
-    public void setMedia(List<Medium> media) {
+    public void setMedia(List<Medium____> media) {
         this.media = media;
     }
 

@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class TwitterContent {
+public class RetweetedStatus {
 
     @SerializedName("created_at")
     @Expose
@@ -25,11 +25,11 @@ public class TwitterContent {
     private Boolean truncated;
     @SerializedName("entities")
     @Expose
-    private Entities entities;
+    private Entities__ entities;
     @SerializedName("extended_entities")
     @Expose
-    private ExtendedEntities extendedEntities;
-    @SerializedName("sodurce")
+    private ExtendedEntities_ extendedEntities;
+    @SerializedName("source")
     @Expose
     private String source;
     @SerializedName("in_reply_to_status_id")
@@ -49,7 +49,7 @@ public class TwitterContent {
     private Object inReplyToScreenName;
     @SerializedName("user")
     @Expose
-    private User user;
+    private User_ user;
     @SerializedName("geo")
     @Expose
     private Object geo;
@@ -62,9 +62,6 @@ public class TwitterContent {
     @SerializedName("contributors")
     @Expose
     private Object contributors;
-    @SerializedName("retweeted_status")
-    @Expose
-    private RetweetedStatus retweetedStatus;
     @SerializedName("is_quote_status")
     @Expose
     private Boolean isQuoteStatus;
@@ -182,7 +179,7 @@ public class TwitterContent {
      * @return
      *     The entities
      */
-    public Entities getEntities() {
+    public Entities__ getEntities() {
         return entities;
     }
 
@@ -191,7 +188,7 @@ public class TwitterContent {
      * @param entities
      *     The entities
      */
-    public void setEntities(Entities entities) {
+    public void setEntities(Entities__ entities) {
         this.entities = entities;
     }
 
@@ -200,7 +197,7 @@ public class TwitterContent {
      * @return
      *     The extendedEntities
      */
-    public ExtendedEntities getExtendedEntities() {
+    public ExtendedEntities_ getExtendedEntities() {
         return extendedEntities;
     }
 
@@ -209,7 +206,7 @@ public class TwitterContent {
      * @param extendedEntities
      *     The extended_entities
      */
-    public void setExtendedEntities(ExtendedEntities extendedEntities) {
+    public void setExtendedEntities(ExtendedEntities_ extendedEntities) {
         this.extendedEntities = extendedEntities;
     }
 
@@ -326,7 +323,7 @@ public class TwitterContent {
      * @return
      *     The user
      */
-    public User getUser() {
+    public User_ getUser() {
         return user;
     }
 
@@ -335,7 +332,7 @@ public class TwitterContent {
      * @param user
      *     The user
      */
-    public void setUser(User user) {
+    public void setUser(User_ user) {
         this.user = user;
     }
 
@@ -409,24 +406,6 @@ public class TwitterContent {
      */
     public void setContributors(Object contributors) {
         this.contributors = contributors;
-    }
-
-    /**
-     * 
-     * @return
-     *     The retweetedStatus
-     */
-    public RetweetedStatus getRetweetedStatus() {
-        return retweetedStatus;
-    }
-
-    /**
-     * 
-     * @param retweetedStatus
-     *     The retweeted_status
-     */
-    public void setRetweetedStatus(RetweetedStatus retweetedStatus) {
-        this.retweetedStatus = retweetedStatus;
     }
 
     /**
