@@ -238,7 +238,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             Toast.makeText(mContext, "Sharing " + guardianObj.getTitle(), Toast.LENGTH_SHORT).show();
-
+                            guardianObj = (GuardianArticle) mList.get(position);
                             //code for share feature
                             Intent shareIntent = new Intent();
                             shareIntent.setAction(Intent.ACTION_SEND);
@@ -252,7 +252,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(mContext, WebViewActivity.class);
-                            intent.putExtra("url", guardianObj.getURL());
+                            intent.putExtra("url", guardianObj.getURL()+"?&api-key=84a85242-3b93-42f2-8952-138f45f50dee");
                             mContext.startActivity(intent);
                             Toast.makeText(mContext, "find out more about " + guardianObj.getTitle(), Toast.LENGTH_SHORT).show();
                         }
@@ -277,7 +277,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(mContext, WebViewActivity.class);
-                            intent.putExtra("url", nasaObj.getURL());
+                            intent.putExtra("url", "http://apod.nasa.gov/apod/");
                             mContext.startActivity(intent);
                         }
                     });
