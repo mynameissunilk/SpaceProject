@@ -255,10 +255,10 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         public void onClick(View view) {
                             Toast.makeText(mContext, "Sharing!", Toast.LENGTH_SHORT).show();
 
-                            //code for share feature, add this in whichever onClickListener should do
+                            //code for share feature
                             Intent shareIntent = new Intent();
                             shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, "lol.url");//guardianObj.getURL()
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());
                             shareIntent.setType("text/plain");
                             mContext.startActivity(shareIntent);
                         }
@@ -304,23 +304,18 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case CALENDAR:
                 if (mList.get(position) instanceof CalendarEventObject) {
                     final CalendarViewHolder calVH = (CalendarViewHolder) holder;
-
                     calendarObj = (CalendarEventObject) mList.get(position);
-                    Log.i(TAG, "calendarObj from the beginning: "+ calendarObj.getmEventTitle());
+
                     Log.i(TAG, "calendar counter is: " + mCounterCalendar);
 
                         if (mCounterCalendar == 0) {
                             //insert section header
                             calVH.mSectionHeader.setText("Plan Ahead:\nAdd Upcoming Celestial Events to Your Calendar");
                             mCounterCalendar++;
-                            Log.i(TAG, "calendar counter after++ is: "+mCounterCalendar);
                         }
-                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
+//                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
                     calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                     calVH.mEventDate.setText(calendarObj.getmEventDate());
-                    calVH.mCalendarCard.setOnClickListener(this);
-
-
 
 
                     calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -346,6 +341,20 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 Toast.makeText(mContext, ""+calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                    calVH.mShare.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            calendarObj = (CalendarEventObject) mList.get(position);
+                            //code for share feature
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, calendarObj.getmDetailUrl());
+                            shareIntent.setType("text/plain");
+                            mContext.startActivity(shareIntent);
+                            Toast.makeText(mContext, "Sharing "+ calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     }
                 break;
         }
@@ -358,7 +367,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onClick(View view) {
-        Log.i(TAG, "addevent click: "+ calendarObj.getmEventTitle());
+
 
     }
 }

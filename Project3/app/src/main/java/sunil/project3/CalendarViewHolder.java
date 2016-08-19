@@ -21,20 +21,17 @@ import sunil.project3.R;
  */
 public class CalendarViewHolder extends RecyclerView.ViewHolder {
     public TextView mEventTitle,mEventDate, mSectionHeader;
-    public ImageButton mAddEvent;
+    public ImageButton mAddEvent, mShare;
     public CardView mCalendarCard;
 
     public CalendarViewHolder(final View itemView) {
         super(itemView);
         mCalendarCard = (CardView) itemView.findViewById(R.id.calendar_single_event_card);
-
         mEventDate = (TextView) itemView.findViewById(R.id.textview_calendar_event_date);
         mEventTitle = (TextView) itemView.findViewById(R.id.textview_calendar_event_title);
         mAddEvent = (ImageButton) itemView.findViewById(R.id.imagebutton_add_to_calendar);
-
-
         mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_calendar);
-
+        mShare = (ImageButton) itemView.findViewById(R.id.imagebutton_calendar_share);
 
 
     }

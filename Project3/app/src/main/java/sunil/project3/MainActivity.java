@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
-        Endpoints.connectGuardian();
+//        Endpoints.connectGuardian();
 
 
         //recyclerview setup
