@@ -178,7 +178,10 @@ public class MainActivity extends AppCompatActivity {
         CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
         cardsing.addObjectToMasterList(helper.createAPODFromTable());
+
+
         cardsing.addListToMasterList(helper.getGuardianListFromDb());
+
         cardsing.addListToMasterList(helper.getNPRListFromDb());
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
