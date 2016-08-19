@@ -181,9 +181,12 @@ public class MainActivity extends AppCompatActivity {
         cardsing.addListToMasterList(helper.getGuardianListFromDb());
         cardsing.addListToMasterList(helper.getNPRListFromDb());
 
+        CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
+
 
         //HARDCODING TWEETS IN BECAUSE TWITTER API SHOULD WORK BY ALL LOGICAL REASONS... BUT DOESN'T.
         // THIS IS JUST TO SHOW THE CONCEPT
+//        TwitterObj tweet = new TwitterObj()
 
 
         //recyclerview setup
@@ -273,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
         String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
         String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
 
-        CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
 
         ArrayList<String> scrollViewURLS = new ArrayList<String>();
         scrollViewURLS.add(eartUrl);

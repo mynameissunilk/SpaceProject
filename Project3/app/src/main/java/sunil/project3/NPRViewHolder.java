@@ -9,7 +9,7 @@ import android.widget.TextView;
  * Created by ander on 8/17/2016.
  */
 public class NPRViewHolder extends RecyclerView.ViewHolder{
-    TextView mSnippet, mHeadder, mDate;
+    TextView mSnippet, mHeadder, mDate, mDescription;
     ImageView mImageViewLarge;
 
     TextView mSectionHeader;
@@ -21,7 +21,7 @@ public class NPRViewHolder extends RecyclerView.ViewHolder{
         mHeadder = (TextView) itemView.findViewById(R.id.npr_title);
         mSnippet = (TextView) itemView.findViewById(R.id.npr_description);
         mDate = (TextView) itemView.findViewById(R.id.npr_date);
-
+        mDescription = (TextView) itemView.findViewById(R.id.npr_description);
         mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_npr);
 
     }
