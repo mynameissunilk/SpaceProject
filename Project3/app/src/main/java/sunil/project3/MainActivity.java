@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     public static String twitToken;
 
 
+
     //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public RecyclerView mRecyclerView;
     public RecyclerView mRecyclerView2;
@@ -141,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
 
+
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+//    private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -662,7 +670,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public  void connectTwitterforToken() {
+    public void connectTwitterforToken() {
         byte[] concatArray = twitterPreEncryption.getBytes();
         encryptedKey64 = Base64.encodeToString(concatArray, Base64.NO_WRAP);
 
