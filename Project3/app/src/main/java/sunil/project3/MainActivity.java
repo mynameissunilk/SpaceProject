@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String twitterBaseURL = "https://api.twitter.com/"; //ugh i'm dumb
     public static String encryptedKey64;
     public static String twitToken;
-
+    private static final String TAG = "MainActivity";
 
 
     //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -95,12 +95,26 @@ public class MainActivity extends AppCompatActivity {
     ListView mListView;
     CardView mHorizontalCardView;
 
-    private static final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // SQLite HELPER
+        DBHelper helper = DBHelper.getInstance(this);
+
+        // TALK TO ENDPOINTS, WRITE RESULT OBJECTS TO TABLE
+        connectGuardian();
+
+        connectNasa();
+
+        connectNPR();
+
+        // NOW CREATE OBJECTS FROM THE TABLE
+        
+
 
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
@@ -133,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inserting astronomical event objects into database
         //i know this doesn't belong here in oncreate, but i don't know where to put it
-        DBHelper helper = DBHelper.getInstance(this);
+
         helper.deleteCalendarTableContents();
         CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 0, 0, "https://in-the-sky.org/news.php?id=20160819_18_100");
         CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 0,0, "https://in-the-sky.org/news.php?id=20160821_11_100");
@@ -308,11 +322,14 @@ public class MainActivity extends AppCompatActivity {
                                 guardianArticles.get(i).getWebTitle(),
                                 guardianArticles.get(i).getApiUrl()));
 
-                        CardObjSingleton.getInstance().addListToMasterList(guardianArticleList);
-                        Log.i("guardian", "onResponse: number of articles:  "+guardianArticles.size());
-                        Log.i("guardian", "master list size:  "+CardObjSingleton.getInstance().getMasterList().size());
-                    }
+                        // write guardian articles to Guardian table!
+                        DBHelper helper1 = DBHelper.getInstance(MainActivity.this);
+                        helper1.addListToTable(guardianArticleList);
+                        Log.i("GUARDIANARTICLES","LIST ADDING LIST TO TABLE");
 
+                        // Log.i("guardian", "onResponse: number of articles:  "+guardianArticles.size());
+                        // Log.i("guardian", "master list size:  "+CardObjSingleton.getInstance().getMasterList().size());
+                    }
 
                     Log.i("SUCCESS", "CONNECTED");
                 } catch (Exception ex) {
@@ -354,8 +371,11 @@ public class MainActivity extends AppCompatActivity {
                 String apodexplanation = response.body().getExplanation();
                 String apodUrl = response.body().getUrl();
 
+                APOD picOfDay = new APOD(apodTitle,apodexplanation,apodUrl);
 
-                //return new APOD(apodTitle,apodexplanation,apodUrl);
+                DBHelper helper = DBHelper.getInstance(MainActivity.this);
+                helper.addAPODToTable(picOfDay);
+                Log.i("APOD","ADDING IMAGE INFO TO TABLE");
 
             }
 
@@ -388,7 +408,8 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Story> responseCopy = new ArrayList<Story>(response.body().getList().getStory());
 
                 // copy the relevant items of responsecopy into an nprarticle list
-                ArrayList<NprArticle> nprList = new ArrayList<NprArticle>();
+                ArrayList<NprArticle> nprList = new ArrayList<>();
+                ArrayList<CardObject>nprHolder = new ArrayList<>();
                 for (int i = 0; i < responseCopy.size(); i++) {
                     nprList.add(new NprArticle(
                             responseCopy.get(i).getTitle().get$text(),
@@ -396,14 +417,19 @@ public class MainActivity extends AppCompatActivity {
                             responseCopy.get(i).getStoryDate().get$text(),
                             responseCopy.get(i).getLink().get(0).get$text()
                     ));
+                    nprHolder.add(nprList.get(i));
                 }
 
-                for (int i = 0; i < nprList.size(); i++) {
+                // messy way to add npr articles to table
+                DBHelper help = DBHelper.getInstance(MainActivity.this);
+                help.addListToTable(nprHolder);
+
+                /*for (int i = 0; i < nprList.size(); i++) {
                     Log.i("TITLE", nprList.get(i).getTitle());
                     Log.i("DESC", nprList.get(i).getParagraph());
                     Log.i("DATE", nprList.get(i).getDate());
                     Log.i("URL", nprList.get(i).getURL());
-                }
+                }*/
 
             }
             @Override
@@ -478,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
 
         TwitterApiService timelineService = retrofit.create(TwitterApiService.class);
 
-        Call<TwitterContent> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
+        Call<TwitterContent> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);
 
         timelineCall.enqueue(new Callback<TwitterContent>() {
             @Override
@@ -493,12 +519,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
-
-
 }
