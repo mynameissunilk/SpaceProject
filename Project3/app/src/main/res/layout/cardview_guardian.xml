@@ -9,20 +9,20 @@
         android:id="@+id/section_header_guardian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="16sp"
-        android:padding="6dp"
         android:layout_marginBottom="6dp"
-        android:text=""/>
+        android:gravity="center_horizontal"
+        android:padding="6dp"
+        android:text=""
+        android:textSize="16sp" />
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_guardian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@color/OpaqueDarkBlue"
         card_view:cardElevation="3dp"
         card_view:cardUseCompatPadding="true"
-        card_view:cardBackgroundColor="@color/OpaqueDarkBlue"
         card_view:theme="@style/Base.Theme.AppCompat.Light">
 
         <LinearLayout
@@ -30,6 +30,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text_guardian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:gravity="left"
+                android:padding="5dp"
+                android:text="The Guardian Title"
+                android:textColor="#ffffff"
+                android:textSize="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,6 +51,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/image_child_large"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:elevation="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/guardian_default_Image"></ImageView>
 
                     <ImageView
                         android:id="@+id/image_child_small"
@@ -50,32 +70,46 @@
                         android:layout_margin="10dp"
                         android:elevation="10dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/guardian_logo"/>
+                        android:src="@mipmap/guardian_logo" />
 
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/title_text_guardian"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/linear_layout_guardian"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginEnd="80dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:alpha="0.8"
-                        android:textColor="@color/DarkBlue" />
+                        android:layout_weight="0.8">
+
+                        <TextView
+                            android:id="@+id/paragraph_text_guardian"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:layout_margin="10dp"
+                            android:letterSpacing="0.1"
+                            android:text="@string/paragraph"
+                            android:textColor="@color/DarkBlue"
+                            android:textSize="15dp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@id/linear_layout_guardian"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
 
-
+                        <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="center_vertical"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:text="0"-->
+                        <!--android:textColor="@color/DarkBlue" />-->
 
                         <ImageButton
                             android:id="@+id/guardian_share_icon"
@@ -83,28 +117,35 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:alpha="0.5"
-                            android:src="@drawable/ic_menu_share"/>
-                    </LinearLayout>
-                </RelativeLayout>
+                            android:src="@drawable/ic_menu_share" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/bufferInner"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="4px"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:alpha=".3"-->
-                    <!--android:background="@color/DarkBlue" />-->
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:alpha="0.5"
+                            android:src="@mipmap/heart" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/bufferInner"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_gravity="center"
+                    android:alpha=".3"
+                    android:background="@color/DarkBlue" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <!--<TextView-->
-        <!--android:id="@+id/buffer"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="4px"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_margin="10dp"-->
-        <!--android:alpha=".3"-->
-        <!--android:background="@color/DarkBlue" />-->
+    <!--android:id="@+id/buffer"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="4px"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:alpha=".3"-->
+    <!--android:background="@color/DarkBlue" />-->
 
 </LinearLayout>

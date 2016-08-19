@@ -10,7 +10,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:label="Space News"
+        android:logo="@mipmap/nasa_logo">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +23,11 @@
 
         <provider
             android:name=".Table1ContentProvider"
-            android:authorities="sunil.project3.Table1ContentProvider" />
+            android:authorities="sunil.project3.Table1ContentProvider" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity android:name=".WebViewActivity"></activity>
     </application>

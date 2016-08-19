@@ -165,7 +165,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mCounterNPR++;
                     }
                     Picasso.with(mContext)
-                            .load("http://sleepypod.com/latest/wp-content/uploads/2016/03/the-new-york-times.jpg")
+                            .load("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/2000px-National_Public_Radio_logo.svg.png")
                             .into(NPR.mImageViewLarge);
                     NPR.mHeadder.setText(nprObj.getTitle());
 
@@ -178,14 +178,18 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                             if (num < 200) {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 200);
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
                                 params.setMargins(40, 30, 40, 30);
                                 view.setLayoutParams(params);
 
-                                LinearLayout.LayoutParams bufferParams1 = new LinearLayout.LayoutParams(num2, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                LinearLayout.LayoutParams bufferParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 bufferParams1.setMargins(30, 5, 30, 5);
                                 NPR.mSnippet.setLayoutParams(bufferParams1);
                                 NPR.mDate.setLayoutParams(bufferParams1);
+
+                                LinearLayout.LayoutParams bufferParams2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                bufferParams1.setMargins(20, 20, 0, 20);
+                                NPR.mHeadder.setLayoutParams(bufferParams2);
 
                                 NPR.mSnippet.setText(nprObj.getParagraph());
                                 NPR.mDate.setText(nprObj.getDate());
@@ -195,7 +199,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                             } else {
                                 Toast.makeText(mContext, "height = " + view.getHeight(), Toast.LENGTH_SHORT).show();
-                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(num2, 199);
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(num2, 199);
                                 params.setMargins(30, 0, 30, 0);
                                 view.setLayoutParams(params);
 
