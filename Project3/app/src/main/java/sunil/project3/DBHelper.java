@@ -10,6 +10,7 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 
 import sunil.project3.CardObjects.CalendarEventObject;
+import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 
 /**
@@ -69,7 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static DBHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new DBHelper(context);
+            instance = new DBHelper(context.getApplicationContext());
         }
         return instance;
     }
@@ -80,7 +81,6 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_CALENDAR_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_NPR_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_GUARDIAN_TABLE);
-
 
         sqLiteDatabase.execSQL("CREATE TABLE " +
                 Table_NYT + "( " +
@@ -150,6 +150,31 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addListToTable(ArrayList<CardObject> list){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i) instanceof NprArticle){
+                NprArticle npr = (NprArticle) list.get(i);
+                cv.put(NPR_TITLE_COL, npr.getTitle());
+                cv.put(NPR_ABSTRACT_COL, npr.getParagraph());
+                cv.put(NPR_DATE_COL, npr.getDate());
+                cv.put(NPR_URL_COL, npr.getURL());
+                db.insert(Table_NPR, null, cv);
+            }
+            else if(list.get(i) instanceof GuardianArticle){
+                GuardianArticle g = (GuardianArticle) list.get(i);
+                cv.put(GUARDIAN_TITLE_COL, g.getTitle());
+                cv.put(GUARDIAN_URL_COL, g.getURL());
+                db.insert(Table_Guardian, null, cv);
+            }
+        }
+        db.close();
+    }
+
+
+
     public void addAPODToTable(APOD a) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -159,6 +184,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(Table_APOD, null, cv);
         db.close();
     }
+
+
+
+
 
     public void addNPRToTable(NprArticle npr) {
         SQLiteDatabase db = getWritableDatabase();
@@ -186,11 +215,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-
-    /**
-     * will these methods know to create different objects? how does it know to do more than one row
-     * isn't that why we loop thru? idk im tired
-     */
 
 
     public GuardianArticle createArticleFromTable() {
@@ -220,13 +244,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //THIS METHOD DOESNT WORK Unable to start activity ComponentInfo{sunil.project3/sunil.project3.MainActivity}: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 8
-    public CalendarEventObject createCalendarEventObjectFromTable() {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + Table_Astro_Events;
-        Cursor cursor = db.rawQuery(query, null);
-//        cursor.close(); CLOSE THIS EVENTUALLY.......
-        return new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)), cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL), cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL), cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
-    }
+//    public CalendarEventObject createCalendarEventObjectFromTable() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        String query = "SELECT * FROM " + Table_Astro_Events;
+//        Cursor cursor = db.rawQuery(query, null);
+////        cursor.close(); CLOSE THIS EVENTUALLY.......
+//        return new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)), cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL), cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL), cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
+//    }
 
     public NprArticle createNPRFromTable() {
         SQLiteDatabase db = getReadableDatabase();
@@ -243,15 +267,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //not even sure if this will do what I want it to
+    //this method seems to work
     //so in the main activity, i insert all the events into the db
     public ArrayList<CardObject> getEventListFromDb() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<CardObject> astroEvents = new ArrayList<>();
-        Cursor cursor = db.query(Table_Astro_Events, null, null, null, null, null, null, null);
+        String query = "SELECT * FROM " + Table_Astro_Events;
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                CalendarEventObject event = createCalendarEventObjectFromTable();
+                CalendarEventObject event = new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)),
+                        cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL),
+                        cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL),
+                        cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
                 astroEvents.add(event);
                 cursor.moveToNext();
             }
@@ -260,6 +288,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return astroEvents;
     }
 
+
+
+
+
+    /** stuff we are not using just now */
 
 //    public void addToTable(String url, String snippet, String para, String imgUrl, String headline) {
 //        SQLiteDatabase db = getWritableDatabase();

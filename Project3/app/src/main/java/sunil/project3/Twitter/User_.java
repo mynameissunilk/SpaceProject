@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class User {
+public class User_ {
 
     @SerializedName("id")
     @Expose
@@ -31,7 +31,7 @@ public class User {
     private String url;
     @SerializedName("entities")
     @Expose
-    private Entities_ entities;
+    private Entities___ entities;
     @SerializedName("protected")
     @Expose
     private Boolean _protected;
@@ -263,7 +263,7 @@ public class User {
      * @return
      *     The entities
      */
-    public Entities_ getEntities() {
+    public Entities___ getEntities() {
         return entities;
     }
 
@@ -272,7 +272,7 @@ public class User {
      * @param entities
      *     The entities
      */
-    public void setEntities(Entities_ entities) {
+    public void setEntities(Entities___ entities) {
         this.entities = entities;
     }
 

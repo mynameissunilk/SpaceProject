@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.ContentNasa;
+import sunil.project3.DBHelper;
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
 import sunil.project3.GuardianArticle;
@@ -30,6 +31,8 @@ import sunil.project3.NprArticle;
 import sunil.project3.Twitter.TwitterContent;
 
 public class Endpoints {
+
+/*   Initially, I thought this was a nice way to declutter the MainActivity before merging with the team, doesn't rly help us atm..
 
     // The Guardian
     public static final String guardianURL = "http://content.guardianapis.com/";
@@ -61,6 +64,9 @@ public class Endpoints {
     public static String encryptedKey64;
     public static String twitToken;
 
+
+
+
     // API Call/Endpoint Methods
     // All calls use Retrofit, OkhttpInterceptor, and GSON POJO's
     // Except for getting Twitter's OAuth token, where I used JSON...
@@ -88,15 +94,23 @@ public class Endpoints {
                 try {
 
                     List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
-                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
+//                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
+                    ArrayList<CardObject>guardianArticleList = new ArrayList<CardObject>();
+
                     // print articles & links
                     for (int i = 0; i < guardianArticles.size(); i++) {
-                     //   Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                        Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
                         guardianArticleList.add(new GuardianArticle(
                                 guardianArticles.get(i).getWebTitle(),
                                 guardianArticles.get(i).getApiUrl()));
-                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
-                        //CardObjSingleton.getInstance().addToMasterList(guardianArticleList);
+//                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
+                        //CardObjSingleton.getInstance().addListToMasterList(guardianArticleList);
+                        Log.i("guardian", "onResponse: number of articles:  "+guardianArticles.size());
+                        Log.i("guardian", "master list size:  "+CardObjSingleton.getInstance().getMasterList().size());
+                        DBHelper helper = DBHelper.getInstance(this);
+                        helper.addGuardianToTable(new GuardianArticle(
+                                guardianArticles.get(i).getWebTitle(),
+                                guardianArticles.get(i).getApiUrl()));
                     }
 
 
@@ -281,7 +295,7 @@ public class Endpoints {
     }
 
 
-/*    public static void connectNYT() {
+*//*    public static void connectNYT() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -321,9 +335,9 @@ public class Endpoints {
                 Log.i("NYT", "FAILED!");
             }
         });
-    }*/
+    }*//*
 
-/*    public static void connectTwitterwithTokenCOPY(String bearerToken) {
+*//*    public static void connectTwitterwithTokenCOPY(String bearerToken) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient twitterTokenClient = new OkHttpClient.Builder()
