@@ -21,3 +21,19 @@ second prototype:
 https://popapp.in/projects/57b34a83d15d26580119ecef/preview
 
 
+PROBLEMS: 
+
+SUNIL: I tried (in several ways) to POST and GET on Twitter. Amusingly, my HTTP requests always return 200 OK statements, but the GET request fails immediately after the GET request. I tried to implement different Retrfofit APIServices, and I tried to pass different POJO/"hand-made" Model objects. Every time, I would get 200 Codes on authentication and on reaching the API, but was unfortunately unable to parse that JSON. 
+
+In addition, we planned to include a 5th API (API.NYT). I must have somehow misused my endpoints, because I was unable to properly query their database. 
+
+Also, (Sunil stil here) It would have been to our benefit if I anticipated the limited scope of the Retrofit callback methods. It was only unfortunately late in the weewk when I realized that I could not quickly or easily access the GSON/JSON/parsed data from my onResponse()s. 
+
+
+
+ALICE: 
+Objects stored in the Arraylist that is passed to our recycleradapter get duplicated. 
+
+ANDERS: 
+We had a strange issue where some cardviews were not of a uniform size in landscape orientation. 
+
