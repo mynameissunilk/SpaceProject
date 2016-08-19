@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import sunil.project3.CardObjects.APOD;
 import sunil.project3.CardObjects.CalendarEventObject;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
@@ -248,7 +247,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                        GVH.mSectionHeader.setLayoutParams(params);
 
                         GVH.mSectionHeader.setText("Stories from The Guardian");
-//                        GVH.mSectionHeader.setVisibility(View.VISIBLE);
                         mCounterGuardian++;
                     }
 //
@@ -261,6 +259,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             Toast.makeText(mContext, "Sharing!", Toast.LENGTH_SHORT).show();
+
                             //code for share feature, add this in whichever onClickListener should do
                             Intent shareIntent = new Intent();
                             shareIntent.setAction(Intent.ACTION_SEND);

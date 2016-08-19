@@ -15,9 +15,9 @@
 
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="@color/OpaqueDarkRed"
+        card_view:cardBackgroundColor="#ffffff"
         card_view:cardElevation="3dp"
         card_view:cardUseCompatPadding="true"
         card_view:theme="@style/Base.Theme.AppCompat.Light">
@@ -27,18 +27,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/nasa_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:gravity="left"
+                android:padding="5dp"
+                android:text="The molecular-decay detonator"
+                android:textColor="#ffffff"
+                android:textSize="15dp"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/nasa_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="20dp"
-                    android:layout_margin="10dp"
-                    android:textColor="@color/LightBlue"/>
 
                 <ImageView
                     android:id="@+id/nasa_image"
@@ -46,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="fitStart"
-                    android:src="@drawable/side_nav_bar" />
+                    android:src="@drawable/startrek" />
 
                 <ImageView
                     android:layout_width="wrap_content"

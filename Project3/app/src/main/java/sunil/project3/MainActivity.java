@@ -1,13 +1,15 @@
 package sunil.project3;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.DocumentsContract;
+import android.app.ActionBar;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,10 +50,11 @@ import java.util.List;
 
 
 import sunil.project3.CardObjects.CalendarEventObject;
+
 import java.util.List;
 
 import sunil.project3.ApiServices.Endpoints;
-import sunil.project3.CardObjects.APOD;
+//import sunil.project3.CardObjects.APOD;
 import sunil.project3.CardObjects.CardObjSingleton;
 import sunil.project3.CardObjects.CardObject;
 import sunil.project3.CardObjects.TwitterObj;
@@ -68,18 +72,17 @@ public class MainActivity extends AppCompatActivity {
     ImageButton mToggle;
 
     CursorAdapter mCursorAdapter;
-    //    TextView mT1, mT2, mT3, mT4, mT5;
     ListView mListView;
     CardView mWebScrapeCardView;
     ImageView mImageView;
-
     private static final String TAG = "MainActivity";
+
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
-
+//    private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +92,19 @@ public class MainActivity extends AppCompatActivity {
         mWebScrapeCardView = (CardView) findViewById(R.id.webScrapeCardView);
         mImageView = (ImageView) findViewById(R.id.imageScrape);
 
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#5E35B1"));
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+        getSupportActionBar().setShowHideAnimationEnabled(true);
 
 //        Endpoints.connectTwitterforToken();
 
+        //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
+        Endpoints.connectGuardian();
+
+
+        //recyclerview setup
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         String marsUrl = "http://highmars.org/wp-content/uploads/2016" + "/05/high-mars-10.jpg";
 
         SetDailyPhotos setDailyPhotos = new SetDailyPhotos();
@@ -115,29 +128,67 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        else {
+        mRecyclerView.setLayoutManager(manager);
+        MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
+        mRecyclerView.setAdapter(adapter);
 
-            mToggle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int height = mWebScrapeCardView.getHeight();
-                    if (height < 100) {
-                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                        Log.i(TAG, "onClick: height " + height);
-                    } else {
-                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
-                        Log.i(TAG, "onClick: height " + height);
-                    }
+        mToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int height = mWebScrapeCardView.getHeight();
+                if (height < 100) {
+                    mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    Log.i(TAG, "onClick: height " + height);
+                } else {
+                    mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
+                    Log.i(TAG, "onClick: height " + height);
                 }
-            });
-        }
+            }
+        });
 
+
+        //notification
+        NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
+        textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
+                .setBigContentTitle("Come see what's new!");
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
+        notificationBuilder.setContentTitle("Yoohoo....")
+
+                .setAutoCancel(true)
+                .setStyle(textStyle)
+                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
+        //use jobscheduler to determine when to periodically launch notification?
+        NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
+
+
+        //inserting astronomical event objects into database
+        //i know this shouldnt be here in oncreate, but i don't know where to put it
+        DBHelper helper = DBHelper.getInstance(this);
+        helper.deleteCalendarTableContents();
+        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
+        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
+        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
+        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
+        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
+        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
+        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
+        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+        helper.addCalendarToTable(event);
+        helper.addCalendarToTable(event1);
+        helper.addCalendarToTable(event2);
+        helper.addCalendarToTable(event3);
+        helper.addCalendarToTable(event4);
+        helper.addCalendarToTable(event5);
+        helper.addCalendarToTable(event6);
+        helper.addCalendarToTable(event7);
         /*
         String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
         String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
         String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
         String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
 
+        CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
 
         ArrayList<String> scrollViewURLS = new ArrayList<String>();
         scrollViewURLS.add(eartUrl);
@@ -147,23 +198,48 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
-        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
-        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
-        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
-        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-
-        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
-        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
-        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
-        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
-        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
-        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
-        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
-        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
 
 
+//        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
+//        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
+//        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
+//        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
+//        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
+//        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+//        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+//        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+//        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+//
+//        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+//        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
+//        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
+//        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
+//        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
+//        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+//        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+//        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
 
+////        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
+////        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
+////        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
+////        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
+////        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
+////        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
+////        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
+////        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
+////        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
+////
+////        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
+////        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
+////        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
+////        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
+////        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
+////        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
+////        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
+//
+
+    /**  all this fun stuff that we are not currently using ..
+     * i'll just leave it here. just in case*/
 //
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -174,82 +250,16 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
 
-//*/
-        List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
-        if (masterList.size()>0){masterList.clear();}
-//        masterList.add(nasaObj1);
-        CardObjSingleton.getInstance().addEventsToMasterList();
-//        masterList.add(guardianObj1);
-//        masterList.add(guardianObj2);
-//        masterList.add(twitterObj1);
-//        masterList.add(twitterObj2);
-//        masterList.add(nytObj1);
-//        masterList.add(nytObj2);
-//        masterList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
-//        masterList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
-        Log.i("list", "master list size: "+masterList.size());
-//        ArrayList<CalendarEventObject> eventList = CalendarEventSingleton.getInstance().getEventList();
-//        CalendarEventSingleton.getInstance().addEventsToMasterList(eventList);
 
-//*/
-        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
-        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
-        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
-        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
-        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-
-        APOD apod1 = new APOD("Title here", temp2, temp3);
-        APOD apod2 = new APOD("Title here", temp2, temp3);
-        NprArticle npr1 = new NprArticle("Title here", temp2, "20/12/2016", temp4);
-        NprArticle npr2 = new NprArticle("Title here", temp2, "20/12/2016", temp4);
-        GuardianArticle guard1 = new GuardianArticle("An article on Mars", "because");
-        GuardianArticle guard2 = new GuardianArticle("An article on Earth", "because");
-
-        masterList.add(npr1);
-        masterList.add(npr2);
-        masterList.add(apod2);
-        masterList.add(apod1);
-        masterList.add(guard2);
-        masterList.add(guard1);
-
-        for (int i = 0; i < masterList.size(); i ++){
-            Log.i(TAG, "onCreate: " + masterList.get(i));
-        }
-
-        //recyclerview setup CARDOBJECTS
-        //recyclerview setup CARDOBJECTS
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            manager.setOrientation(LinearLayout.VERTICAL);
-        } else {
-            manager.setOrientation(LinearLayout.HORIZONTAL);
-        }
-        mRecyclerView.setLayoutManager(manager);
-        MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
-        mRecyclerView.setAdapter(adapter);
-
-
-
-
-
-
-//
-//
-//           //code for share feature, add this in whichever onClickListener should do
+        //code for share feature, add this in whichever onClickListener should do
 //                            Intent shareIntent = new Intent();
 //                            shareIntent.setAction(Intent.ACTION_SEND);
 //                            shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());//second parameter is whatever we wanna send as a string url
 //                            shareIntent.setType("text/plain");
-//                            MainActivity.this.startActivity(shareIntent);
-
-
-
-
+//                            mContext.startActivity(shareIntent);
 
 
 //        DBHelper dbHelper = DBHelper.getInstance(this);
-//
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(ProviderContract.NYT.COL_1, "a");
 //        contentValues.put(ProviderContract.NYT.COL_2, "b");
@@ -260,9 +270,6 @@ public class MainActivity extends AppCompatActivity {
 //        dbHelper.addItems(contentValues);
 
 
-
-//
-//
 //        //temp card data
 //        ArrayList<String> arrayList = new ArrayList<>();
 //        arrayList.add("From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid. ");
@@ -285,15 +292,74 @@ public class MainActivity extends AppCompatActivity {
 //        astroINList.add("White dwarf Euclid ");
 //        astroINList.add("Vanquish the impossthe. ");
 //        astroINList.add("Apollonius of Perga? Citizens .");
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+//        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    //    @Override
+//    public void onBackPressed() {
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main2, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    @SuppressWarnings("StatementWithEmptyBody")
+//    @Override
+//    public boolean onNavigationItemSelected(MenuItem item) {
+//        // Handle navigation view item clicks here.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.nav_camera) {
+//            // Handle the camera action
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
-    public class SetDailyPhotos extends AsyncTask<Void,Void,String>{
-        Bitmap mBitmap;
+
+    public class SetDailyPhotos extends AsyncTask<Void, Void, String> {
         String mURL;
+        private static final String TAG = "SetDailyPhotos";
+
         @Override
         protected String doInBackground(Void... voids) {
             try {
@@ -314,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+
         @Override
         protected void onPostExecute(String string) {
             super.onPostExecute(string);
@@ -332,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
+//        client.connect();
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "Main Page", // TODO: Define a title for the content shown.
@@ -343,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://sunil.project3/http/host/path")
         );
-        AppIndex.AppIndexApi.start(client, viewAction);
+//        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     @Override
@@ -362,8 +429,9 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: Make sure this auto-generated app URL is correct.
                 Uri.parse("android-app://sunil.project3/http/host/path")
         );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
+//        AppIndex.AppIndexApi.end(client, viewAction);
+//        client.disconnect();
     }
+
 
 }
