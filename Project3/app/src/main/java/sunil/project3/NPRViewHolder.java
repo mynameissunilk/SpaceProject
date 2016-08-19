@@ -18,9 +18,9 @@ public class NPRViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
 
         mImageViewLarge = (ImageView) itemView.findViewById(R.id.image_child_large);
-        mHeadder = (TextView) itemView.findViewById(R.id.short_text);
-        mSnippet = (TextView) itemView.findViewById(R.id.snippetNYT);
-        mDate = (TextView) itemView.findViewById(R.id.dateNYT);
+        mHeadder = (TextView) itemView.findViewById(R.id.npr_title);
+        mSnippet = (TextView) itemView.findViewById(R.id.npr_description);
+        mDate = (TextView) itemView.findViewById(R.id.npr_date);
 
         mSectionHeader = (TextView) itemView.findViewById(R.id.section_header_npr);
 
