@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event7);
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
-        Log.i("guardian", "calendar events added to master: "+ );
 
 
     }
