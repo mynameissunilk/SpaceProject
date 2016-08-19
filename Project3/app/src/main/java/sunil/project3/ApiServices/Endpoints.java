@@ -2,16 +2,12 @@ package sunil.project3.ApiServices;
 
 import android.util.Base64;
 import android.util.Log;
-
 import com.google.gson.Gson;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -19,9 +15,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+//import sunil.project3.APOD;
+import sunil.project3.CardObjects.CardObjSingleton;
+import sunil.project3.CardObjects.CardObject;
 import sunil.project3.ContentNasa;
 import sunil.project3.Guardian.Content;
 import sunil.project3.Guardian.ResponseBody;
+import sunil.project3.GuardianArticle;
 import sunil.project3.NPR.ContentNpr;
 import sunil.project3.NPR.Story;
 import sunil.project3.NYT.ContentNyt;
@@ -64,6 +64,7 @@ public class Endpoints {
     // API Call/Endpoint Methods
     // All calls use Retrofit, OkhttpInterceptor, and GSON POJO's
     // Except for getting Twitter's OAuth token, where I used JSON...
+
     public static void connectGuardian() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -87,11 +88,17 @@ public class Endpoints {
                 try {
 
                     List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
-
+                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
                     // print articles & links
                     for (int i = 0; i < guardianArticles.size(); i++) {
-                        Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                     //   Log.i("CONTENTS: ", guardianArticles.get(i).getApiUrl() + " " + guardianArticles.get(i).getWebTitle());
+                        guardianArticleList.add(new GuardianArticle(
+                                guardianArticles.get(i).getWebTitle(),
+                                guardianArticles.get(i).getApiUrl()));
+                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
+                        //CardObjSingleton.getInstance().addToMasterList(guardianArticleList);
                     }
+
 
 
                     Log.i("SUCCESS", "CONNECTED");
@@ -133,9 +140,8 @@ public class Endpoints {
                 String apodexplanation = response.body().getExplanation();
                 String apodUrl = response.body().getUrl();
 
-                Log.i("TITLE: ", apodTitle);
-                Log.i("EXPLANATION: ", apodexplanation);
-                Log.i("URL: ", apodUrl);
+
+                //return new APOD(apodTitle,apodexplanation,apodUrl);
 
             }
 
@@ -146,7 +152,7 @@ public class Endpoints {
         });
     }
 
-    public void connectNPR() {
+    public static void connectNPR() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient nprClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -212,7 +218,7 @@ public class Endpoints {
 
         TwitterApiService twitterService = retrofit.create(TwitterApiService.class);
 
-        String twitAuth = "Basic " + encryptedKey64;
+        final String twitAuth = "Basic " + encryptedKey64;
 
         Call<okhttp3.ResponseBody> call = twitterService.getToken(twitAuth, "application/x-www-form-urlencoded;charset=UTF-8", "client_credentials");
         call.enqueue(new Callback<okhttp3.ResponseBody>() {
@@ -226,7 +232,6 @@ public class Endpoints {
                     JSONObject jason = new JSONObject(output);
                     twitToken = jason.getString("access_token");
 
-                    // token is trapped in this scope, sigh took forever to realize this
                     connectTwitterwithToken("Bearer "+twitToken);
 
                 } catch (IOException e) {
@@ -259,37 +264,24 @@ public class Endpoints {
 
         TwitterApiService timelineService = retrofit.create(TwitterApiService.class);
 
-        Call<okhttp3.ResponseBody> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
+        Call<TwitterContent> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
 
-        timelineCall.enqueue(new Callback<okhttp3.ResponseBody>() {
+        timelineCall.enqueue(new Callback<TwitterContent>() {
             @Override
-            public void onResponse(Call<okhttp3.ResponseBody> call, Response<okhttp3.ResponseBody> response) {
+            public void onResponse(Call<TwitterContent> call, Response<TwitterContent> response) {
                 Log.i("@GET WITH TOKEN", "GOT TO GETTIMELINE() ONRESPONSE");
-
-                Gson gson = new Gson();
-                TwitterContent content = null;
-                try {
-                    content = new Gson().fromJson(response.body().string(),TwitterContent.class);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                Log.i("TWITTERTEST:",content.getText());
-                /*Log.i("TWEET: ",response.body().getText());
-                Log.i("USERIMAGE_URL: ", response.body().getUser().getProfileImageUrl());
-                Log.i("USERNAME: ",response.body().getEntities().getUserMentions().get(0).getName());*/
-
 
             }
 
             @Override
-            public void onFailure(Call<okhttp3.ResponseBody> call, Throwable t) {
+            public void onFailure(Call<TwitterContent> call, Throwable t) {
                 Log.i("@GET WITH TOKEN", "FAILED");
             }
         });
     }
-    public static void connectNYT() {
+
+
+/*    public static void connectNYT() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -329,5 +321,36 @@ public class Endpoints {
                 Log.i("NYT", "FAILED!");
             }
         });
-    }
+    }*/
+
+/*    public static void connectTwitterwithTokenCOPY(String bearerToken) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        OkHttpClient twitterTokenClient = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(twitterBaseURL)
+                .client(twitterTokenClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TwitterApiService timelineService = retrofit.create(TwitterApiService.class);
+
+        Call<TwitterContent> timelineCall = timelineService.getTimeline(bearerToken,"application/json;charset=utf-8", "NASA_Astronauts", 5);//twitterapi
+
+        timelineCall.enqueue(new Callback<TwitterContent>() {
+            @Override
+            public void onResponse(Call<TwitterContent> call, Response<TwitterContent> response) {
+                Log.i("@GET WITH TOKEN", " GOT TO GETTIMELINE() ONRESPONSE");
+
+            }
+
+            @Override
+            public void onFailure(Call<TwitterContent> call, Throwable t) {
+                Log.i("@GET WITH TOKEN", "FAILED");
+            }
+        });
+    }*/
 }
