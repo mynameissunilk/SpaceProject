@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import sunil.project3.DBHelper;
+
 /**
  * Created by ander on 8/16/2016.
  */
@@ -34,9 +36,6 @@ public class CardObjSingleton {
         return instance;
     }
 
-//    public void addToMasterList(CardObject cardObject) {
-//        masterArray.add(cardObject);
-//    }
 
     //takes the lists returned by API Endpoints class and adds them... to the master list, which is what populates the RecyclerView
     public void addListToMasterList(ArrayList<CardObject> list){
@@ -84,8 +83,9 @@ public class CardObjSingleton {
 
 
 
-    public void addEventListToMasterList(){
 
+
+    public void addEventListToMasterList(){
 
         CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
         CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");

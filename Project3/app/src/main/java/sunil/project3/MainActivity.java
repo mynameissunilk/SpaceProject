@@ -12,30 +12,17 @@ import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 
 import sunil.project3.CardObjects.CalendarEventObject;
 
-import java.util.List;
-
 import sunil.project3.ApiServices.Endpoints;
-import sunil.project3.CardObjects.APOD;
 import sunil.project3.CardObjects.CardObjSingleton;
-import sunil.project3.CardObjects.CardObject;
-import sunil.project3.CardObjects.TwitterObj;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Endpoints.connectTwitterforToken();
 
         //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
+        Endpoints.connectGuardian();
 
-//recyclerview setup
+
+        //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -72,81 +60,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(manager);
         MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
         mRecyclerView.setAdapter(adapter);
-
-
-        Endpoints.connectGuardian();
-
-        /*mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
-
-
-//        CardObjSingleton.getInstance().addListToMasterList(Endpoints.connectGuardian());
-
-
-
-//        GuardianArticle guardianObj1 = new GuardianArticle("")
-//
-//
-//        List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
-//        if (masterList.size() > 0) {
-//            masterList.clear();
-//        }
-//        masterList.add(guardianObj1);
-//        CardObjSingleton.getInstance().addEventsToMasterList();
-
-
-
-        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
-        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
-        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
-        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
-        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
-        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
-        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
-
-        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
-        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
-        GuardianArticle guardianObj1 = new GuardianArticle(temp1, temp2);
-        GuardianArticle guardianObj2 = new GuardianArticle(temp3, temp4);
-        APOD nasaObj1 = new APOD(eartUrl, "An article on Mars", "because");
-
-        ArrayList<CardObject> list = new ArrayList<>();
-
-        list.add(guardianObj1);
-        list.add(guardianObj2);
-        list.add(nasaObj1);
-
-        CardObjSingleton.getInstance().addListToMasterList(list);
-
-
-
-
-        mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
->>>>>>> b4010cd11561afd98e05dda2627d69403327b306
-        mToggle = (Button) findViewById(R.id.toggle);
-        mHorizontalCardView = (CardView) findViewById(R.id.horizontal_scrollview);*/
-
-//        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-/*        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-        ArrayList<String> scrollViewURLS = new ArrayList<String>();
-        scrollViewURLS.add(marsUrl);
-        ImagScrollViewAdapter ImgAdapter = new ImagScrollViewAdapter(this, scrollViewURLS);
-
-        mListView.setAdapter(ImgAdapter);
-        mToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int height = mListView.getHeight();
-                if (height < 100) {
-                    mHorizontalCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
-                    Log.i(TAG, "onClick: height " + height);
-                } else {
-                    mHorizontalCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
-                    Log.i(TAG, "onClick: height " + height);
-                }
-            }
-        });*/
 
 
         //notification
@@ -163,70 +76,40 @@ public class MainActivity extends AppCompatActivity {
         //use jobscheduler to determine when to periodically launch notification?
         NotificationManagerCompat.from(MainActivity.this).notify(0, notificationBuilder.build());
 
+
+
+
+        //inserting astronomical event objects into database
+        //i know this shouldnt be here in oncreate, but i don't know where to put it
+        DBHelper helper = DBHelper.getInstance(this);
+        helper.deleteCalendarTableContents();
+        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 00, 00, "https://in-the-sky.org/news.php?id=20160819_18_100");
+        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100");
+        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
+        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 00, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
+        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
+        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
+        CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
+        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+        helper.addCalendarToTable(event);
+        helper.addCalendarToTable(event1);
+        helper.addCalendarToTable(event2);
+        helper.addCalendarToTable(event3);
+        helper.addCalendarToTable(event4);
+        helper.addCalendarToTable(event5);
+        helper.addCalendarToTable(event6);
+        helper.addCalendarToTable(event7);
+
+        CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
+
+
+
     }
 
-}
 
 
-//dummy data
-        /*
-        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
-        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
-        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
-
-
-        ArrayList<String> scrollViewURLS = new ArrayList<String>();
-        scrollViewURLS.add(eartUrl);
-        scrollViewURLS.add(marsUrl);
-        scrollViewURLS.add(person1);
-        scrollViewURLS.add(person2);
-
-
-
-<<<<<<< HEAD
-        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
-        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
-        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
-        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
-        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
-        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
-        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
-
-        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
-        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
-        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
-        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
-        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
-        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
-        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
-        NasaObj nasaObj2 = new NasaObj(eartUrl, "An article on Earth", "because");
-=======
-//        String temp1 = "From which we spring! Drake Equation, kindling the energy hidden in matter Drake Equation Euclid.";
-//        String temp2 = "Great turbulent clouds at the edge of forever consectetur star stuff harvesting star ligh";
-//        String temp3 = "White dwarf Euclid paroxysm of global death of brilliant syntheses concept of the number oneinteriors of collapsing stars";
-//        String temp4 = "Vanquish the impossible the carbon in our apple pies hydrogen atoms globular star cluster gr star light.";
-//        String temp5 = "Apollonius of Perga? Citizens of distant epochs? At the edge of forever colonies a very smal hydrogen atoms colonies";
-//        String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
-//        String eartUrl = "https://lifesjourneyblog.files.wordpress.com/2013/07/planet-earth-from-space.jpg";
-//        String person1 = "http://www.tvchoicemagazine.co.uk/sites/default/files/imagecache/interview_image/intex/michael_emerson.png";
-//        String person2 = "https://d.ibtimes.co.uk/en/full/1356835/number-2-u-s-president-barack-obama-second-most-admired-person-planet.jpg?w=400";
-//
-//        TwitterObj twitterObj1 = new TwitterObj(person1, "name", temp5, "8/14/2016", "Anders");
-//        TwitterObj twitterObj2 = new TwitterObj(person2, "name", temp3, "8/14/2016", "Anders");
-//        GuardianObj guardianObj1 = new GuardianObj(temp1, temp2, temp3);
-//        GuardianObj guardianObj2 = new GuardianObj(temp1, temp2, temp3);
-//        NYTObj nytObj1 = new NYTObj(temp1, temp2, temp3, temp4);
-//        NYTObj nytObj2 = new NYTObj(temp1, temp2, temp3, temp4);
-//        NasaObj nasaObj1 = new NasaObj(marsUrl, "An article on Mars", "because");
->>>>>>> b4010cd11561afd98e05dda2627d69403327b306
-
-
-
-        //populate the master list to feed into the recyclerview
-
+    /**  all this fun stuff that we are not currently using ..
+     * i'll just leave it here. just in case*/
 //
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -238,37 +121,12 @@ public class MainActivity extends AppCompatActivity {
 //        navigationView.setNavigationItemSelectedListener(this);
 
 
-        List<CardObject> masterList = CardObjSingleton.getInstance().getMasterList();
-        if (masterList.size()>0){masterList.clear();}
-        masterList.add(nasaObj1);
-        CardObjSingleton.getInstance().addEventsToMasterList();
-        masterList.add(guardianObj1);
-        masterList.add(guardianObj2);
-        masterList.add(twitterObj1);
-        masterList.add(twitterObj2);
-        masterList.add(nytObj1);
-        masterList.add(nytObj2);
-//        masterList.add(new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 00, 00, "https://in-the-sky.org/news.php?id=20160821_11_100"));
-//        masterList.add(new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100"));
-        Log.i("list", "master list size: "+masterList.size());
-
-
-
-
-
-
-
-
-           //code for share feature, add this in whichever onClickListener should do
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());//second parameter is whatever we wanna send as a string url
-                            shareIntent.setType("text/plain");
-                            mContext.startActivity(shareIntent);
-
-
-
-
+    //code for share feature, add this in whichever onClickListener should do
+//                            Intent shareIntent = new Intent();
+//                            shareIntent.setAction(Intent.ACTION_SEND);
+//                            shareIntent.putExtra(Intent.EXTRA_TEXT, guardianObj.getURL());//second parameter is whatever we wanna send as a string url
+//                            shareIntent.setType("text/plain");
+//                            mContext.startActivity(shareIntent);
 
 
 //        DBHelper dbHelper = DBHelper.getInstance(this);
@@ -280,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
 //        contentValues.put(ProviderContract.NYT.COL_5, "e");
 //        getContentResolver().insert(ProviderContract.NYT.CONTENT_URI, contentValues);
 //        dbHelper.addItems(contentValues);
-
-
 
 //
 //
@@ -307,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 //        astroINList.add("White dwarf Euclid ");
 //        astroINList.add("Vanquish the impossthe. ");
 //        astroINList.add("Apollonius of Perga? Citizens .");
-    }
+
 
 //    @Override
 //    public void onBackPressed() {
@@ -365,6 +221,6 @@ public class MainActivity extends AppCompatActivity {
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
-}
 
-*/
+
+}

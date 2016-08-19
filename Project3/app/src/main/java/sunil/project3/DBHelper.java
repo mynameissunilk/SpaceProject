@@ -1,15 +1,16 @@
 package sunil.project3;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
 import android.provider.BaseColumns;
 
 import java.util.ArrayList;
+
+import sunil.project3.CardObjects.CalendarEventObject;
+import sunil.project3.CardObjects.CardObject;
 
 /**
  * Created by ander on 8/15/2016.
@@ -29,6 +30,37 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL_4 = ProviderContract.NYT.COL_4;
     public static final String COL_5 = ProviderContract.NYT.COL_5;
 
+
+    public static final String Table_Guardian = "GuardianTable";
+    public static final String GUARDIAN_ID = "_id";
+    public static final String GUARDIAN_TITLE_COL = "title";
+    public static final String GUARDIAN_URL_COL = "url";
+
+    public static final String Table_APOD = "APODTable";
+    public static final String APOD_ID = "_id";
+    public static final String APOD_TITLE_COL = "apodtitle";
+    public static final String APOD_EXPLANATION_COL = "explanation";
+    public static final String APOD_URL_COL = "image_url";
+
+    public static final String Table_NPR = "NPRTable";
+    public static final String NPR_ID = "_id";
+    public static final String NPR_TITLE_COL = "nprtitle";
+    public static final String NPR_ABSTRACT_COL = "abstract";
+    public static final String NPR_DATE_COL = "date";
+    public static final String NPR_URL_COL = "nprurl";
+
+    public static final String Table_Astro_Events = "calendarTable";
+    public static final String CAL_ID = "_id";
+    public static final String CAL_TITLE_COL = "event_title";
+    public static final String CAL_WEEKDAY_COL = "weekday";
+    public static final String CAL_YEAR_COL = "year";
+    public static final String CAL_MONTH_COL = "month";
+    public static final String CAL_DAY_COL = "day";
+    public static final String CAL_HOUR_COL = "hour";
+    public static final String CAL_MINUTE_COL = "minute";
+    public static final String CAL_URL_COL = "detailurl";
+
+
     private static DBHelper instance;
 
     public DBHelper(Context context) {
@@ -44,6 +76,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(SQL_CREATE_APOD_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_CALENDAR_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_NPR_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_GUARDIAN_TABLE);
+
+
         sqLiteDatabase.execSQL("CREATE TABLE " +
                 Table_NYT + "( " +
                 _ID + " INTEGER PRIMARY KEY, " +
@@ -57,9 +95,171 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL(SQL_DELETE_APOD_TABLE);
+        sqLiteDatabase.execSQL(SQL_DELETE_CALENDAR_TABLE);
+        sqLiteDatabase.execSQL(SQL_DELETE_GUARDIAN_TABLE);
+        sqLiteDatabase.execSQL(SQL_DELETE_NPR_TABLE);
+
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Table_NYT);
         onCreate(sqLiteDatabase);
     }
+
+
+    public static final String SQL_CREATE_GUARDIAN_TABLE = "CREATE TABLE " +
+            Table_Guardian + "( " +
+            GUARDIAN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            GUARDIAN_TITLE_COL + " TEXT, " +
+            GUARDIAN_URL_COL + " TEXT)";
+    public static final String SQL_CREATE_APOD_TABLE = "CREATE TABLE " +
+            Table_APOD + "( " +
+            APOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            APOD_TITLE_COL + " TEXT, " +
+            APOD_EXPLANATION_COL + " TEXT, " +
+            APOD_URL_COL + " TEXT)";
+    public static final String SQL_CREATE_NPR_TABLE = "CREATE TABLE " +
+            Table_NPR + "( " +
+            NPR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            NPR_TITLE_COL + " TEXT, " +
+            NPR_ABSTRACT_COL + " TEXT, " +
+            NPR_DATE_COL + " TEXT, " +
+            NPR_URL_COL + " TEXT)";
+    public static final String SQL_CREATE_CALENDAR_TABLE = "CREATE TABLE " +
+            Table_Astro_Events + "( " +
+            CAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            CAL_TITLE_COL + " TEXT, " +
+            CAL_WEEKDAY_COL + " TEXT, " +
+            CAL_YEAR_COL + " INT, " +
+            CAL_MONTH_COL + " INT, " +
+            CAL_DAY_COL + " INT, " +
+            CAL_HOUR_COL + " INT, " +
+            CAL_MINUTE_COL + " INT, " +
+            CAL_URL_COL + " TEXT)";
+
+    public static final String SQL_DELETE_GUARDIAN_TABLE = "DROP TABLE IF EXISTS " + Table_Guardian;
+    public static final String SQL_DELETE_APOD_TABLE = "DROP TABLE IF EXISTS " + Table_APOD;
+    public static final String SQL_DELETE_NPR_TABLE = "DROP TABLE IF EXISTS " + Table_NPR;
+    public static final String SQL_DELETE_CALENDAR_TABLE = "DROP TABLE IF EXISTS " + Table_Astro_Events;
+
+
+    public void addGuardianToTable(GuardianArticle g) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(GUARDIAN_TITLE_COL, g.getTitle());
+        cv.put(GUARDIAN_URL_COL, g.getURL());
+        db.insert(Table_Guardian, null, cv);
+        db.close();
+    }
+
+    public void addAPODToTable(APOD a) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(APOD_TITLE_COL, a.getTitle());
+        cv.put(APOD_EXPLANATION_COL, a.getExplanation());
+        cv.put(APOD_URL_COL, a.getURL());
+        db.insert(Table_APOD, null, cv);
+        db.close();
+    }
+
+    public void addNPRToTable(NprArticle npr) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NPR_TITLE_COL, npr.getTitle());
+        cv.put(NPR_ABSTRACT_COL, npr.getParagraph());
+        cv.put(NPR_DATE_COL, npr.getDate());
+        cv.put(NPR_URL_COL, npr.getURL());
+        db.insert(Table_NPR, null, cv);
+        db.close();
+    }
+
+    public void addCalendarToTable(CalendarEventObject o) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CAL_TITLE_COL, o.getmEventTitle());
+        cv.put(CAL_WEEKDAY_COL, o.getmWeekDay());
+        cv.put(CAL_YEAR_COL, o.getmYear());
+        cv.put(CAL_MONTH_COL, o.getmMonth());
+        cv.put(CAL_DAY_COL, o.getmDay());
+        cv.put(CAL_HOUR_COL, o.getmHour());
+        cv.put(CAL_MINUTE_COL, o.getmMinute());
+        cv.put(CAL_URL_COL, o.getmDetailUrl());
+        db.insert(Table_Astro_Events, null, cv);
+        db.close();
+    }
+
+
+    /**
+     * will these methods know to create different objects? how does it know to do more than one row
+     * isn't that why we loop thru? idk im tired
+     */
+
+
+    public GuardianArticle createArticleFromTable() {
+        //GuardianArticle guardianArticle;
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + Table_Guardian;
+        Cursor cursor = db.rawQuery(query, null);
+//        if(cursor.moveToFirst()){
+//            while(!cursor.isAfterLast()){
+//                String title = cursor.getString(cursor.getColumnIndex(GUARDIAN_TITLE_COL));
+//                String url = (cursor.getString(cursor.getColumnIndex(GUARDIAN_URL_COL)));
+//            }DO I NEED THIS LOOP ANYMORE?
+//        }
+//        cursor.close(); CLOSE THIS EVENTUALLY.......
+        return new GuardianArticle(cursor.getString(cursor.getColumnIndex(GUARDIAN_TITLE_COL)), cursor.getString(cursor.getColumnIndex(GUARDIAN_URL_COL)));
+    }
+
+    public APOD createAPODFromTable() {
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + Table_APOD;
+        Cursor cursor = db.rawQuery(query, null);
+//        cursor.close(); CLOSE THIS EVENTUALLY.......
+        return new APOD(cursor.getString(cursor.getColumnIndex(APOD_TITLE_COL)), cursor.getString(cursor.getColumnIndex(APOD_EXPLANATION_COL)), cursor.getString(cursor.getColumnIndex(APOD_URL_COL)));
+    }
+
+
+
+    //THIS METHOD DOESNT WORK Unable to start activity ComponentInfo{sunil.project3/sunil.project3.MainActivity}: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 8
+    public CalendarEventObject createCalendarEventObjectFromTable() {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + Table_Astro_Events;
+        Cursor cursor = db.rawQuery(query, null);
+//        cursor.close(); CLOSE THIS EVENTUALLY.......
+        return new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)), cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL), cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL), cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
+    }
+
+    public NprArticle createNPRFromTable() {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + Table_APOD;
+        Cursor cursor = db.rawQuery(query, null);
+//        cursor.close(); CLOSE THIS EVENTUALLY.......
+        return new NprArticle(cursor.getString(cursor.getColumnIndex(NPR_TITLE_COL)), cursor.getString(cursor.getColumnIndex(NPR_ABSTRACT_COL)), cursor.getString(cursor.getColumnIndex(NPR_DATE_COL)), cursor.getString(cursor.getColumnIndex(NPR_URL_COL)));
+    }
+
+    public void deleteCalendarTableContents() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(Table_Astro_Events, null, null);
+        db.execSQL("delete from " + Table_Astro_Events);
+        db.close();
+    }
+
+    //not even sure if this will do what I want it to
+    //so in the main activity, i insert all the events into the db
+    public ArrayList<CardObject> getEventListFromDb() {
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<CardObject> astroEvents = new ArrayList<>();
+        Cursor cursor = db.query(Table_Astro_Events, null, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                CalendarEventObject event = createCalendarEventObjectFromTable();
+                astroEvents.add(event);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return astroEvents;
+    }
+
 
 //    public void addToTable(String url, String snippet, String para, String imgUrl, String headline) {
 //        SQLiteDatabase db = getWritableDatabase();
@@ -71,22 +271,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getAllItems() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(Table_NYT, null,null,null,null,null,null);
+        Cursor cursor = db.query(Table_NYT, null, null, null, null, null, null);
         return cursor;
     }
 
     public ArrayList<String> getAllItemsArrayList() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList array = new ArrayList();
-        Cursor cursor = db.query(Table_NYT, null,null,null,null,null,null);
-        if (cursor.moveToFirst()){
-            while(!cursor.isAfterLast()){
+        Cursor cursor = db.query(Table_NYT, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
                 String c1 = cursor.getString(cursor.getColumnIndex(COL_1));
                 String c2 = cursor.getString(cursor.getColumnIndex(COL_2));
                 String c3 = cursor.getString(cursor.getColumnIndex(COL_3));
                 String c4 = cursor.getString(cursor.getColumnIndex(COL_4));
                 String c5 = cursor.getString(cursor.getColumnIndex(COL_5));
-                array.add(c1);array.add(c2);array.add(c3);array.add(c4);array.add(c5);
+                array.add(c1);
+                array.add(c2);
+                array.add(c3);
+                array.add(c4);
+                array.add(c5);
                 cursor.moveToNext();
             }
         }
@@ -105,15 +309,14 @@ public class DBHelper extends SQLiteOpenHelper {
         int rowSelected = 0;
 
         if (id == null) {
-            rowSelected = db.delete(Table_NYT,selection,selectionArgs);
-        }
-        else {
-            rowSelected = db.delete(Table_NYT,"WHERE _ID = ?", selectionArgs);
+            rowSelected = db.delete(Table_NYT, selection, selectionArgs);
+        } else {
+            rowSelected = db.delete(Table_NYT, "WHERE _ID = ?", selectionArgs);
         }
         return rowSelected;
     }
 
-    public int updateProduct(ContentValues values,String selection,String[] selectionArgs,String id) {
+    public int updateProduct(ContentValues values, String selection, String[] selectionArgs, String id) {
         SQLiteDatabase db = getWritableDatabase();
         int rowSelected = 0;
 
@@ -125,20 +328,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return rowSelected;
     }
 
-    public Cursor findStocks(String selection,String[] selectionArgs,String sortOrder, String id){
+    public Cursor findStocks(String selection, String[] selectionArgs, String sortOrder, String id) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = null;
 
-        if(id == null) {
+        if (id == null) {
             cursor = db.query(Table_NYT, null, selection, selectionArgs, null, null, sortOrder);
-        }
-        else{
-            cursor = db.query(Table_NYT, null, "WHERE _ID = ?", selectionArgs, null,null,sortOrder);
+        } else {
+            cursor = db.query(Table_NYT, null, "WHERE _ID = ?", selectionArgs, null, null, sortOrder);
         }
 
         return cursor;
     }
-
 
 
 }
