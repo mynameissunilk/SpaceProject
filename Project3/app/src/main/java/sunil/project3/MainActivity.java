@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     public ImageView mImageView1, mImageView2, mImageView3, mImageView4;
     HorizontalScrollView mHorizontalScrollView;
     Button mToggle;
-
     CursorAdapter mCursorAdapter;
     ListView mListView;
     CardView mHorizontalCardView;
@@ -64,12 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
         //notification
         NotificationCompat.BigTextStyle textStyle = new NotificationCompat.BigTextStyle();
-        textStyle.bigText("Don't you want to know what's going on in space? Space is the Place, if you haven't heard.")
+        textStyle.bigText("Don't you want to know what's going on in space?")
                 .setBigContentTitle("Come see what's new!");
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ic_insert_emoticon_black_24dp);
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
         notificationBuilder.setContentTitle("Yoohoo....")
-
                 .setAutoCancel(true)
                 .setStyle(textStyle)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(), 0));
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 07, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
         CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 00, 00, "https://in-the-sky.org/news.php?id=20160823_18_100");
         CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
-        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/news.php?id=20160830_18_100");
+        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 00, 00, "https://in-the-sky.org/data/object.php?id=103071");
         helper.addCalendarToTable(event);
         helper.addCalendarToTable(event1);
         helper.addCalendarToTable(event2);
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event5);
         helper.addCalendarToTable(event6);
         helper.addCalendarToTable(event7);
+
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
 

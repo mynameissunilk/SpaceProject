@@ -2,6 +2,7 @@ package sunil.project3;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,8 +35,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     GuardianArticle guardianObj;
     APOD nasaObj;
     CalendarEventObject calendarObj;
-//    AstronautViewHolder AVH;
-    CalendarViewHolder calVH;
     Context mContext;
     private final int TWITTER = 0, GUARDIAN = 1, NPR = 2, CALENDAR = 3, NASA = 4;
 
@@ -289,6 +288,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     NVH.mTitleNasa.setText(nasaObj.getTitle());
                     //need a place for explanation
 
+
                     //to open the url in a webview
                     NVH.mNasaImageViewLarge.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -305,26 +305,30 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 if (mList.get(position) instanceof CalendarEventObject) {
                     final CalendarViewHolder calVH = (CalendarViewHolder) holder;
 
+                    calendarObj = (CalendarEventObject) mList.get(position);
+                    Log.i(TAG, "calendarObj from the beginning: "+ calendarObj.getmEventTitle());
                     Log.i(TAG, "calendar counter is: " + mCounterCalendar);
+
                         if (mCounterCalendar == 0) {
                             //insert section header
-                            calVH.mSectionHeader.setText("Add Upcoming Celestial Events to Your Calendar");
+                            calVH.mSectionHeader.setText("Plan Ahead:\nAdd Upcoming Celestial Events to Your Calendar");
                             mCounterCalendar++;
+                            Log.i(TAG, "calendar counter after++ is: "+mCounterCalendar);
                         }
-//                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
+                        if(mCounterCalendar > 0){mCounterCalendar = 1;}
                     calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                     calVH.mEventDate.setText(calendarObj.getmEventDate());
+                    calVH.mCalendarCard.setOnClickListener(this);
 
 
-                    /**this is where the problem is. it sets the textviews fine, but in the inner classes, it can't tell which object it is */
 
-                        calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
+
+                    calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                calendarObj = (CalendarEventObject) mList.get(position);
                                 CardObjSingleton.getInstance().addEventToCalendar(calendarObj, mContext);
-
-                                Log.i("list", "CalendarOnClick: " + calendarObj.getmEventTitle());
+                                Log.i(TAG, "addevent click: "+ calendarObj.getmEventTitle());
 
                             }
                         });
@@ -333,13 +337,12 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         calVH.mCalendarCard.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                calendarObj = (CalendarEventObject) mList.get(position);
                                 Intent intent = new Intent(mContext,WebViewActivity.class);
                                 intent.putExtra("url", calendarObj.getmDetailUrl());
                                 mContext.startActivity(intent);
-//                                Intent intent = new Intent(Intent.ACTION_VIEW);
-//                                intent.setData(Uri.parse(calendarObj.getmDetailUrl()));
-//                                mContext.startActivity(intent);
+
+                                Log.i(TAG, "onClickCalendarCard: "+ calendarObj.getmEventTitle());
                                 Toast.makeText(mContext, ""+calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -355,6 +358,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onClick(View view) {
+        Log.i(TAG, "addevent click: "+ calendarObj.getmEventTitle());
 
     }
 }

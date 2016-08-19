@@ -81,7 +81,6 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_NPR_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_GUARDIAN_TABLE);
 
-
         sqLiteDatabase.execSQL("CREATE TABLE " +
                 Table_NYT + "( " +
                 _ID + " INTEGER PRIMARY KEY, " +
@@ -192,7 +191,6 @@ public class DBHelper extends SQLiteOpenHelper {
      * isn't that why we loop thru? idk im tired
      */
 
-
     public GuardianArticle createArticleFromTable() {
         //GuardianArticle guardianArticle;
         SQLiteDatabase db = getReadableDatabase();
@@ -220,13 +218,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //THIS METHOD DOESNT WORK Unable to start activity ComponentInfo{sunil.project3/sunil.project3.MainActivity}: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 8
-    public CalendarEventObject createCalendarEventObjectFromTable() {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + Table_Astro_Events;
-        Cursor cursor = db.rawQuery(query, null);
-//        cursor.close(); CLOSE THIS EVENTUALLY.......
-        return new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)), cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL), cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL), cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
-    }
+//    public CalendarEventObject createCalendarEventObjectFromTable() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        String query = "SELECT * FROM " + Table_Astro_Events;
+//        Cursor cursor = db.rawQuery(query, null);
+////        cursor.close(); CLOSE THIS EVENTUALLY.......
+//        return new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)), cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL), cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL), cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
+//    }
 
     public NprArticle createNPRFromTable() {
         SQLiteDatabase db = getReadableDatabase();
@@ -243,15 +241,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //not even sure if this will do what I want it to
+    //this method seems to work
     //so in the main activity, i insert all the events into the db
     public ArrayList<CardObject> getEventListFromDb() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<CardObject> astroEvents = new ArrayList<>();
-        Cursor cursor = db.query(Table_Astro_Events, null, null, null, null, null, null, null);
+        String query = "SELECT * FROM " + Table_Astro_Events;
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                CalendarEventObject event = createCalendarEventObjectFromTable();
+                CalendarEventObject event = new CalendarEventObject(cursor.getString(cursor.getColumnIndex(CAL_TITLE_COL)),
+                        cursor.getString(cursor.getColumnIndex(CAL_WEEKDAY_COL)), cursor.getColumnIndex(CAL_YEAR_COL),
+                        cursor.getColumnIndex(CAL_MONTH_COL), cursor.getColumnIndex(CAL_DAY_COL), cursor.getColumnIndex(CAL_HOUR_COL),
+                        cursor.getColumnIndex(CAL_MINUTE_COL), cursor.getString(cursor.getColumnIndex(CAL_URL_COL)));
                 astroEvents.add(event);
                 cursor.moveToNext();
             }
