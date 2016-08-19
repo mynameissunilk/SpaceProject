@@ -53,7 +53,6 @@ import sunil.project3.Twitter.TwitterContent;
 
 public class MainActivity extends AppCompatActivity {
 
-
     // The Guardian
     public static final String guardianURL = "http://content.guardianapis.com/";
     public static final String guardianKey = "84a85242-3b93-42f2-8952-138f45f50dee";
@@ -86,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
     //public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public RecyclerView mRecyclerView;
     public RecyclerView mRecyclerView2;
@@ -105,17 +101,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
-//        Endpoints.connectGuardian();
-
-        Endpoints.connectGuardian();
-
-        DBHelper helper = DBHelper.getInstance(this);
-
-
-
 
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
@@ -148,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         //inserting astronomical event objects into database
         //i know this doesn't belong here in oncreate, but i don't know where to put it
+        DBHelper helper = DBHelper.getInstance(this);
         helper.deleteCalendarTableContents();
         CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 0, 0, "https://in-the-sky.org/news.php?id=20160819_18_100");
         CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 0,0, "https://in-the-sky.org/news.php?id=20160821_11_100");
@@ -167,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event7);
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
+        Log.i("guardian", "calendar events added to master: "+ );
 
 
     }
@@ -288,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-    // ENDPOINTS BELOW
+    // ENDPOINTS BELOW PLEASE LET THE ENDPOINTS BE AT THE BOTTOM OF THIS ;)
     public  void connectGuardian() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -310,9 +297,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Content> call, Response<Content> response) {
                 try {
+                    Log.i("GUARDIAN","CONNECTED");
 
                     List<ResponseBody> guardianArticles = response.body().getResponse().getResults();
-//                    ArrayList<GuardianArticle>guardianArticleList = new ArrayList<GuardianArticle>();
                     ArrayList<CardObject> guardianArticleList = new ArrayList<CardObject>();
 
                     // print articles & links
@@ -321,16 +308,11 @@ public class MainActivity extends AppCompatActivity {
                         guardianArticleList.add(new GuardianArticle(
                                 guardianArticles.get(i).getWebTitle(),
                                 guardianArticles.get(i).getApiUrl()));
-//                        Log.i(guardianArticleList.get(i).getTitle(),"works?");
-                        //CardObjSingleton.getInstance().addListToMasterList(guardianArticleList);
+
+                        CardObjSingleton.getInstance().addListToMasterList(guardianArticleList);
                         Log.i("guardian", "onResponse: number of articles:  "+guardianArticles.size());
                         Log.i("guardian", "master list size:  "+CardObjSingleton.getInstance().getMasterList().size());
-                        DBHelper helper = DBHelper.getInstance(MainActivity.this);
-                        helper.addGuardianToTable(new GuardianArticle(
-                                guardianArticles.get(i).getWebTitle(),
-                                guardianArticles.get(i).getApiUrl()));
                     }
-
 
 
                     Log.i("SUCCESS", "CONNECTED");
@@ -341,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Content> call, Throwable t) {
-                Log.i("FAILURE", "FAILED TO CONNECT");
+                Log.i("THE GUARDIAN", "FAILED TO CONNECT");
             }
         });
     }
@@ -367,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ContentNasa>() {
             @Override
             public void onResponse(Call<ContentNasa> call, Response<ContentNasa> response) {
+                Log.i("NASA","CONNECTION SUCCESSFUL");
 
                 String apodTitle = response.body().getTitle();
                 String apodexplanation = response.body().getExplanation();
@@ -379,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ContentNasa> call, Throwable t) {
-
+                Log.i("NASA","CONNECTION FAILED");
             }
         });
     }
