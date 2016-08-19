@@ -23,7 +23,7 @@ public class CalendarEventObject extends CardObject{
 
     public String getmEventDate() {
 
-        if (mHour == 00 && mMinute == 00) {
+        if (mHour == 0 && mMinute == 0) {
             return mWeekDay + ", " + mMonth + "/" + mDay + "/" + mYear;
         }
         return mWeekDay + ", " + mMonth + "/" + mDay + "/" + mYear + " at " + mHour + ":" + mMinute;

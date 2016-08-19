@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        
         //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
 //        Endpoints.connectGuardian();
 
@@ -78,17 +78,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         //inserting astronomical event objects into database
-        //i know this shouldnt be here in oncreate, but i don't know where to put it
+        //i know this doesn't belong here in oncreate, but i don't know where to put it
         DBHelper helper = DBHelper.getInstance(this);
         helper.deleteCalendarTableContents();
-        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 21, 19, "https://in-the-sky.org/news.php?id=20160819_18_100");
-        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 23,23 , "https://in-the-sky.org/news.php?id=20160821_11_100");
-        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 21, 20, "https://in-the-sky.org/news.php?id=20160822_09_100");
-        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 01, 35, "https://in-the-sky.org/news.php?id=20160822_15_100");
-        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 17, 28, "https://in-the-sky.org/news.php?id=20160822_16_100");
-        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 11, 11, "https://in-the-sky.org/news.php?id=20160823_18_100");
+        CalendarEventObject event = new CalendarEventObject("43P/Wolf-Harrington at perihelion", "Friday", 2016, 8, 19, 0, 0, "https://in-the-sky.org/news.php?id=20160819_18_100");
+        CalendarEventObject event1 = new CalendarEventObject("α–Cygnid meteor shower", "Sunday", 2016, 8, 21, 0,0, "https://in-the-sky.org/news.php?id=20160821_11_100");
+        CalendarEventObject event2 = new CalendarEventObject("The Moon at perigee", "Sunday", 2016, 8, 21, 0, 0, "https://in-the-sky.org/news.php?id=20160822_09_100");
+        CalendarEventObject event3 = new CalendarEventObject("Asteroid 2 Pallas at opposition", "Monday", 2016, 8, 22, 01, 00, "https://in-the-sky.org/news.php?id=20160822_15_100");
+        CalendarEventObject event4 = new CalendarEventObject("Conjunction between the Moon and Uranus", "Monday", 2016, 8, 22, 0, 0, "https://in-the-sky.org/news.php?id=20160822_16_100");
+        CalendarEventObject event5 = new CalendarEventObject("43P/Wolf-Harrington reaches its brightest", "Tuesday", 2016, 8, 23, 0, 0, "https://in-the-sky.org/news.php?id=20160823_18_100");
         CalendarEventObject event6 = new CalendarEventObject("Conjunction between Mars and Saturn", "Wednesday", 2016, 8, 24, 11, 37, "https://in-the-sky.org/news.php?id=20160824_16_100");
-        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 13, 13, "https://in-the-sky.org/data/object.php?id=103071");
+        CalendarEventObject event7 = new CalendarEventObject("144P/Kushida at perihelion", "Tuesday", 2016, 8, 30, 0, 0, "https://in-the-sky.org/data/object.php?id=103071");
         helper.addCalendarToTable(event);
         helper.addCalendarToTable(event1);
         helper.addCalendarToTable(event2);
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         helper.addCalendarToTable(event5);
         helper.addCalendarToTable(event6);
         helper.addCalendarToTable(event7);
-
 
         CardObjSingleton.getInstance().addListToMasterList(DBHelper.getInstance(this).getEventListFromDb());
 

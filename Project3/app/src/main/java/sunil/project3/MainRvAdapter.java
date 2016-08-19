@@ -300,6 +300,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     calVH.mEventTitle.setText(calendarObj.getmEventTitle());
                     calVH.mEventDate.setText(calendarObj.getmEventDate());
+                    //it's messing with the date, dont know why, but it sets it to 3/4/5 6:7
 
 
                     calVH.mAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -328,16 +329,13 @@ public class MainRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         @Override
                         public void onClick(View view) {
                             calendarObj = (CalendarEventObject) mList.get(position);
-                            Toast.makeText(mContext, "Sharing url: "+ calendarObj.getmDetailUrl(), Toast.LENGTH_SHORT).show();
-
-//
 //                            //share feature
-//                            Intent shareIntent = new Intent();
-//                            shareIntent.setAction(Intent.ACTION_SEND);
-//                            shareIntent.putExtra(Intent.EXTRA_TEXT, calendarObj.getmDetailUrl());
-//                            shareIntent.setType("text/plain");
-//                            mContext.startActivity(shareIntent);
-//                            Toast.makeText(mContext, "Sharing " + calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, calendarObj.getmDetailUrl());
+                            shareIntent.setType("text/plain");
+                            mContext.startActivity(shareIntent);
+                            Toast.makeText(mContext, "Sharing " + calendarObj.getmEventTitle(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
