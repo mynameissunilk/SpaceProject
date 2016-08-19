@@ -15,7 +15,7 @@ public class APOD extends CardObject{
         Explanation = e;
         URL = u;
     }
-
+    public APOD(){}
     public void setTitle(String t){Title = t;}
     public String getTitle(){return Title;}
 

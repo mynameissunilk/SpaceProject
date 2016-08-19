@@ -42,10 +42,16 @@ public class CardObjSingleton {
         masterArray.addAll(list);
     }
 
+    public void addObjectToMasterList(CardObject object){
+        masterArray.add(object);
+    }
+
     public List<CardObject> getMasterList() {
         Log.i("list", "getMasterList size is: " + masterArray.size());
         return masterArray;
     }
+
+
 
 
     //calendar event-related methods

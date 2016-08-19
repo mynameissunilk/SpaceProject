@@ -233,12 +233,20 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public APOD createAPODFromTable() {
-
+        APOD apod = new APOD();
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + Table_APOD;
         Cursor cursor = db.rawQuery(query, null);
-//        cursor.close(); CLOSE THIS EVENTUALLY.......
-        return new APOD(cursor.getString(cursor.getColumnIndex(APOD_TITLE_COL)), cursor.getString(cursor.getColumnIndex(APOD_EXPLANATION_COL)), cursor.getString(cursor.getColumnIndex(APOD_URL_COL)));
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                apod.setTitle(cursor.getString(cursor.getColumnIndex(APOD_TITLE_COL)));
+                apod.setExplanation(cursor.getString(cursor.getColumnIndex(APOD_EXPLANATION_COL)));
+                apod.setURL(cursor.getString(cursor.getColumnIndex(APOD_URL_COL)));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return apod;
     }
 
 

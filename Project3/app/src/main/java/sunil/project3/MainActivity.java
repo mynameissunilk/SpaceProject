@@ -180,8 +180,8 @@ public class MainActivity extends AppCompatActivity {
         CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
         cardsing.addListToMasterList(helper.getGuardianListFromDb());
-//        cardsing.addListToMasterList(helper.getNPRListFromDb());
-
+        cardsing.addListToMasterList(helper.getNPRListFromDb());
+        cardsing.addObjectToMasterList(helper.createAPODFromTable());
 
 
         //recyclerview setup
