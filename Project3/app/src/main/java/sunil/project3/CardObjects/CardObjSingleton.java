@@ -76,7 +76,8 @@ public class CardObjSingleton {
         values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/New_York");
         //using hardcoded calendar id because requesting the READ_CALENDAR permission was giving me trouble when I tried to query for the id,
         //I'll come back to it, and checking permissions, when other stuff works
-        contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+//        contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+
 
         Toast.makeText(context, event.getmEventTitle() + " added to your calendar", Toast.LENGTH_SHORT).show();
     }

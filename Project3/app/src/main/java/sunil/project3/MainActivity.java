@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 
 import sunil.project3.CardObjects.CalendarEventObject;
+
 import java.util.List;
 
 import sunil.project3.ApiServices.Endpoints;
@@ -59,6 +60,18 @@ public class MainActivity extends AppCompatActivity {
         //Endpoints.connectTwitterforToken();
 
         //Endpoints.connectTwitterwithToken(CardObjSingleton.getInstance().getToken());
+
+//recyclerview setup
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv);
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            manager.setOrientation(LinearLayout.VERTICAL);
+        } else {
+            manager.setOrientation(LinearLayout.HORIZONTAL);
+        }
+        mRecyclerView.setLayoutManager(manager);
+        MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
+        mRecyclerView.setAdapter(adapter);
 
 
         Endpoints.connectGuardian();
@@ -107,17 +120,6 @@ public class MainActivity extends AppCompatActivity {
         CardObjSingleton.getInstance().addListToMasterList(list);
 
 
-        //recyclerview setup CARDOBJECTS
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv);
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            manager.setOrientation(LinearLayout.VERTICAL);
-        } else {
-            manager.setOrientation(LinearLayout.HORIZONTAL);
-        }
-        mRecyclerView.setLayoutManager(manager);
-        MainRvAdapter adapter = new MainRvAdapter(CardObjSingleton.getInstance().getMasterList());
-        mRecyclerView.setAdapter(adapter);
 
 
         mListView = (ListView) findViewById(R.id.HorizontalIMGlistView);
