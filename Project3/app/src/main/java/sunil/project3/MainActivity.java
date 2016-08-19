@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
     CursorAdapter mCursorAdapter;
     //    TextView mT1, mT2, mT3, mT4, mT5;
     ListView mListView;
-    CardView mWebScrapePic;
+    CardView mWebScrapeCardView;
+    ImageView mImageView;
 
     private static final String TAG = "MainActivity";
     /**
@@ -84,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mToggle = (ImageButton) findViewById(R.id.toggle);
-//        mWebScrapePic = (CardView) findViewById(R.id.webScrapeCardView);
+        mToggle = (ImageButton) findViewById(R.id.toggle);
+        mWebScrapeCardView = (CardView) findViewById(R.id.webScrapeCardView);
+        mImageView = (ImageView) findViewById(R.id.imageScrape);
 
 
 //        Endpoints.connectTwitterforToken();
@@ -95,41 +97,40 @@ public class MainActivity extends AppCompatActivity {
         SetDailyPhotos setDailyPhotos = new SetDailyPhotos();
         setDailyPhotos.execute();
 
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//
-//            mToggle.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int height = mWebScrapePic.getHeight();
-//                    if (height < 100) {
-//                        mWebScrapePic.setLayoutParams(new LinearLayout.LayoutParams(
-//                                ViewGroup.LayoutParams.MATCH_PARENT, 800));
-//                        mToggle.setImageResource(R.mipmap.up);
-//                        Log.i(TAG, "onClick: height " + height);
-//                    } else {
-//                        mWebScrapePic.setLayoutParams(new LinearLayout.LayoutParams(100, 0));
-//                        Log.i(TAG, "onClick: height " + height);
-//                        mToggle.setImageResource(R.mipmap.down);
-//                    }
-//                }
-//            });
-//        }
-//        else {
-//
-//            mToggle.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int height = mImageScrape.getHeight();
-//                    if (height < 100) {
-//                        mWebScrapePic.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//                        Log.i(TAG, "onClick: height " + height);
-//                    } else {
-//                        mWebScrapePic.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
-//                        Log.i(TAG, "onClick: height " + height);
-//                    }
-//                }
-//            });
-//        }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            mToggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int height = mWebScrapeCardView.getHeight();
+                    if (height < 100) {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));
+                        mToggle.setImageResource(R.mipmap.up);
+                        Log.i(TAG, "onClick: height " + height);
+                    } else {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(100, 0));
+                        Log.i(TAG, "onClick: height " + height);
+                        mToggle.setImageResource(R.mipmap.down);
+                    }
+                }
+            });
+        }
+        else {
+
+            mToggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int height = mWebScrapeCardView.getHeight();
+                    if (height < 100) {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        Log.i(TAG, "onClick: height " + height);
+                    } else {
+                        mWebScrapeCardView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT));
+                        Log.i(TAG, "onClick: height " + height);
+                    }
+                }
+            });
+        }
 
         /*
         String marsUrl = "http://highmars.org/wp-content/uploads/2016/05/high-mars-10.jpg";
@@ -296,13 +297,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                Document document = Jsoup.connect("http://apod.nasa.gov/apod/astropix.html/").get();
-                Log.i(TAG, "doInBackground: " + document);
+                Document document = Jsoup.connect("http://apod.nasa.gov/apod/astropix.html").get();
+                Log.i(TAG, "doInBackground: document" + document);
                 Elements img = document.select("p a img");
 
-                Log.i(TAG, "doInBackground: " + img);
+                Log.i(TAG, "doInBackground image element: " + img);
                 String imgSource = img.attr("src");
-                Log.i(TAG, "doInBackground: image " + imgSource);
+                Log.i(TAG, "doInBackground: image source " + imgSource);
                 mURL = imgSource;
 
                 Log.i(TAG, "doInBackground: url" + mURL);
