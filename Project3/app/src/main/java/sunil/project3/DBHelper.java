@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static DBHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new DBHelper(context);
+            instance = new DBHelper(context.getApplicationContext());
         }
         return instance;
     }
