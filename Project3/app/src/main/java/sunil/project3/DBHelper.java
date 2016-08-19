@@ -253,7 +253,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<CardObject> getGuardianListFromDb() {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<CardObject> guardianList = new ArrayList<>();
-
         String query = "SELECT "+ GUARDIAN_TITLE_COL+", "+GUARDIAN_URL_COL+" FROM " + Table_Guardian;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -272,7 +271,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<CardObject> nprList = new ArrayList<>();
         String query = "SELECT " + NPR_TITLE_COL+", "+NPR_ABSTRACT_COL+", "+NPR_DATE_COL+", "
-                + NPR_URL_COL+ " FROM " + Table_NPR;
+               + NPR_URL_COL+ " FROM " + Table_NPR;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {

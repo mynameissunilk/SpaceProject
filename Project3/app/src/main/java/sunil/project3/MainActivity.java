@@ -177,7 +177,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // NOW CREATE OBJECTS FROM THE TABLE
+        CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
+        cardsing.addListToMasterList(helper.getGuardianListFromDb());
+//        cardsing.addListToMasterList(helper.getNPRListFromDb());
 
 
 
