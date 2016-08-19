@@ -182,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
         cardsing.addListToMasterList(helper.getNPRListFromDb());
 
 
+        //HARDCODING TWEETS IN BECAUSE TWITTER API SHOULD WORK BY ALL LOGICAL REASONS... BUT DOESN'T.
+        // THIS IS JUST TO SHOW THE CONCEPT
+
 
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
