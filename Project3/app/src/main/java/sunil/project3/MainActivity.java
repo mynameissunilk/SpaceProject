@@ -177,7 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // NOW CREATE OBJECTS FROM THE TABLE
+        CardObjSingleton cardsing = CardObjSingleton.getInstance();
 
+        cardsing.addListToMasterList(helper.getGuardianListFromDb());
 
         //recyclerview setup
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
